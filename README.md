@@ -16,7 +16,7 @@ Want to double check if you are building it correctly? [Download the "GlowTower.
 
 - **Ø 160/154 mm** acrylic tube, 1m long (if you prefer vibrant colors and bright light: frosted. If you prefer seeing no single LED: white)
 - **min. 260ml** of 3D printing resin (or similar amount of filament, if you use an FDM printer)
-- **1x 1m** aluminium square tube, 11.5x11.5mm
+- **1x 1m** aluminium square tube, 10x10mm
 - **1m** WS2812B or WS2812B Eco LED strip, 60 LEDs/meter, white PCB
 - **1x** USB-C female connector JRC-B008
 - **1x** ESP32 D1 Mini
