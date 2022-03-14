@@ -7,3 +7,7 @@ The main PCB for GlowTower, as well as GlowLight. Controls the connected LED str
 
 ![GlowTowerPCB](pcb_front.jpg)
 ![GlowTowerPCB](pcb_back.jpg)
+
+## Links
+- [Schematic](https://github.com/glowingkitty/GlowTower/blob/main/GlowTowerPCB/GlowTowerPCB.pdf)
+- [Interactive BOM](https://htmlpreview.github.io/?https://github.com/glowingkitty/GlowTower/blob/main/GlowTowerPCB/bom/ibom.html)
