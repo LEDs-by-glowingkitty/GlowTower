@@ -12,4 +12,4 @@ The main PCB for GlowTower, as well as GlowLight. Controls the connected LED str
 
 - [Schematic](https://github.com/glowingkitty/GlowTower/blob/main/GlowTowerPCB/GlowTowerPCB.pdf)
 - [Interactive BOM](https://htmlpreview.github.io/?https://github.com/glowingkitty/GlowTower/blob/main/GlowTowerPCB/bom/ibom.html)
-- [3D printable stencil](https://github.com/glowingkitty/GlowTower/blob/main/stencil.stl)
+- [3D printable stencil](https://github.com/glowingkitty/GlowTower/blob/main/GlowTowerPCB/stencil.stl)
