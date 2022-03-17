@@ -380,7 +380,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "GlowTower_LED_connector_PCB.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
