@@ -1,15 +1,29 @@
-%TF.GenerationSoftware,KiCad,Pcbnew,(6.0.0-0)*%
-%TF.CreationDate,2022-03-11T11:56:05+01:00*%
+%TF.GenerationSoftware,KiCad,Pcbnew,(6.0.4-0)*%
+%TF.CreationDate,2022-04-23T10:59:51+02:00*%
 %TF.ProjectId,GlowTower_LED_connector_PCB,476c6f77-546f-4776-9572-5f4c45445f63,rev?*%
 %TF.SameCoordinates,Original*%
 %TF.FileFunction,Legend,Top*%
 %TF.FilePolarity,Positive*%
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW (6.0.0-0)) date 2022-03-11 11:56:05*
+G04 Created by KiCad (PCBNEW (6.0.4-0)) date 2022-04-23 10:59:51*
 %MOMM*%
 %LPD*%
 G01*
 G04 APERTURE LIST*
+%ADD10C,0.254001*%
 G04 APERTURE END LIST*
+D10*
+%TO.C,SW1*%
+X103137457Y-72369924D02*
+G75*
+G03*
+X103137457Y-72369924I-1727457J0D01*
+G01*
+X102580942Y-72369924D02*
+G75*
+G03*
+X102580942Y-72369924I-1170942J0D01*
+G01*
+%TD*%
 M02*
