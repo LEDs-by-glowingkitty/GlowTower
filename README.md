@@ -7,4 +7,5 @@ A beautiful looking LED lamp for lighting up your home or setting the right mood
 ## Links
 
 - [3D models](https://grabcad.com/library/glowtower-1)
-- [PCB files](https://github.com/glowingkitty/GlowTower/tree/main/GlowTowerPCB)
+- [Main PCB files](https://github.com/glowingkitty/GlowTower/tree/main/GlowTowerPCB)
+- [Connector PCB files](https://github.com/glowingkitty/GlowTower/tree/main/GlowTower_LED_connector_PCB)
