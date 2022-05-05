@@ -1,7 +1,7 @@
 ![GlowTowerPCB](pcb_3d_model.jpg)
 
 
-# GlowTower PCB
+# GlowTower/GlowLight Main PCB
 
 The main PCB for GlowTower, as well as GlowLight. Controls the connected LED strips via an ESP32 and WLED. But you can also upload your own software to the ESP32 and connect additional hardware (like sensors) to the pins on the PCB.
 
