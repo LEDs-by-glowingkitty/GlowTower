@@ -3,7 +3,7 @@
 
 # GlowTower/GlowLight Connector PCB
 
-This PCB connects the LED strips in GlowTower & GlowLight with each other and therefore removes the need for wires. But it also contains the main control button, for turning on/off the lamp and quickly switch the animation.
+This PCB connects the LED strips in GlowTower & GlowLight with each other and therefore removes the need for wires. But it also contains the main control button, for turning on/off the lamp and quickly switching the animation.
 
 ![GlowTower_LED_connector_PCB](pcb_front.jpg)
 ![GlowTower_LED_connector_PCB](pcb_back.jpg)
