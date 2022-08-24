@@ -5809,7 +5809,7 @@
   (gr_text "GlowTower\n/GlowLight" (at 91.58 60.56) (layer "F.SilkS") (tstamp 4f679144-3cb6-4e40-adec-1fdc03c9422e)
     (effects (font (size 2.5 2.5) (thickness 0.4)) (justify left))
   )
-  (gr_text "Connector PCB v1.0 RC1" (at 91.76 65.94) (layer "F.SilkS") (tstamp f4808f8c-8f22-4ca2-8201-f4583689a51e)
+  (gr_text "Connector PCB v1.0" (at 91.76 65.94) (layer "F.SilkS") (tstamp f4808f8c-8f22-4ca2-8201-f4583689a51e)
     (effects (font (size 1 1) (thickness 0.15)) (justify left))
   )
 
