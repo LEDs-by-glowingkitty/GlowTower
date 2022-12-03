@@ -1291,7 +1291,7 @@
       (net 72 "unconnected-(U14-Pad1)") (pinfunction "1") (pintype "unspecified")
       (options (clearance outline) (anchor circle))
       (primitives
-        (gr_circle (center 2.725 0) (end 5.439265 0) (width 1))
+        (gr_circle (center 2.725 0) (end 5.439265 0) (width 1) (fill none))
       ) (tstamp 04630b0d-038f-48c5-bb77-940d44c96962))
     (model "${GLOWINGKITTYPARTS}/footprint/packages3d/SMTSO3030CTJ.step"
       (offset (xyz 0 0 3))
@@ -1437,7 +1437,7 @@
       (net 3 "+5V") (pinfunction "Pin_6") (pintype "passive") (tstamp 7ef8d41e-fd90-4218-9a8f-c26a285b0be3))
     (pad "7" thru_hole oval (at 0 15.24) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
       (net 1 "GND") (pinfunction "Pin_7") (pintype "passive") (tstamp 0b1fdb84-b232-45ec-9b9c-9bb8858ebb3b))
-    (model "${KICAD6_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x07_P2.54mm_Vertical.wrl"
+    (model "${KICAD6_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x07_P2.54mm_Vertical.wrl" hide
       (offset (xyz 0 0 0))
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
@@ -1715,7 +1715,7 @@
       (net 70 "unconnected-(U12-Pad1)") (pinfunction "1") (pintype "unspecified")
       (options (clearance outline) (anchor circle))
       (primitives
-        (gr_circle (center 2.725 0) (end 5.439265 0) (width 1))
+        (gr_circle (center 2.725 0) (end 5.439265 0) (width 1) (fill none))
       ) (tstamp 16b08057-ecf4-4623-8860-d604b11ee4cd))
     (model "${GLOWINGKITTYPARTS}/footprint/packages3d/SMTSO3030CTJ.step"
       (offset (xyz 0 0 3))
@@ -2789,7 +2789,7 @@
       (net 71 "unconnected-(U13-Pad1)") (pinfunction "1") (pintype "unspecified")
       (options (clearance outline) (anchor circle))
       (primitives
-        (gr_circle (center 2.725 0) (end 5.439265 0) (width 1))
+        (gr_circle (center 2.725 0) (end 5.439265 0) (width 1) (fill none))
       ) (tstamp 427da8f8-db09-4609-b5e1-f717fb935728))
     (model "${GLOWINGKITTYPARTS}/footprint/packages3d/SMTSO3030CTJ.step"
       (offset (xyz 0 0 3))
@@ -6344,7 +6344,7 @@
       (net 69 "unconnected-(U11-Pad1)") (pinfunction "1") (pintype "unspecified")
       (options (clearance outline) (anchor circle))
       (primitives
-        (gr_circle (center 2.725 0) (end 5.439265 0) (width 1))
+        (gr_circle (center 2.725 0) (end 5.439265 0) (width 1) (fill none))
       ) (tstamp 6481af05-59d1-4cc2-8648-571ab9f041a5))
     (model "${GLOWINGKITTYPARTS}/footprint/packages3d/SMTSO3030CTJ.step"
       (offset (xyz 0 0 3))
