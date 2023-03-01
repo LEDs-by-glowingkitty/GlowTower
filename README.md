@@ -1,8 +1,4 @@
-![GlowTower](readme/header.jpg)
-
-## Warning:
-
-This project is currently under active development and has not been fully tested yet. If you decide to build or clone the project, be aware it might not work yet as expected. Use at your own risk.
+![GlowTower](images/header.jpg)
 
 ## What is this project?
 

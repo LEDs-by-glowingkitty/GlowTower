@@ -1,7 +1,7 @@
-*.step
 *.mp4
 *.heic
 *-backups
 assembly/
 *_autosave
 .DS_Store
+*.icloud
