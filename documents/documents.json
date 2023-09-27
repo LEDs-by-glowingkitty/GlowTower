@@ -1,1 +1,34 @@
-{"versions":["glowtower_v1_0"],"glowtower_v1_0":{"select_value":"glowtower_v1_0","select_name":"GlowTower v1.0","git_link":"https://github.com/LEDs-by-glowingkitty/GlowTower/tree/d53cfc2b1375b36133c2d45616cdfaefbb623ea1/documents","downloadlink_base":"https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/d53cfc2b1375b36133c2d45616cdfaefbb623ea1/documents/","content":[{"name":"Quick Start Guide","filetype":"pdf","updated":"","size":"","downloadlink_file":""},{"name":"DIY Kit Assembly Guide","filetype":"pdf","updated":"","size":"","downloadlink_file":""},{"name":"Main PCB Pinout","filetype":"pdf","updated":"2022-12-06","size":"0.4MB","downloadlink_file":"pinout%20GlowLight%20GlowTower%20v1.0.pdf"},{"name":"Manual","filetype":"pdf","updated":"","size":"","downloadlink_file":""}]}}
+{
+    "versions": ["glowtower_v1_0"],
+    "glowtower_v1_0": {
+        "select_value": "glowtower_v1_0",
+        "select_name": "GlowTower v1.0",
+        "git_link": "https://github.com/LEDs-by-glowingkitty/GlowTower/tree/d53cfc2b1375b36133c2d45616cdfaefbb623ea1/documents",
+        "downloadlink_base": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/d53cfc2b1375b36133c2d45616cdfaefbb623ea1/documents/",
+        "content": [{
+            "name": "Quick Start Guide",
+            "filetype": "pdf",
+            "updated": "",
+            "size": "",
+            "downloadlink_file": ""
+        }, {
+            "name": "DIY Kit Assembly Guide",
+            "filetype": "pdf",
+            "updated": "",
+            "size": "",
+            "downloadlink_file": ""
+        }, {
+            "name": "Main PCB Pinout",
+            "filetype": "pdf",
+            "updated": "2022-12-06",
+            "size": "0.4MB",
+            "downloadlink_file": "pinout%20GlowLight%20GlowTower%20v1.0.pdf"
+        }, {
+            "name": "Manual",
+            "filetype": "pdf",
+            "updated": "",
+            "size": "",
+            "downloadlink_file": ""
+        }]
+    }
+}

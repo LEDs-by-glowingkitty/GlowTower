@@ -5,3 +5,5 @@ assembly/
 *_autosave
 .DS_Store
 *.icloud
+jlcpcb
+*-cache
