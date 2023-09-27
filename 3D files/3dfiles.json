@@ -1,8 +1,84 @@
 {
-    "versions": ["glowtower_v1_0"],
-    "glowtower_v1_0": {
+    "versions": [{
+        "select_value": "glowtower_v2_0",
+        "select_content": "GlowTower v2.0"
+    },{
         "select_value": "glowtower_v1_0",
-        "select_name": "GlowTower v1.0",
+        "select_content": "GlowTower v1.0"
+    }],
+    "glowtower_v2_0": {
+        "git_link": "https://github.com/LEDs-by-glowingkitty/GlowTower/tree/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/3D%20files",
+        "downloadlink_base": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/3D%20files/",
+        "content": {
+            "cases": [{
+                "name": "bottom case",
+                "filetype": "stl",
+                "updated": "2023-09-25",
+                "size": "0.3MB",
+                "downloadlink_file": "case/bottom_case.stl",
+                "camera": "-113.64898,148.15574,227.33361,0.01782,-3.40000,0.00000,0.00000,1.00000,0.00000,45.00000"
+            },{
+                "name": "button",
+                "filetype": "stl",
+                "updated": "2023-09-25",
+                "size": "0.1MB",
+                "downloadlink_file": "case/button.stl",
+                "camera": "-27.62927,36.58902,55.25854,0.00000,-0.25000,0.00000,0.00000,1.00000,0.00000,45.00000"
+            }, {
+                "name": "top case connector",
+                "filetype": "stl",
+                "updated": "2023-09-25",
+                "size": "0.2MB",
+                "downloadlink_file": "case/top_case_to_aluminum_connector.stl",
+                "camera": "-39.15151,49.19380,78.29070,-0.00615,-3.00000,0.00000,0.00000,1.00000,0.00000,45.00000"
+            },{
+                "name": "top case",
+                "filetype": "stl",
+                "updated": "2023-09-25",
+                "size": "0.2MB",
+                "downloadlink_file": "case/top_acrylic_part.stl",
+                "camera": "-113.59779,151.43986,227.15978,-0.01790,0.00000,0.00000,0.00000,1.00000,0.00000,45.00000"
+            },
+            {
+                "name": "top case without button",
+                "filetype": "stl",
+                "updated": "2023-09-25",
+                "size": "0.1MB",
+                "downloadlink_file": "case/top_acrylic_part_no_button.stl",
+                "camera": "-113.59779,151.43986,227.15978,-0.01790,0.00000,0.00000,0.00000,1.00000,0.00000,45.00000"
+            }],
+            "step_files": [{
+                "name": "Main PCB",
+                "filetype": "step",
+                "updated": "2023-09-25",
+                "size": "29.2MB",
+                "downloadlink": "https://media.githubusercontent.com/media/LEDs-by-glowingkitty/GlowTower/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/3D%20files/step%20files/MainPCB.step"
+            }, {
+                "name": "Button PCB",
+                "filetype": "step",
+                "updated": "2023-09-25",
+                "size": "0.3MB",
+                "downloadlink_file": null,
+                "downloadlink": "https://media.githubusercontent.com/media/LEDs-by-glowingkitty/GlowTower/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/3D%20files/step%20files/ButtonPCB.step"
+            }, {
+                "name": "GlowTower",
+                "filetype": "step",
+                "updated": "2023-09-27",
+                "size": "525.6MB",
+                "downloadlink_file": null,
+                "downloadlink": "https://media.githubusercontent.com/media/LEDs-by-glowingkitty/GlowTower/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/3D%20files/step%20files/GlowTower.step"
+            }],
+            "ar": [{
+                "name": "GlowTower",
+                "filetype": "usdz",
+                "updated": "2023-09-27",
+                "size": "5.1MB",
+                "downloadlink_file": null,
+                "downloadlink": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/GlowTower.usdz"
+            }]
+        }
+    },
+    "glowtower_v1_0": {
         "git_link": "https://github.com/LEDs-by-glowingkitty/GlowTower/tree/d53cfc2b1375b36133c2d45616cdfaefbb623ea1/3D%20files",
         "downloadlink_base": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/d53cfc2b1375b36133c2d45616cdfaefbb623ea1/3D%20files/",
         "content": {

@@ -7,8 +7,8 @@
         "select_content": "GlowTower v1.0"
     }],
     "glowtower_v2_0": {
-        "git_link": "https://github.com/LEDs-by-glowingkitty/GlowLight/blob/b9e20646133fe5ea889452d630e038018d4172d2/PCB%20files",
-        "downloadlink_base": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowLight/b9e20646133fe5ea889452d630e038018d4172d2/PCB%20files/",
+        "git_link": "https://github.com/LEDs-by-glowingkitty/GlowTower/tree/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/PCB%20files",
+        "downloadlink_base": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/PCB%20files/",
         "content": [ {
             "name": "Main PCB - KiCad 7 files",
             "filetype": "zip",

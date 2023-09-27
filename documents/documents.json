@@ -1,8 +1,54 @@
 {
-    "versions": ["glowtower_v1_0"],
-    "glowtower_v1_0": {
+    "versions": [{
+        "select_value": "glowtower_v2_0",
+        "select_content": "GlowTower v2.0"
+    },
+    {
         "select_value": "glowtower_v1_0",
-        "select_name": "GlowTower v1.0",
+        "select_content": "GlowTower v1.0"
+    }],
+    "glowtower_v2_0": {
+        "git_link": "https://github.com/LEDs-by-glowingkitty/GlowTower/tree/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/documents",
+        "downloadlink_base": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/96d6403c2eeed8b88fdfe5fd26084d14b84979ef/documents/",
+        "content": [{
+            "name": "Quick Start Guide",
+            "filetype": "pdf",
+            "updated": "",
+            "size": "",
+            "downloadlink_file": ""
+        }, {
+            "name": "DIY Kit Assembly Guide",
+            "filetype": "pdf",
+            "updated": "",
+            "size": "",
+            "downloadlink_file": ""
+        }, {
+            "name": "Main PCB Pinout",
+            "filetype": "pdf",
+            "updated": "2023-09-25",
+            "size": "2.12MB",
+            "downloadlink_file": "pinout%20GlowLight%20GlowTower%20PCB%20v2.0.pdf"
+        },{
+            "name": "Main PCB schematic",
+            "filetype": "pdf",
+            "updated": "2023-09-26",
+            "size": "5.4MB",
+            "downloadlink_file": "MainPCB%20v2%20schematic.pdf"
+        }, {
+            "name": "Button PCB schematic",
+            "filetype": "pdf",
+            "updated": "2023-09-26",
+            "size": "0.2MB",
+            "downloadlink_file": "Button%20PCB%20v2%20schematic.pdf"
+        },{
+            "name": "Manual",
+            "filetype": "pdf",
+            "updated": "",
+            "size": "",
+            "downloadlink_file": ""
+        }]
+    },
+    "glowtower_v1_0": {
         "git_link": "https://github.com/LEDs-by-glowingkitty/GlowTower/tree/d53cfc2b1375b36133c2d45616cdfaefbb623ea1/documents",
         "downloadlink_base": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/d53cfc2b1375b36133c2d45616cdfaefbb623ea1/documents/",
         "content": [{
