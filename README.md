@@ -6,6 +6,7 @@ A beautiful looking LED lamp for lighting up your home and setting the mood.
 
 ## Links
 
+- [Shop](https://shop.glowingkitty.com/products/glowtower)
 - [More details](https://glowingkitty.com/glowtower)
 <!-- - [Tech specs](https://glowingkitty.com/glowtower/specs)
 - [FAQ](https://glowingkitty.com/glowtower/faq)
