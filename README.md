@@ -1,13 +1,13 @@
-![GlowTower](readme/header.jpg)
+![GlowTower](glowtower.jpg)
 
 ## What is this project?
 
 A beautiful looking LED lamp for lighting up your home and setting the mood.
 
-<!-- ## Links
+## Links
 
 - [More details](https://glowingkitty.com/glowtower)
-- [Tech specs](https://glowingkitty.com/glowtower/specs)
+<!-- - [Tech specs](https://glowingkitty.com/glowtower/specs)
 - [FAQ](https://glowingkitty.com/glowtower/faq)
 - [Documents](https://glowingkitty.com/glowtower/docs)
 - [3D files](https://glowingkitty.com/glowtower/3d)
