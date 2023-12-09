@@ -9,7 +9,7 @@
     }],
     "glowtower_v2_0": {
         "git_link": "https://github.com/LEDs-by-glowingkitty/GlowTower/tree/153134dee89242e26beb402a23011f582050a64b/documents",
-        "downloadlink_base": "https://raw.githubusercontent.com/LEDs-by-glowingkitty/GlowTower/153134dee89242e26beb402a23011f582050a64b/documents/",
+        "downloadlink_base": "https://media.githubusercontent.com/media/LEDs-by-glowingkitty/GlowTower/153134dee89242e26beb402a23011f582050a64b/documents/",
         "content": [{
             "name": "DIY Kit Assembly Guide",
             "filetype": "pdf",
