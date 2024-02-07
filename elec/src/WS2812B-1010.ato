@@ -1,0 +1,31 @@
+import Capacitor from "generics/capacitors.ato"
+
+component WS2812B_1010:
+    """
+    This is a WS2812B LED in the 1010 package.
+    Datasheet: https://datasheet.lcsc.com/szlcsc/1812041635_Worldsemi-XL-1010RGBC-WS2812B_C5349953.pdf
+
+    Specs:
+    - VDD: 3.5V to 5.5V
+    """
+
+    # component XL-1010RGBC-WS2812B
+    footprint = "LED-SMD_4P-L1.0-W1.0-TL_XL-1010RGBC-WS2812B"
+    lcsc_id = "C5349953"
+    mpn = "C5349953"
+
+    # pins
+    signal DOUT ~ pin 1
+    signal VDD ~ pin 2
+    signal GND ~ pin 3
+    signal DIN ~ pin 4
+
+    # add the capacitor
+    cap = new Capacitor
+    cap.capacitance = 0.1uF +/- 10%
+    cap.footprint = "C0402"
+    cap.mpn = "C1525"
+
+    # connect the capacitor
+    cap.power.vcc ~ VDD
+    cap.power.gnd ~ GND

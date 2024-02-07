@@ -1,0 +1,10 @@
+import Resistor from "generics/resistors.ato"
+import TPS40305DRCR from "tps40305drcr.ato"
+
+module MainPCB:
+    """
+    This is the main PCB of GlowLight & GlowTower. It contains all the power management, the microcontroller and more.
+    WS2812B LED strips are connected to this PCB via pin headers.
+    """
+
+    buck_converter = new TPS40305DRCR

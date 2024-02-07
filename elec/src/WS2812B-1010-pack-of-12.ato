@@ -1,0 +1,72 @@
+import Power from "generics/interfaces.ato"
+import WS2812B_1010 from "WS2812B-1010.ato"
+
+module WS2812B_1010_pack_of_12:
+    """
+    This is a collection of 12 WS2812B LEDs in the 1010 package.
+    """
+
+    signal DIN
+    signal VDD_5V
+    signal GND
+
+    # Define the LEDs (caps are included)
+    led_1 = new WS2812B_1010
+    led_2 = new WS2812B_1010
+    led_3 = new WS2812B_1010
+    led_4 = new WS2812B_1010
+    led_5 = new WS2812B_1010
+    led_6 = new WS2812B_1010
+    led_7 = new WS2812B_1010
+    led_8 = new WS2812B_1010
+    led_9 = new WS2812B_1010
+    led_10 = new WS2812B_1010
+    led_11 = new WS2812B_1010
+    led_12 = new WS2812B_1010
+
+    # define the 5V power interface
+    power = new Power
+    VDD_5V ~ power.vcc
+    GND ~ power.gnd
+
+    # Connect the LEDs to the power interface
+    led_1.VDD ~ power.vcc
+    led_2.VDD ~ power.vcc
+    led_3.VDD ~ power.vcc
+    led_4.VDD ~ power.vcc
+    led_5.VDD ~ power.vcc
+    led_6.VDD ~ power.vcc
+    led_7.VDD ~ power.vcc
+    led_8.VDD ~ power.vcc
+    led_9.VDD ~ power.vcc
+    led_10.VDD ~ power.vcc
+    led_11.VDD ~ power.vcc
+    led_12.VDD ~ power.vcc
+
+    # Connect the LEDs to GND
+    led_1.GND ~ power.gnd
+    led_2.GND ~ power.gnd
+    led_3.GND ~ power.gnd
+    led_4.GND ~ power.gnd
+    led_5.GND ~ power.gnd
+    led_6.GND ~ power.gnd
+    led_7.GND ~ power.gnd
+    led_8.GND ~ power.gnd
+    led_9.GND ~ power.gnd
+    led_10.GND ~ power.gnd
+    led_11.GND ~ power.gnd
+    led_12.GND ~ power.gnd
+
+    # Connect the LED data lines
+    DIN ~ led_1.DIN
+    led_1.DOUT ~ led_2.DIN
+    led_2.DOUT ~ led_3.DIN
+    led_3.DOUT ~ led_4.DIN
+    led_4.DOUT ~ led_5.DIN
+    led_5.DOUT ~ led_6.DIN
+    led_6.DOUT ~ led_7.DIN
+    led_7.DOUT ~ led_8.DIN
+    led_8.DOUT ~ led_9.DIN
+    led_9.DOUT ~ led_10.DIN
+    led_10.DOUT ~ led_11.DIN
+    led_11.DOUT ~ led_12.DIN

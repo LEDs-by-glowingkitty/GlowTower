@@ -1,0 +1,9 @@
+ato-version: ^0.2.0
+builds:
+  default:
+    entry: elec/src/main-pcb.ato:MainPCB
+  button_pcb:
+    entry: elec/src/button-pcb.ato:ButtonPCB
+dependencies:
+- generics^v2.2.2
+- esp32-s3

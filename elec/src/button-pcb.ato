@@ -1,0 +1,45 @@
+import WS2812B_1010_pack_of_12 from "WS2812B-1010-pack-of-12.ato"
+import LargePushButton from "large-pushbutton.ato"
+import PinHeaders2P_2_54mm from "pin-headers-2P-2-54mm.ato"
+import Power from "generics/interfaces.ato"
+
+module ButtonPCB:
+    """
+    This is the PCB for the button on top of GlowLight & GlowTower.
+    Pressing the button allows a user to:
+    - Turn the light on/off
+    - Switch between saved presets / effects
+    - Change the brightness of the lamp
+
+    The LEDs give visual feedback, for example for the current brightness level.
+
+    The PCB is connected via cables to the main PCB of the lamp.
+    """
+
+    # Define the power supply
+    power = new Power
+    
+    # Define the LEDs
+    leds = new WS2812B_1010_pack_of_12
+
+    # Define the button
+    button = new LargePushButton
+
+    # Define the pin headers, which are used to connect the PCB to the main PCB
+    pin_headers_leds = new PinHeaders2P_2_54mm
+    pin_headers_button = new PinHeaders2P_2_54mm
+
+    # Connect power to the LEDs
+    power.vcc ~ leds.VDD_5V
+    power.gnd ~ leds.GND
+
+    # Connect the button to GND (once its pressed)
+    button._3 ~ power.gnd
+
+    # Connect the pin headers for the LEDs
+    pin_headers_leds._1 ~ power.vcc
+    pin_headers_leds._2 ~ leds.DIN
+
+    # Connect the pin headers for the button
+    pin_headers_button._1 ~ power.gnd
+    pin_headers_button._2 ~ button._1

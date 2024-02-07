@@ -1,0 +1,15 @@
+component LargePushButton:
+    """
+    This is a larger push button switch with 4 pins. It is a surface mount component.
+    If the button is pressed, the pins 1 and 2 are connected with 3 and 4.
+    By default, the pins 1 and 2 are connected. And the pins 3 and 4 are connected.
+    """
+    # component TS-1102S-C-A-B
+    footprint = "KEY-SMD_4P-L6.0-W6.0-P4.50-LS8.6"
+    lcsc_id = "C381038"
+    mpn = "C381038"
+    # pins
+    signal _3 ~ pin 3
+    signal _4 ~ pin 4
+    signal _1 ~ pin 1
+    signal _2 ~ pin 2

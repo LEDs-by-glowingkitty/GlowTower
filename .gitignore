@@ -9,3 +9,5 @@ jlcpcb
 *-cache
 *- print.pdf
 venv
+.ato
+build
