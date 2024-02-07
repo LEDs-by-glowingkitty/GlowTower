@@ -16,9 +16,10 @@ module ButtonPCB:
     The PCB is connected via cables to the main PCB of the lamp.
     """
 
-    # Define the power supply
-    power = new Power
-    
+    ############################################
+    ############### Components #################
+    ############################################
+
     # Define the LEDs
     leds = new WS2812B_1010_pack_of_12
 
@@ -28,6 +29,14 @@ module ButtonPCB:
     # Define the pin headers, which are used to connect the PCB to the main PCB
     pin_headers_leds = new PinHeaders2P_2_54mm
     pin_headers_button = new PinHeaders2P_2_54mm
+
+
+    ############################################
+    ############### Connections ################
+    ############################################
+
+    # Define the power supply
+    power = new Power
 
     # Connect power to the LEDs
     power.vcc ~ leds.VDD_5V
