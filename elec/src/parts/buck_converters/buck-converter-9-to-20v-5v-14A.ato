@@ -1,8 +1,19 @@
-component TPS40305DRCR:
+
+
+component BuckConverter_In_9_to_20V_Out_5V_14A:
+    """
+    This is a buck converter, which is setup for the following requirements:
+    - IC: TPS40305DRCR
+    - Product page: https://www.ti.com/product/TPS40305/part-details/TPS40305DRCR
+    - Input voltage: 9V to 20V
+    - Output voltage: 5V
+    - Output current: 14A max
+    """
     # component TPS40305DRCR
     footprint = "VSON-10_L3.0-W3.0-P0.50-BL-EP_TPS62410DRCR"
     lcsc_id = "C140285"
     mpn = "C140285"
+
     # pins
     signal VDD ~ pin 1
     signal ENSS ~ pin 2

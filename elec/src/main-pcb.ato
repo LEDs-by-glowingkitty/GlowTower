@@ -1,5 +1,5 @@
 import Resistor from "generics/resistors.ato"
-import TPS40305DRCR from "tps40305drcr.ato"
+import BuckConverter_In_9_to_20V_Out_5V_14A from "parts/buck_converters/buck-converter-9-to-20v-5v-14A.ato"
 
 module MainPCB:
     """
@@ -7,4 +7,24 @@ module MainPCB:
     WS2812B LED strips are connected to this PCB via pin headers.
     """
 
-    buck_converter = new TPS40305DRCR
+    ############################################
+    ################# Parts ####################
+    ############################################
+
+    # Define the microcontroller
+
+    # Define the USB connector
+
+    # Define the USB PD controller
+
+    # Define the buck converter for the LEDs, which is designed for 9-20V to 5V at max 14A
+    buck_converter = new BuckConverter_In_9_to_20V_Out_5V_14A
+
+    # Define the LDO converter for the microcontroller
+
+
+
+
+    ############################################
+    ############### Connections ################
+    ############################################
