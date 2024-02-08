@@ -9,6 +9,8 @@ component CP2102N:
     This is the CP2102N USB to serial IC from Silicon Labs.
     In comparison to the CP2102, the CP2102N has an increased maximum data rate of 3Mbps (vs 2Mbps) and a few additional features.
     Datasheet: https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf
+
+    Included are also the required capacitors, resistors, ESD protection for the D+ and D- lines, and an auto-reset dual transistor.
     """
 
     # component CP2102N-A02-GQFN24R
