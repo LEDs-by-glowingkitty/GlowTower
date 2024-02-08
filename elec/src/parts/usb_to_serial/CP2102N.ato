@@ -3,6 +3,11 @@ import Resistor from "generics/resistors.ato"
 import Power from "generics/interfaces.ato"
 import SP0503BAHTG from "../esd_protection/SP0503BAHTG.ato"
 import UMH3N from "../transistors/UMH3N.ato"
+import Capacitor_0402_100nF from "../capacitors/0402/100nF.ato"
+import Capacitor_0603_10uF from "../capacitors/0603/10uF.ato"
+import Resistor_0402_1K from "../resistors/0402/1K.ato"
+import Resistor_0402_2K from "../resistors/0402/2K.ato"
+import Resistor_0402_5_1K from "../resistors/0402/5_1K.ato"
 
 component CP2102N:
     """
@@ -19,15 +24,8 @@ component CP2102N:
     mpn = "C969151"
 
     # Add capacitors for the VREGIN and VDD pins
-    small_cap = new Capacitor
-    small_cap.capacitance = 0.1uF +/- 10%
-    small_cap.footprint = "C0402"
-    small_cap.mpn = "C307331"
-
-    large_cap = new Capacitor
-    large_cap.capacitance = 10uF +/- 20%
-    large_cap.footprint = "C0603"
-    large_cap.mpn = "C96446"
+    small_cap = new Capacitor_0402_100nF
+    large_cap = new Capacitor_0603_10uF
 
     # Add voltage divider for VBUS pin
     # TODO: check with real hardware testing if the values work. Theory: if VBUS is 5V -> 5V * (5100 / (5100 + 20000)) = 1.1V, if VBUS is 20V -> 20V * (5100 / (5100 + 20000)) = 4.4V
@@ -39,21 +37,11 @@ component CP2102N:
     # - test flashing with 4.2V input
     # - then also test disconnecting VBUS from REGIN and connect REGIN and VDD to fixed 3.3V input
     # TODO: consider turning on/off CP2102N with MOSFETs, like with GlowSign PCB (I think inspired by Adafruit)
-    voltage_divider_r1 = new Resistor
-    voltage_divider_r1.resistance = 20000ohm +/- 1%
-    voltage_divider_r1.footprint = "R0402"
-    voltage_divider_r1.mpn = "C25765"
-
-    voltage_divider_r2 = new Resistor
-    voltage_divider_r2.resistance = 5100ohm +/- 1% 
-    voltage_divider_r2.footprint = "R0402"
-    voltage_divider_r2.mpn = "C25905"
+    voltage_divider_r1 = new Resistor_0402_2K
+    voltage_divider_r2 = new Resistor_0402_5_1K
 
     # Add a pull up resistor for the RSTb pin.
-    pull_up_resistor = new Resistor
-    pull_up_resistor.resistance = 1000ohm +/- 1%
-    pull_up_resistor.footprint = "R0402"
-    pull_up_resistor.mpn = "C11702"
+    pull_up_resistor = new Resistor_0402_1K
 
     # Add ESD protection for the D+ and D- lines
     esd_protection = new SP0503BAHTG

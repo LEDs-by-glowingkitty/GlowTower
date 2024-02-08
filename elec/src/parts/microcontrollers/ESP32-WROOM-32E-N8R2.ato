@@ -2,6 +2,9 @@ import Capacitor from "generics/capacitors.ato"
 import Resistor from "generics/resistors.ato"
 import SmallPushButton from "../buttons/small-pushbutton.ato"
 import Power from "generics/interfaces.ato"
+import Capacitor_0603_1uF from "../capacitors/0603/1uF.ato"
+import Capacitor_0603_10uF from "../capacitors/0603/10uF.ato"
+import Resistor_0402_5_1K from "../resistors/0402/5_1K.ato"
 
 component ESP32_WROOM_32E_N8R2:
     """
@@ -24,25 +27,16 @@ component ESP32_WROOM_32E_N8R2:
     mpn = "C5361945"
 
     # Add capacitor for 3.3V input of ESP32
-    vin_cap = new Capacitor
-    vin_cap.capacitance = 10uF +/- 20%
-    vin_cap.footprint = "C0603"
-    vin_cap.mpn = "C96446"
+    vin_cap = new Capacitor_0603_10uF
 
     # Add the reset button
     reset_button = new SmallPushButton
 
     # Add a delay capacitor for the EN pin
-    delay_cap = new Capacitor
-    delay_cap.capacitance = 1uF +/- 10%
-    delay_cap.footprint = "C0603"
-    delay_cap.mpn = "C15849"
+    delay_cap = new Capacitor_0603_1uF
 
     # Add a pull up resistor for the EN pin
-    en_pullup_resistor = new Resistor
-    en_pullup_resistor.resistance = 5.1kohm +/- 1% 
-    en_pullup_resistor.footprint = "R0402"
-    en_pullup_resistor.mpn = "C25905"
+    en_pullup_resistor = new Resistor_0402_5_1K
 
     # pins
     # INFO: Many of the disconnected pins are required to be low or high on boot, or else prevent the ESP32 from booting. Therefore shouldn't be used.
