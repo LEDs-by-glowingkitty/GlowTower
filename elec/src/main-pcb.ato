@@ -3,6 +3,7 @@ import BuckConverter_In_9_to_20V_Out_5V_14A from "parts/buck_converters/buck-con
 import ESP32_WROOM_32E_N8R2 from "parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
 import CP2102N from "parts/usb_to_serial/CP2102N.ato"
 import USB_C_Connector_5A from "parts/usb_connectors/USB-C_5A.ato"
+import CYPD3177_min_9V_2A from "parts/usb_pd_ics/CYPD3177_min_9V_2A.ato"
 
 module MainPCB:
     """
@@ -18,13 +19,13 @@ module MainPCB:
     esp32 = new ESP32_WROOM_32E_N8R2
 
     # Add USB to serial via CP2102N
-    usb_serial = new CP2102N
+    usb_to_serial_ic = new CP2102N
 
     # Add USB-C connector that can handle up to 5A at 20V (100W)
     usb_c_connector = new USB_C_Connector_5A
 
-    # Add USB-C PD (9-20V) to 5V (max 14A)
-    # usb_pd = new USB_PD_9_to_20V
+    # Add USB-C PD (min 9V 2A input) to 5V (max 14A output)
+    usb_pd = new CYPD3177_min_9V_2A
     buck_converter = new BuckConverter_In_9_to_20V_Out_5V_14A
 
     # 5V to 3.3V

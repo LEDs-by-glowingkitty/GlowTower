@@ -1,0 +1,43 @@
+component CYPD3177:
+    """
+    This is the CYPD3177-24LQXQ, a USB-PD controller from Cypress Semiconductor.
+    It can negotiate power delivery with a USB-PD power supply, with an output voltage of 5V to 20V and a current of up to 5A (100W max).
+    It also has a SAFE_PWR output, which can output 5V at 900mA, if the negotiation of USB PD failed (because the device is connected to a non-PD power supply).
+    The requested voltage and amps are set via resistors.
+    Datasheet: https://datasheet.lcsc.com/lcsc/2208051100_Cypress-Semicon-CYPD3177-24LQXQ_C2959321.pdf
+    """
+
+    # component CYPD3177-24LQXQ_C2959321
+    footprint = "TQFN-24_L4.0-W4.0-P0.50-TL-EP2.8"
+    lcsc_id = "C2959321"
+    mpn = "C2959321"
+
+    # pins
+    signal VBUS_MIN ~ pin 1
+    signal VBUS_MAX ~ pin 2
+    signal VBUS_FET_EN ~ pin 3
+    signal SAFE_PWR_EN ~ pin 4
+    signal ISNK_COARSE ~ pin 5
+    signal ISNK_FINE ~ pin 6
+    signal HPI_INT ~ pin 7
+    signal GPIO_1 ~ pin 8
+    signal FAULT ~ pin 9
+    signal FLIP ~ pin 10
+    signal VDC_OUT ~ pin 11
+    signal HPI_SDA ~ pin 12
+    signal HPI_SCL ~ pin 13
+    signal CC2 ~ pin 14
+    signal CC1 ~ pin 15
+    signal Dminus ~ pin 16
+    signal Dplus ~ pin 17
+    signal VBUS_IN ~ pin 18
+    signal GND ~ pin 19
+    signal DNU1 ~ pin 20
+    signal DNU2 ~ pin 21
+    GND ~ pin 22
+    signal VDDD ~ pin 23
+    signal VCCD ~ pin 24
+    signal EPAD ~ pin 25
+
+    # Connect the EPAD to GND
+    EPAD ~ GND

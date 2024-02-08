@@ -1,0 +1,8 @@
+import CYPD3177 from "CYPD3177.ato"
+
+module CYPD3177_min_9V_2A:
+    """
+    This is a module for the CYPD3177, where the CYPD3177 is setup to request at least 9V at 2A from the power supply.
+    If the power supply cannot provide this, the CYPD3177 will give out via SAVE_PWR 5V at 900mA.
+    """
+    ic = new CYPD3177
