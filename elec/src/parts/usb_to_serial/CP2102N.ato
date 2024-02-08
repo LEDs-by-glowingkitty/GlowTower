@@ -1,0 +1,39 @@
+component CP2102N:
+    """
+    This is the CP2102N USB to serial IC from Silicon Labs.
+    In comparison to the CP2102, the CP2102N has an increased maximum data rate of 3Mbps (vs 2Mbps) and a few additional features.
+    Datasheet: https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf
+    """
+
+    # component CP2102N-A02-GQFN24R
+    footprint = "QFN-24_L4.0-W4.0-P0.50-TL-EP2.6"
+    lcsc_id = "C969151"
+    mpn = "C969151"
+    # pins
+    signal RI_CLK ~ pin 1
+    signal GND ~ pin 2
+    signal D_ ~ pin 3
+    D_ ~ pin 4
+    signal VIO ~ pin 5
+    signal VDD ~ pin 6
+    signal VREGIN ~ pin 7
+    signal VBUS ~ pin 8
+    signal RSTb ~ pin 9
+    signal NC ~ pin 10
+    signal GPIO_3_WAKEUP ~ pin 11
+    signal GPIO_2_RS485 ~ pin 12
+    signal GPIO_1_RXT ~ pin 13
+    signal GPIO_0_TXT ~ pin 14
+    signal SUSPENDb ~ pin 15
+    NC ~ pin 16
+    signal SUSPEND ~ pin 17
+    signal CTS ~ pin 18
+    signal RTS ~ pin 19
+    signal RXD ~ pin 20
+    signal TXD ~ pin 21
+    signal DSR ~ pin 22
+    signal DTR ~ pin 23
+    signal DCD ~ pin 24
+    GND ~ pin 25
+
+    # Add capacitors to the VREGIN and VDD pins

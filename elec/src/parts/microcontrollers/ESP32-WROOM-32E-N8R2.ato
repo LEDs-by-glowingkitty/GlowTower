@@ -7,6 +7,15 @@ component ESP32_WROOM_32E_N8R2:
     """
     This is the ESP32 WROOM 32E N8R2 module from Espressif.
     It has 8MB flash and 2MB PSRAM.
+    Datasheet: https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf
+    Specs:
+    - 2.4 GHz Wi-Fi
+    - Bluetooth 4.2
+    - Dual-core processor with up to 240 MHz
+
+    Info: 
+    To save even more space on a PCB, you can use the IC directly (ESP32-D0WDQ6) and add the required components (crystal, capacitors, resistors, etc.) manually.
+    However, the module is recommended for most projects, as it is easier to implement and has a built-in antenna.
     """
 
     # component ESP32-WROOM-32E-N8R2
