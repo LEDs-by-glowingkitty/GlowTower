@@ -1,5 +1,6 @@
 import Resistor from "generics/resistors.ato"
 import BuckConverter_In_9_to_20V_Out_5V_14A from "parts/buck_converters/buck-converter-9-to-20v-5v-14A.ato"
+import ESP32_WROOM_32E_N8R2 from "parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
 
 module MainPCB:
     """
@@ -11,16 +12,29 @@ module MainPCB:
     ################# Parts ####################
     ############################################
 
-    # Define the microcontroller
+    # ESP32
+    esp32 = new ESP32_WROOM_32E_N8R2
 
-    # Define the USB connector
+    # USB to serial via CP2102N
+    # usb_serial = new USB_to_Serial
 
-    # Define the USB PD controller
+    # USB-C connector
 
-    # Define the buck converter for the LEDs, which is designed for 9-20V to 5V at max 14A
+    # USB-C PD (9-20V) to 5V (max 14A)
+    # usb_pd = new USB_PD_9_to_20V
     buck_converter = new BuckConverter_In_9_to_20V_Out_5V_14A
 
-    # Define the LDO converter for the microcontroller
+    # 5V to 3.3V
+
+    # Microphone
+
+    # LED levelshifter
+
+    # Pin headers
+
+    # Actionbutton + inverter
+
+    # Pads
 
 
 

@@ -23,7 +23,7 @@ module ButtonPCB:
     # Define the LEDs
     leds = new WS2812B_1010_pack_of_12
 
-    # Define the button
+    # Define the Actionbutton
     button = new LargePushButton
 
     # Define the pin headers, which are used to connect the PCB to the main PCB

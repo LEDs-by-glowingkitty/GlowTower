@@ -1,4 +1,5 @@
 import Capacitor from "generics/capacitors.ato"
+import Power from "generics/interfaces.ato"
 
 component WS2812B_1010:
     """
@@ -26,6 +27,11 @@ component WS2812B_1010:
     cap.footprint = "C0402"
     cap.mpn = "C1525"
 
+    # add the power interface
+    power = new Power
+    power.vcc ~ VDD
+    power.gnd ~ GND
+
     # connect the capacitor
-    cap.power.vcc ~ VDD
-    cap.power.gnd ~ GND
+    cap.power.vcc ~ power.vcc
+    cap.power.gnd ~ power.gnd

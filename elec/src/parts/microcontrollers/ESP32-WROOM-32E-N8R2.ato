@@ -1,0 +1,102 @@
+import Capacitor from "generics/capacitors.ato"
+import Resistor from "generics/resistors.ato"
+import SmallPushButton from "../buttons/small-pushbutton.ato"
+import Power from "generics/interfaces.ato"
+
+component ESP32_WROOM_32E_N8R2:
+    """
+    This is the ESP32 WROOM 32E N8R2 module from Espressif.
+    It has 8MB flash and 2MB PSRAM.
+    """
+
+    # component ESP32-WROOM-32E-N8R2
+    footprint = "WIFI-SMD_ESP32-WROOM-32E"
+    lcsc_id = "C5361945"
+    mpn = "C5361945"
+
+    # add the power interface for 3.3V
+    power = new Power
+
+    # Add capacitor for 3.3V input of ESP32
+    vin_cap = new Capacitor
+    vin_cap.capacitance = 10uF +/- 20%
+    vin_cap.footprint = "C0603"
+    vin_cap.mpn = "C96446"
+
+    # Add the reset button
+    reset_button = new SmallPushButton
+
+    # Add a delay capacitor for the EN pin
+    delay_cap = new Capacitor
+    delay_cap.capacitance = 1uF
+    delay_cap.footprint = "C0603"
+    delay_cap.mpn = "C15849"
+
+    # Add a pull up resistor for the EN pin
+    resistor = new Resistor
+    resistor.resistance = 5100Ω
+    resistor.footprint = "R0402"
+    resistor.mpn = "C25905"
+
+    # pins
+    # INFO: Many of the disconnected pins are required to be low or high on boot, or else prevent the ESP32 from booting. Therefore shouldn't be used.
+    signal GND ~ pin 1
+    signal _3V3 ~ pin 2
+    signal EN ~ pin 3
+    signal SENSOR_VP ~ pin 4
+    signal SENSOR_VN ~ pin 5
+    signal IO34 ~ pin 6
+    signal IO35 ~ pin 7
+    signal IO32 ~ pin 8
+    signal IO33 ~ pin 9
+    signal IO25 ~ pin 10
+    signal IO26 ~ pin 11
+    signal IO27 ~ pin 12
+    signal IO14 ~ pin 13
+    signal IO12 ~ pin 14    # pin must be LOW during boot
+    GND ~ pin 15
+    signal IO13 ~ pin 16
+    signal NC ~ pin 17
+    NC ~ pin 18
+    NC ~ pin 19
+    NC ~ pin 20
+    NC ~ pin 21
+    NC ~ pin 22
+    signal IO15 ~ pin 23    # must be HIGH during boot, prevents startup log if pulled LOW
+    signal IO2 ~ pin 24     # must be LOW during boot and also connected to the on-board LED
+    signal IO0 ~ pin 25
+    signal IO4 ~ pin 26
+    signal IO16 ~ pin 27
+    signal IO17 ~ pin 28
+    signal IO5 ~ pin 29     # pin must be HIGH during boot
+    signal IO18 ~ pin 30
+    signal IO19 ~ pin 31
+    NC ~ pin 32
+    signal IO21 ~ pin 33
+    signal RXD0 ~ pin 34
+    signal TXD0 ~ pin 35
+    signal IO22 ~ pin 36
+    signal IO23 ~ pin 37
+    GND ~ pin 38
+    GND ~ pin 39
+
+    # connect the power interface for 3.3V
+    power.vcc ~ _3V3
+    power.gnd ~ GND
+
+    # connect 1uF capacitor to the 3.3V input of the ESP32
+    vin_cap.p1 ~ power.vcc
+    vin_cap.p2 ~ power.gnd
+
+    # connect the reset button
+    reset_button._1 ~ power.gnd
+
+    # connect a delay capacitor for the EN pin
+    delay_cap.p1 ~ power.gnd
+
+    # connect a pull up resistor for the EN pin
+    resistor.p2 ~ power.vcc
+
+    # connect the cap to EN and via the resistor to 3.3V
+    delay_cap.p2 ~ resistor.p1
+    delay_cap.p2 ~ EN
