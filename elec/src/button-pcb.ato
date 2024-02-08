@@ -20,7 +20,7 @@ module ButtonPCB:
     ################# Parts ####################
     ############################################
 
-    # Define the LEDs
+    # Define the LEDs. The capacitors are already included in the pack and the LEDs are connected in series.
     leds = new WS2812B_1010_pack_of_12
 
     # Define the Actionbutton

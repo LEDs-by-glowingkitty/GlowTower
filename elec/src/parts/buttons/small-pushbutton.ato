@@ -9,4 +9,3 @@ component SmallPushButton:
     # pins
     signal _2 ~ pin 2
     signal _1 ~ pin 1
-
