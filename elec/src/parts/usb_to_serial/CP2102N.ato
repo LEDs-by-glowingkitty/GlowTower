@@ -58,12 +58,6 @@ component CP2102N:
 
     # Add auto-reset dual transistor
     auto_reset_transistor = new UMH3N
-    # Auto program:
-    # DTR   RTS -->	EN 	IO0
-    # 1	    1		1	1
-    # 0	    0		1	1
-    # 1	    0		0	1
-    # 0	    1		1	0
 
     # pins
     signal RI_CLK ~ pin 1           # Ring Indicator/Clock Input
@@ -122,3 +116,20 @@ component CP2102N:
     # Connect the pull up resistor to the RSTb pin, so it is high by default
     pull_up_resistor.p1 ~ RSTb
     pull_up_resistor.p2 ~ power_3_3v.vcc
+
+    # Connect the ESD protection SP0503BAHTG to the D+ and D- lines
+    esd_protection.p1 ~ GND
+    esd_protection.p2 ~ Dplus
+    esd_protection.p3 ~ Dminus
+
+    # Connect the auto-reset UMH3N dual transistor to CP2102N
+    auto_reset_transistor.p1 ~ RTS
+    auto_reset_transistor.p2 ~ DTR
+    auto_reset_transistor.p4 ~ DTR
+    auto_reset_transistor.p5 ~ RTS
+    # Auto program:
+    # DTR   RTS -->	EN 	IO0
+    # 1	    1		1	1
+    # 0	    0		1	1
+    # 1	    0		0	1
+    # 0	    1		1	0

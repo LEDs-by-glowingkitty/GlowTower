@@ -9,9 +9,9 @@ component UMH3N:
     lcsc_id = "C62892"
     mpn = "C62892"
     # pins
-    signal A ~ pin 1
-    signal B ~ pin 2
-    signal C ~ pin 3
-    signal D ~ pin 4
-    signal E ~ pin 5
-    signal F ~ pin 6
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+    signal p3 ~ pin 3
+    signal p4 ~ pin 4
+    signal p5 ~ pin 5
+    signal p6 ~ pin 6
