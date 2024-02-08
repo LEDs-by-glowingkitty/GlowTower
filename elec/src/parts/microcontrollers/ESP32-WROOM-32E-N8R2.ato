@@ -33,10 +33,10 @@ component ESP32_WROOM_32E_N8R2:
     delay_cap.mpn = "C15849"
 
     # Add a pull up resistor for the EN pin
-    resistor = new Resistor
-    resistor.resistance = 5100Ω
-    resistor.footprint = "R0402"
-    resistor.mpn = "C25905"
+    en_pullup_resistor = new Resistor
+    en_pullup_resistor.resistance = 5100Ω
+    en_pullup_resistor.footprint = "R0402"
+    en_pullup_resistor.mpn = "C25905"
 
     # pins
     # INFO: Many of the disconnected pins are required to be low or high on boot, or else prevent the ESP32 from booting. Therefore shouldn't be used.
@@ -88,15 +88,13 @@ component ESP32_WROOM_32E_N8R2:
     vin_cap.p1 ~ power.vcc
     vin_cap.p2 ~ power.gnd
 
-    # connect the reset button
+    # connect the reset button to GND, so it gets pulled low when pressed
     reset_button._1 ~ power.gnd
 
-    # connect a delay capacitor for the EN pin
-    delay_cap.p1 ~ power.gnd
+    # connect the delay capacitor to the EN pin and GND, so that it is pulled low after a delay
+    delay_cap.p1 ~ EN
+    delay_cap.p1 ~ en_pullup_resistor.p1
+    delay_cap.p2 ~ power.gnd
 
-    # connect a pull up resistor for the EN pin
-    resistor.p2 ~ power.vcc
-
-    # connect the cap to EN and via the resistor to 3.3V
-    delay_cap.p2 ~ resistor.p1
-    delay_cap.p2 ~ EN
+    # connect the pull up resistor to 3.3V, so that the EN pin is pulled high by default
+    en_pullup_resistor.p2 ~ power.vcc
