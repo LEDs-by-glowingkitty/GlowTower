@@ -3,7 +3,9 @@ import Resistor from "generics/resistors.ato"
 import Power from "generics/interfaces.ato"
 import CYPD3177 from "CYPD3177.ato"
 import HSM4805 from "../mosfets/HSM4805.ato"
-import Resistor_0402_1K from "../resistors/0402/1K.ato"
+import Resistor_0603_1K from "../resistors/0603/1K.ato"
+import Resistor_0603_10K from "../resistors/0603/10K.ato"
+import Capacitor_0805_3_3uF from "../capacitors/0805/3_3uF.ato"
 import Capacitor_0603_1uF from "../capacitors/0603/1uF.ato"
 import Capacitor_0402_100nF from "../capacitors/0402/100nF.ato"
 
@@ -23,15 +25,18 @@ module CYPD3177_min_9V_2A:
     vddd_cap_3 = new Capacitor_0402_100nF
 
     # Add the P-MOSFET Load Switch for up to 100W output
+    # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
     load_switch_mosfet = new HSM4805
 
     # Add a cap for VBUS
-    # vbus_cap = new Capacitor
+    vbus_cap = new Capacitor_0805_3_3uF
 
     # Add the caps for the load switch
-    # load_switch_input_cap = new Capacitor
-    # load_switch_output_cap = new Capacitor
-    # load_switch_input_cap.capacitance = 1uF +/- 20%
+    load_switch_input_cap = new Capacitor_0603_1uF
+    load_switch_output_cap = new Capacitor_0603_1uF
+
+    # Add a resistor for between the FET GATE and VBUS
+    fet_gate_vbus_resistor = new Resistor_0603_10K
 
     # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
     vbus_fet_en_resistor = new Resistor_0603_1K

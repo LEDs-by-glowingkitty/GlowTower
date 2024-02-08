@@ -11,3 +11,5 @@ jlcpcb
 venv
 .ato
 build
+*auto_saved_files*
+*autosave*
