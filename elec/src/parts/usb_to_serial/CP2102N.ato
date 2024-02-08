@@ -92,6 +92,33 @@ component CP2102N:
     signal DCD ~ pin 24             # Data Carrier Detect
     GND ~ pin 25                    # Ground
 
-    # Add a power supply
+    # Add a 3.3V power supply
+    power_3_3v = new Power
 
-    # Connect the CP2102N to power
+    # Add a VBUS power supply
+    power_vbus = new Power
+
+    # Connect the CP2102N to 3.3V
+    power_3_3v.vcc ~ VREGIN
+    power_3_3v.vcc ~ VDD
+    power_3_3v.vcc ~ VIO
+    power_3_3v.gnd ~ GND
+
+    # Connect the CP2102N to VBUS via a voltage divider, to protect the CP2102N from overvoltage
+    power_vbus.vcc ~ voltage_divider_r1.p1
+    power_vbus.gnd ~ GND
+
+    # Connect the voltage divider to the CP2102N
+    voltage_divider_r1.p2 ~ voltage_divider_r2.p1
+    voltage_divider_r1.p2 ~ VBUS
+    voltage_divider_r2.p2 ~ GND
+
+    # Connect the capacitors to the input voltage for the CP2102N
+    small_cap.p1 ~ power_3_3v.vcc
+    small_cap.p2 ~ power_3_3v.gnd
+    large_cap.p1 ~ power_3_3v.vcc
+    large_cap.p2 ~ power_3_3v.gnd
+
+    # Connect the pull up resistor to the RSTb pin, so it is high by default
+    pull_up_resistor.p1 ~ RSTb
+    pull_up_resistor.p2 ~ power_3_3v.vcc
