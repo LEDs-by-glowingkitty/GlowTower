@@ -1,3 +1,5 @@
+import SP0503BAHTG from "../esd_protection/SP0503BAHTG.ato"
+
 component CP2102N:
     """
     This is the CP2102N USB to serial IC from Silicon Labs.
@@ -9,23 +11,34 @@ component CP2102N:
     footprint = "QFN-24_L4.0-W4.0-P0.50-TL-EP2.6"
     lcsc_id = "C969151"
     mpn = "C969151"
+
+    # Add capacitors to the VREGIN and VDD pins
+
+    # Add voltage divider for VBUS pin
+
+    # Add a pull up resistor for the RSTb pin.
+
+    # Add ESD protection to the D+ and D- lines
+    esd_protection = new SP0503BAHTG
+
+
     # pins
     signal RI_CLK ~ pin 1           # Ring Indicator/Clock Input
     signal GND ~ pin 2              # Ground
-    signal D_ ~ pin 3               # Data Line
-    D_ ~ pin 4                      # Data Line
+    signal Dplus ~ pin 3            # Data+ Line
+    signal Dminus ~ pin 4           # Data- Line
     signal VIO ~ pin 5              # Voltage Input/Output
     signal VDD ~ pin 6              # Power Supply
     signal VREGIN ~ pin 7           # Voltage Regulator Input
     signal VBUS ~ pin 8             # USB Bus Voltage
-    signal RSTb ~ pin 9             # Reset (active low)
-    signal NC ~ pin 10              # No Connection
+    signal RSTb ~ pin 9             # Reset. The RSTb pin will be driven low during power-on and power failure reset events
+    signal NC ~ pin 10
     signal GPIO_3_WAKEUP ~ pin 11   # General Purpose Input/Output 3 / Wakeup
     signal GPIO_2_RS485 ~ pin 12    # General Purpose Input/Output 2 / RS485
     signal GPIO_1_RXT ~ pin 13      # General Purpose Input/Output 1 / Receive Transmit
     signal GPIO_0_TXT ~ pin 14      # General Purpose Input/Output 0 / Transmit
-    signal SUSPENDb ~ pin 15        # Suspend (active low)
-    NC ~ pin 16                     # No Connection
+    signal SUSPENDb ~ pin 15        # Suspend
+    NC ~ pin 16
     signal SUSPEND ~ pin 17         # Suspend
     signal CTS ~ pin 18             # Clear To Send
     signal RTS ~ pin 19             # Request To Send
@@ -36,4 +49,6 @@ component CP2102N:
     signal DCD ~ pin 24             # Data Carrier Detect
     GND ~ pin 25                    # Ground
 
-    # Add capacitors to the VREGIN and VDD pins
+    # Add a power supply
+
+    # Connect the CP2102N to power

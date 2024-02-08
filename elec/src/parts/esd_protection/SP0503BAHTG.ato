@@ -1,0 +1,16 @@
+component SP0503BAHTG:
+    """
+    This is an ESD protection diode. It is used to protect sensitive components from ESD damage.
+    More specifically: it is an Uni-directional 3-Line TVS Array
+    Datasheet: https://datasheet.lcsc.com/lcsc/2206241815_TECH-PUBLIC-SP0503BAHTG_C3040626.pdf
+    """
+
+    # component SP0503BAHTG
+    footprint = "SOT-143-4_L2.9-W1.3-P1.92-LS2.4-BL"
+    lcsc_id = "C3040626"
+    mpn = "C3040626"
+    # pins
+    signal _4 ~ pin 4
+    signal _3 ~ pin 3
+    signal _2 ~ pin 2
+    signal _1 ~ pin 1
