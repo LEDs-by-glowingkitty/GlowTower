@@ -2,6 +2,7 @@ import Resistor from "generics/resistors.ato"
 import BuckConverter_In_9_to_20V_Out_5V_14A from "parts/buck_converters/buck-converter-9-to-20v-5v-14A.ato"
 import ESP32_WROOM_32E_N8R2 from "parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
 import CP2102N from "parts/usb_to_serial/CP2102N.ato"
+import USB_C_Connector_5A from "parts/usb_connectors/USB-C_5A.ato"
 
 module MainPCB:
     """
@@ -13,15 +14,16 @@ module MainPCB:
     ################# Parts ####################
     ############################################
 
-    # ESP32
+    # Add ESP32
     esp32 = new ESP32_WROOM_32E_N8R2
 
-    # USB to serial via CP2102N
+    # Add USB to serial via CP2102N
     usb_serial = new CP2102N
 
-    # USB-C connector
+    # Add USB-C connector that can handle up to 5A at 20V (100W)
+    usb_c_connector = new USB_C_Connector_5A
 
-    # USB-C PD (9-20V) to 5V (max 14A)
+    # Add USB-C PD (9-20V) to 5V (max 14A)
     # usb_pd = new USB_PD_9_to_20V
     buck_converter = new BuckConverter_In_9_to_20V_Out_5V_14A
 

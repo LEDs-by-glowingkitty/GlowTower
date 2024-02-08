@@ -1,0 +1,46 @@
+import Power from "generics/interfaces.ato"
+
+component USB_C_Connector_5A:
+    """
+    This is a USB-C connector with 5A current rating.
+    It's made for USB PD applications that can deliver up to 100W of power at 20V and 5A.
+    If you don't need the 5A current rating, you should probably use a cheaper USB-C connector without the 5A rating.
+    Datasheet: https://datasheet.lcsc.com/lcsc/2108131930_Korean-Hroparts-Elec-TYPE-C-31-M-22_C530612.pdf
+    """
+
+    # component TYPE-C-31-M-22
+    footprint = "USB-C-SMD_TYPE-C-31-M-22"
+    lcsc_id = "C530612"
+    mpn = "C530612"
+
+    # pins
+    signal GND ~ pin 1
+    signal VBUS ~ pin 2
+    signal SBU2 ~ pin 3
+    signal CC1 ~ pin 4
+    signal DN2 ~ pin 5
+    signal DP1 ~ pin 6
+    signal DN1 ~ pin 7
+    signal DP2 ~ pin 8
+    signal SBU1 ~ pin 9
+    signal CC2 ~ pin 10
+    VBUS ~ pin 11
+    GND ~ pin 12
+    signal SHELL ~ pin 13
+    SHELL ~ pin 14
+    SHELL ~ pin 15
+    SHELL ~ pin 16
+
+    # Ground the shell of the connector
+    SHELL ~ GND
+
+    # Add a VBUS power supply
+    power = new Power
+    power.vcc ~ VBUS
+    power.gnd ~ GND 
+
+    # Add a single D+ and D- signal
+    signal Dplus ~ DP1
+    signal Dminus ~ DN1
+    Dplus ~ DP2
+    Dminus ~ DN2
