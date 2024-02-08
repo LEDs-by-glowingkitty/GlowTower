@@ -23,9 +23,6 @@ component ESP32_WROOM_32E_N8R2:
     lcsc_id = "C5361945"
     mpn = "C5361945"
 
-    # add the power interface for 3.3V
-    power = new Power
-
     # Add capacitor for 3.3V input of ESP32
     vin_cap = new Capacitor
     vin_cap.capacitance = 10uF +/- 20%
@@ -49,45 +46,48 @@ component ESP32_WROOM_32E_N8R2:
 
     # pins
     # INFO: Many of the disconnected pins are required to be low or high on boot, or else prevent the ESP32 from booting. Therefore shouldn't be used.
-    signal GND ~ pin 1
-    signal _3V3 ~ pin 2
-    signal EN ~ pin 3
-    signal SENSOR_VP ~ pin 4
-    signal SENSOR_VN ~ pin 5
-    signal IO34 ~ pin 6
-    signal IO35 ~ pin 7
-    signal IO32 ~ pin 8
-    signal IO33 ~ pin 9
-    signal IO25 ~ pin 10
-    signal IO26 ~ pin 11
-    signal IO27 ~ pin 12
-    signal IO14 ~ pin 13
-    signal IO12 ~ pin 14    # pin must be LOW during boot
-    GND ~ pin 15
-    signal IO13 ~ pin 16
+    signal GND ~ pin 1          # Ground
+    signal _3V3 ~ pin 2         # 3.3V power supply
+    signal EN ~ pin 3           # High: On, enables the chip. | Low: Off, the chip powers off | Note: Do not leave the pin floating.
+    signal SENSOR_VP ~ pin 4    # GPIO36, ADC1_CH0, RTC_GPIO0
+    signal SENSOR_VN ~ pin 5    # GPIO39, ADC1_CH3, RTC_GPIO3
+    signal IO34 ~ pin 6         # GPIO34, ADC1_CH6, RTC_GPIO4
+    signal IO35 ~ pin 7         # GPIO35, ADC1_CH7, RTC_GPIO5
+    signal IO32 ~ pin 8         # GPIO32, XTAL_32K_P (32.768 kHz crystal oscillator input), ADC1_CH4, TOUCH9, RTC_GPIO9
+    signal IO33 ~ pin 9         # GPIO33, XTAL_32K_N (32.768 kHz crystal oscillator output), ADC1_CH5, TOUCH8, RTC_GPIO8
+    signal IO25 ~ pin 10        # GPIO25, DAC_1, ADC2_CH8, RTC_GPIO6, EMAC_RXD0
+    signal IO26 ~ pin 11        # GPIO26, DAC_2, ADC2_CH9, RTC_GPIO7, EMAC_RXD1
+    signal IO27 ~ pin 12        # GPIO27, ADC2_CH7, TOUCH7, RTC_GPIO17, EMAC_RX_DV
+    signal IO14 ~ pin 13        # GPIO14, ADC2_CH6, TOUCH6, RTC_GPIO16, MTMS, HSPICLK, HS2_CLK, SD_CLK, EMAC_TXD2
+    signal IO12 ~ pin 14        # !!! pin must be LOW during boot !!!       GPIO12, ADC2_CH5, TOUCH5, RTC_GPIO15, MTDI, HSPIQ, HS2_DATA2, SD_DATA2, EMAC_TXD3
+    GND ~ pin 15                # Ground
+    signal IO13 ~ pin 16        # GPIO13, ADC2_CH4, TOUCH4, RTC_GPIO14, MTCK, HSPID, HS2_DATA3, SD_DATA3, EMAC_RX_ER
     signal NC ~ pin 17
     NC ~ pin 18
     NC ~ pin 19
     NC ~ pin 20
     NC ~ pin 21
     NC ~ pin 22
-    signal IO15 ~ pin 23    # must be HIGH during boot, prevents startup log if pulled LOW
-    signal IO2 ~ pin 24     # must be LOW during boot and also connected to the on-board LED
-    signal IO0 ~ pin 25
-    signal IO4 ~ pin 26
-    signal IO16 ~ pin 27
-    signal IO17 ~ pin 28
-    signal IO5 ~ pin 29     # pin must be HIGH during boot
-    signal IO18 ~ pin 30
-    signal IO19 ~ pin 31
+    signal IO15 ~ pin 23        # !!! must be HIGH during boot, prevents startup log if pulled LOW !!!      GPIO15, ADC2_CH3, TOUCH3, MTDO, HSPICS0, RTC_GPIO13, HS2_CMD, SD_CMD, EMAC_RXD3
+    signal IO2 ~ pin 24         # !!! must be LOW during boot and also connected to the on-board LED !!!    GPIO2, ADC2_CH2, TOUCH2, RTC_GPIO12, HSPIWP, HS2_DATA0, SD_DATA0
+    signal IO0 ~ pin 25         # GPIO0, ADC2_CH1, TOUCH1, RTC_GPIO11, CLK_OUT1, EMAC_TX_CLK
+    signal IO4 ~ pin 26         # GPIO4, ADC2_CH0, TOUCH0, RTC_GPIO10, HSPIHD, HS2_DATA1, SD_DATA1, EMAC_TX_ER
+    signal IO16 ~ pin 27        # GPIO16, HS1_DATA4, U2RXD, EMAC_CLK_OUT
+    signal IO17 ~ pin 28        # GPIO17, HS1_DATA5, U2TXD, EMAC_CLK_OUT_180
+    signal IO5 ~ pin 29         # !!! pin must be HIGH during boot !!!     GPIO5, VSPICS0, HS1_DATA6, EMAC_RX_CLK
+    signal IO18 ~ pin 30        # GPIO18, VSPICLK, HS1_DATA7
+    signal IO19 ~ pin 31        # GPIO19, VSPIQ, U0CTS, EMAC_TXD0
     NC ~ pin 32
-    signal IO21 ~ pin 33
-    signal RXD0 ~ pin 34
-    signal TXD0 ~ pin 35
-    signal IO22 ~ pin 36
-    signal IO23 ~ pin 37
-    GND ~ pin 38
-    GND ~ pin 39
+    signal IO21 ~ pin 33        # GPIO21, VSPIHD, EMAC_TX_EN
+    signal RXD0 ~ pin 34        # GPIO3, U0RXD, CLK_OUT2
+    signal TXD0 ~ pin 35        # GPIO1, U0TXD, CLK_OUT3, EMAC_RXD2
+    signal IO22 ~ pin 36        # GPIO22, VSPIWP, U0RTS, EMAC_TXD1
+    signal IO23 ~ pin 37        # GPIO23, VSPID, HS1_STROBE
+    GND ~ pin 38                # Ground
+    GND ~ pin 39                # Ground
+
+    # add the power interface for 3.3V
+    power = new Power
 
     # connect the power interface for 3.3V
     power.vcc ~ _3V3

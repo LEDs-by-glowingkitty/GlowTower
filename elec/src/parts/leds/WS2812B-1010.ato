@@ -16,10 +16,10 @@ component WS2812B_1010:
     mpn = "C5349953"
 
     # pins
-    signal DOUT ~ pin 1
-    signal VDD ~ pin 2
-    signal GND ~ pin 3
-    signal DIN ~ pin 4
+    signal DOUT ~ pin 1 # data out
+    signal VDD ~ pin 2  # power supply (3.5V to 5.5V)
+    signal GND ~ pin 3  # ground
+    signal DIN ~ pin 4  # data in
 
     # add the capacitor
     cap = new Capacitor
