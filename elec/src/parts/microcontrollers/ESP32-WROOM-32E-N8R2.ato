@@ -34,13 +34,13 @@ component ESP32_WROOM_32E_N8R2:
 
     # Add a delay capacitor for the EN pin
     delay_cap = new Capacitor
-    delay_cap.capacitance = 1uF
+    delay_cap.capacitance = 1uF +/- 10%
     delay_cap.footprint = "C0603"
     delay_cap.mpn = "C15849"
 
     # Add a pull up resistor for the EN pin
     en_pullup_resistor = new Resistor
-    en_pullup_resistor.resistance = 5100ohm +/- 1% 
+    en_pullup_resistor.resistance = 5.1kohm +/- 1% 
     en_pullup_resistor.footprint = "R0402"
     en_pullup_resistor.mpn = "C25905"
 

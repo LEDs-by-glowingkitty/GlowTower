@@ -1,0 +1,19 @@
+component HSM4805:
+    """
+    HSM4805 is a dual P-channel MOSFET for up to 30V and up to 9A.
+    Datasheet: https://datasheet.lcsc.com/lcsc/2009041208_HUASHUO-HSM4805_C700973.pdf
+    """
+
+    # component HSM4805
+    footprint = "SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
+    lcsc_id = "C700973"
+    mpn = "C700973"
+    # pins
+    signal S1 ~ pin 1
+    signal G1 ~ pin 2
+    signal S2 ~ pin 3
+    signal G2 ~ pin 4
+    signal D2 ~ pin 5
+    D2 ~ pin 6
+    signal D1 ~ pin 7
+    D1 ~ pin 8
