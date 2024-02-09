@@ -40,3 +40,8 @@ module CYPD3177_min_9V_2A:
 
     # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
     vbus_fet_en_resistor = new Resistor_0603_1K
+
+    
+    # Add a pull down resistor for the FAULT pin, so that it is not floating
+
+    # Add a pull up resistor for the FLIP pin
