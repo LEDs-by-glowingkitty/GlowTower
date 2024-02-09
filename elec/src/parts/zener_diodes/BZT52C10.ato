@@ -1,0 +1,13 @@
+import ZenerDiode from "generics/diodes.ato"
+
+component BZT52C10 from ZenerDiode:
+    """
+    This is a zener diode in the SOD-123F package.
+    A zener diode is a diode that allows current to flow in the forward direction in the same manner as an ideal diode, but also permits it to flow in the reverse direction when the voltage is above a certain value, known as the breakdown voltage.
+    Datasheet: https://datasheet.lcsc.com/lcsc/2109011130_YONGYUTAI-BZT52C10_C2891778.pdf
+    """
+    
+    # component BZT52C10
+    footprint = "D_SOD-123F"
+    lcsc_id = "C2891778"
+    mpn = "C2891778"

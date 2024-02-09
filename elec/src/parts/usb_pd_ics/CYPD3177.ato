@@ -1,3 +1,5 @@
+import I2C from "generics/interfaces.ato"
+
 component CYPD3177:
     """
     This is the CYPD3177-24LQXQ, a USB-PD controller from Cypress Semiconductor.
@@ -69,3 +71,9 @@ component CYPD3177:
 
     # Connect the EPAD to GND
     EPAD ~ GND
+
+    # Add the I2C interface
+    i2c = new I2C
+    i2c.sda ~ HPI_SDA
+    i2c.scl ~ HPI_SCL
+    i2c.gnd ~ GND
