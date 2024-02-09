@@ -4056,7 +4056,7 @@
     (effects (font (size 1 1)) (justify left bottom))
     (uuid 493f9399-3c1f-435c-b59c-5cace06a7631)
   )
-  (text "INFO:\nMOSFET has slightly different Vgs(th) values then recommended MOSFET. But should be fine.\nOriginal (BSL308PE H6327):\n-2.0 (min), -1.5 (typ), -1.0(max), condition ID=-11uA\nThis model:\n-1.0 (min), -1.6 (typ), -3.0(max), condition ID=-250uA"
+  (text "INFO:\nMOSFET has slightly different Vgs(th) values then recommended MOSFET. But should be fine.\nOriginal (BSL308PE H6327):\n-1.0 (min), -1.5 (typ), -2.0(max), condition ID=-11uA\nThis model:\n-1.0 (min), -1.6 (typ), -3.0(max), condition ID=-250uA"
     (at 200.025 180.34 0)
     (effects (font (size 1 1)) (justify left bottom))
     (uuid 54b56ab0-865d-4821-b6aa-938a8a4ed9b0)
