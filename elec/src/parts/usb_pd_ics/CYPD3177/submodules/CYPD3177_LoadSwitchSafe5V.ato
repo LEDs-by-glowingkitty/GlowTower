@@ -1,0 +1,15 @@
+import Power from "generics/interfaces.ato"
+import HSM4805 from "../mosfets/HSM4805.ato"
+import Resistor_0603_1K from "../resistors/0603/1K.ato"
+
+
+module CYPD3177_LoadSwitchSafe5V:
+    """
+    This is a submodule for the CYPD3177. It adds a load switch for the 5V Safe Output.
+    """
+    
+    # Add the MOSFET for the safe 5V load switch
+    # TODO: test if I can also use the HSM4805 for this. Might be overkill, but it could save costs and simplify design testing.
+    save_5v_load_switch_mosfet = new HSM4805
+    save_5v_load_switch_voltage_divider_resistor_1 = new Resistor_0603_49_9K
+    save_5v_load_switch_voltage_divider_resistor_2 = new Resistor_0603_1K

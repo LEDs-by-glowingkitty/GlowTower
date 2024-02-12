@@ -3,7 +3,7 @@ import BuckConverter_In_9_to_20V_Out_5V_14A from "parts/buck_converters/buck-con
 import ESP32_WROOM_32E_N8R2 from "parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
 import CP2102N from "parts/usb_to_serial/CP2102N.ato"
 import USB_C_Connector_5A from "parts/usb_connectors/USB-C_5A.ato"
-import CYPD3177_min_9V_2A from "parts/usb_pd_ics/CYPD3177_min_9V_2A.ato"
+import CYPD3177_min_9V_2A from "parts/usb_pd_ics/CYPD3177/CYPD3177_min_9V_2A.ato"
 
 module MainPCB:
     """
