@@ -1,4 +1,9 @@
 import CYPD3177_WithCoreParts from "submodules/CYPD3177_WithCoreParts.ato"
+import Resistor_0402_1K from "../../resistors/0402/1K.ato"
+import Resistor_0402_2_4K from "../../resistors/0402/2_4K.ato"
+import Resistor_0402_5_1K from "../../resistors/0402/5_1K.ato"
+import Resistor_0603_20K from "../../resistors/0603/20K.ato"
+import Resistor_0603_100K from "../../resistors/0603/100K.ato"
 
 
 module CYPD3177_min_9V_2A:
