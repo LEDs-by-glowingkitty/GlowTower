@@ -1,0 +1,27 @@
+import Resistor_0402_1K from "elec/src/parts/resistors/0402/1K.ato"
+import Resistor_0402_5_1K from "elec/src/parts/resistors/0402/5_1K.ato"
+import Power from "generics/interfaces.ato"
+
+
+module Voltage_Divider_5_1K__1K:
+    """
+    This is a voltage divider using a 5.1K resistor and a 1K resistor.
+    Calculate the output voltage using the following formula:
+    Vout = Vin * (R2 / (R1 + R2))
+    """
+    # add a power interface
+    power = new Power
+    
+    # add pull up resistor
+    voltage_request_pull_up_resistor = new Resistor_0402_5_1K
+
+    # connect pull up resistor
+    power.vcc ~ voltage_request_pull_up_resistor.p1 
+    signal vout ~ voltage_request_pull_up_resistor.p2
+
+    # add pull down resistor
+    voltage_request_pull_down_resistor = new Resistor_0402_1K
+    
+    # connect pull down resistor
+    power.gnd ~ voltage_request_pull_down_resistor.p1 
+    voltage_request_pull_down_resistor.p2 ~ voltage_request_pull_up_resistor.p2

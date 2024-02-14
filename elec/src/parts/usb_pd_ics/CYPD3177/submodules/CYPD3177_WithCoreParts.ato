@@ -28,8 +28,11 @@ module CYPD3177_WithCoreParts:
     ############## Other components ###############
     ###############################################
 
+    # TODO connect them all
+
     # Add cap for the VCCD (1.8V) to the CYPD3177
     vccd_cap = new Capacitor_0603_1uF
+
 
     # Add caps for the VDDD (3.3V) to the CYPD3177
     vddd_cap_1 = new Capacitor_0603_1uF

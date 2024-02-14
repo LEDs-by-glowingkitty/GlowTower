@@ -13,6 +13,8 @@ module CYPD3177_LoadSwitch100W:
     This is a submodule for the CYPD3177. It adds a load switch for up to 100W output.
     """
 
+    # TODO check that everything is connected correctly
+
     # Add the Load Switch for up to 100W output
     # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
     load_switch_mosfet = new HSM4805

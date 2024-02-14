@@ -1,9 +1,6 @@
 import CYPD3177_WithCoreParts from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_WithCoreParts.ato"
-import Resistor_0402_1K from "elec/src/parts/resistors/0402/1K.ato"
-import Resistor_0402_2_4K from "elec/src/parts/resistors/0402/2_4K.ato"
-import Resistor_0402_5_1K from "elec/src/parts/resistors/0402/5_1K.ato"
-import Resistor_0603_20K from "elec/src/parts/resistors/0603/20K.ato"
-import Resistor_0603_100K from "elec/src/parts/resistors/0603/100K.ato"
+import Voltage_Divider_5_1K__1K from "elec/src/parts/voltage_divider/Voltage_Divider_5_1K__1K.ato"
+import Voltage_Divider_5_1K__2_4K from "elec/src/parts/voltage_divider/Voltage_Divider_5_1K__2_4K.ato"
 
 
 module CYPD3177_min_9V_2A:
@@ -14,21 +11,13 @@ module CYPD3177_min_9V_2A:
     cypd3177 = new CYPD3177_WithCoreParts
 
     # Request 9V (min)
-    # via pull up resistor
-    voltage_request_pull_up_resistor = new Resistor_0402_5_1K
-    cypd3177.vdd_3_3v.vcc ~ voltage_request_pull_up_resistor.p1 
-    cypd3177.ic.VBUS_MIN ~ voltage_request_pull_up_resistor.p2
-    # via pull down resistor
-    voltage_request_pull_down_resistor = new Resistor_0402_1K
-    cypd3177.gnd ~ voltage_request_pull_down_resistor.p1 
-    voltage_request_pull_down_resistor.p2 ~ voltage_request_pull_up_resistor.p2
+    voltage_request_divider = new Voltage_Divider_5_1K__1K
+    cypd3177.ic.VBUS_MIN ~ voltage_request_divider.vout
+    cypd3177.vdd_3_3v.vcc ~ voltage_request_divider.power.vcc
+    cypd3177.gnd ~ voltage_request_divider.power.gnd
 
     # Request 2A (min)
-    # via pull up resistor
-    current_request_pull_up_resistor = new Resistor_0402_5_1K
-    cypd3177.vdd_3_3v.vcc ~ current_request_pull_up_resistor.p1 
-    cypd3177.ic.ISNK_COARSE ~ current_request_pull_up_resistor.p2
-    # via pull down resistor
-    current_request_pull_down_resistor = new Resistor_0402_2_4K
-    cypd3177.gnd ~ current_request_pull_down_resistor.p1
-    current_request_pull_down_resistor.p2 ~ current_request_pull_up_resistor.p2
+    current_request_divider = new Voltage_Divider_5_1K__2_4K
+    cypd3177.ic.ISNK_COARSE ~ current_request_divider.vout
+    cypd3177.vdd_3_3v.vcc ~ current_request_divider.power.vcc
+    cypd3177.gnd ~ current_request_divider.power.gnd 

@@ -10,6 +10,7 @@ module CYPD3177_LoadSwitchSafe5V:
     """
     
     # Add the MOSFET for the safe 5V load switch
+    # TODO: add connections
     # TODO: test if I can also use the HSM4805 for this. Might be overkill, but it could save costs and simplify design testing.
     save_5v_load_switch_mosfet = new HSM4805
     save_5v_load_switch_voltage_divider_resistor_1 = new Resistor_0603_49_9K
