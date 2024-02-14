@@ -80,4 +80,6 @@ module CYPD3177_LoadSwitch100W:
 
     # Connect the resistor between the gate of the load_switch_mosfet
     fet_gate_vbus_resistor.p1 ~ load_switch_mosfet.G1
-    signal vbus_fet_en ~ fet_gate_vbus_resistor.p2
+
+    # Create an EN pin to control the load switch
+    signal en ~ fet_gate_vbus_resistor.p2

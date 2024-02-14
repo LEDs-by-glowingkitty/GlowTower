@@ -40,4 +40,6 @@ module CYPD3177_LoadSwitchSafe5V:
     load_switch_voltage_divider = new Voltage_Divider_0603_49_9K__1K
     load_switch_mosfet.G1 ~ load_switch_voltage_divider.vout
     vbus_in.vcc ~ load_switch_voltage_divider.power.vcc
-    signal safe_5v_fet_en ~ load_switch_voltage_divider.power.gnd
+
+    # create an EN pin to control the load switch
+    signal en ~ load_switch_voltage_divider.power.gnd
