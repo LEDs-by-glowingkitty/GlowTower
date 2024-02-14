@@ -62,8 +62,11 @@ module CYPD3177_LoadSwitch100W:
     vbus_cap.p1 ~ vbus_in.vcc
     vbus_cap.p2 ~ vbus_in.gnd
 
-    # Make sure the gates of the load switch are connected
+    # Connect the gates of the load switch
     load_switch_mosfet.G1 ~ load_switch_mosfet.G2
+
+    # Connect the sources of the load switch
+    load_switch_mosfet.S1 ~ load_switch_mosfet.S2
 
     # Connect the caps for the load switch
     load_switch_input_cap_1uF.p1 ~ vbus_in.vcc
