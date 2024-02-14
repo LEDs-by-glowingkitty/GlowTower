@@ -1,13 +1,13 @@
 import Power from "generics/interfaces.ato"
-import CYPD3177 from "CYPD3177.ato"
-import Resistor_0402_2K from "../../../resistors/0402/2K.ato"
-import Resistor_0603_20K from "../../../resistors/0603/20K.ato"
-import Resistor_0603_100K from "../../../resistors/0603/100K.ato"
-import Capacitor_0603_1uF from "../../../capacitors/0603/1uF.ato"
-import Capacitor_0402_100nF from "../../../capacitors/0402/100nF.ato"
-import BZT52C10 from "../../../zener_diodes/BZT52C10.ato"
-import CYPD3177_LoadSwitchSafe5V from "CYPD3177_LoadSwitchSafe5V.ato"
-import CYPD3177_LoadSwitch100W from "CYPD3177_LoadSwitch100W.ato"
+import CYPD3177 from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177.ato"
+import Resistor_0402_2K from "elec/src/parts/resistors/0402/2K.ato"
+import Resistor_0603_20K from "elec/src/parts/resistors/0603/20K.ato"
+import Resistor_0603_100K from "elec/src/parts/resistors/0603/100K.ato"
+import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
+import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
+import BZT52C10 from "elec/src/parts/zener_diodes/BZT52C10.ato"
+import CYPD3177_LoadSwitchSafe5V from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitchSafe5V.ato"
+import CYPD3177_LoadSwitch100W from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitch100W.ato"
 
 
 module CYPD3177_WithCoreParts:

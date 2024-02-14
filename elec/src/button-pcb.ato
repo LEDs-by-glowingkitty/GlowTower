@@ -1,6 +1,6 @@
-import WS2812B_1010_pack_of_12 from "parts/leds/WS2812B-1010-pack-of-12.ato"
-import LargePushButton from "parts/buttons/large-pushbutton.ato"
-import PinHeaders2P_2_54mm from "parts/pin-headers-2P-2-54mm.ato"
+import WS2812B_1010_pack_of_12 from "elec/src/parts/leds/WS2812B-1010-pack-of-12.ato"
+import LargePushButton from "elec/src/parts/buttons/large-pushbutton.ato"
+import PinHeaders2P_2_54mm from "elec/src/parts/pin-headers-2P-2-54mm.ato"
 import Power from "generics/interfaces.ato"
 
 module ButtonPCB:
