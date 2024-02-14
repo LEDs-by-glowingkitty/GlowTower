@@ -1,6 +1,6 @@
 import CYPD3177_WithCoreParts from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_WithCoreParts.ato"
-import Voltage_Divider_5_1K__1K from "elec/src/parts/voltage_divider/Voltage_Divider_5_1K__1K.ato"
-import Voltage_Divider_5_1K__2_4K from "elec/src/parts/voltage_divider/Voltage_Divider_5_1K__2_4K.ato"
+import Voltage_Divider_0402_5_1K__1K from "elec/src/parts/voltage_divider/0402/Voltage_Divider_0402_5_1K__1K.ato"
+import Voltage_Divider_0402_5_1K__2_4K from "elec/src/parts/voltage_divider/0402/Voltage_Divider_0402_5_1K__2_4K.ato"
 
 
 module CYPD3177_min_9V_2A:
@@ -11,13 +11,13 @@ module CYPD3177_min_9V_2A:
     cypd3177 = new CYPD3177_WithCoreParts
 
     # Request 9V (min)
-    voltage_request_divider = new Voltage_Divider_5_1K__1K
+    voltage_request_divider = new Voltage_Divider_0402_5_1K__1K
     cypd3177.ic.VBUS_MIN ~ voltage_request_divider.vout
     cypd3177.vdd_3_3v.vcc ~ voltage_request_divider.power.vcc
     cypd3177.gnd ~ voltage_request_divider.power.gnd
 
     # Request 2A (min)
-    current_request_divider = new Voltage_Divider_5_1K__2_4K
+    current_request_divider = new Voltage_Divider_0402_5_1K__2_4K
     cypd3177.ic.ISNK_COARSE ~ current_request_divider.vout
     cypd3177.vdd_3_3v.vcc ~ current_request_divider.power.vcc
     cypd3177.gnd ~ current_request_divider.power.gnd 

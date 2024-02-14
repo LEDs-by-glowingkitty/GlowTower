@@ -17,39 +17,6 @@ module CYPD3177_WithCoreParts:
     """
     ic = new CYPD3177
 
-    # Add a 100W load switch for the VDC_OUT
-    vdc_out_load_switch = new CYPD3177_LoadSwitch100W
-
-    # Add the 5V Safe Output load switch
-    safe_5v_load_switch = new CYPD3177_LoadSwitchSafe5V
-
-    
-    ###############################################
-    ############## Other components ###############
-    ###############################################
-
-    # TODO connect them all
-
-    # Add cap for the VCCD (1.8V) to the CYPD3177
-    vccd_cap = new Capacitor_0603_1uF
-
-
-    # Add caps for the VDDD (3.3V) to the CYPD3177
-    vddd_cap_1 = new Capacitor_0603_1uF
-    vddd_cap_2 = new Capacitor_0402_100nF
-    vddd_cap_3 = new Capacitor_0402_100nF
-
-    # Add a pull down resistor for the FAULT pin, so that it is not floating
-    fault_pull_down_resistor = new Resistor_0603_100K
-
-    # Add a pull up resistor for the FLIP pin, so that it is not floating
-    flip_pull_up_resistor = new Resistor_0402_2K
-    
-    # Add a voltage divider, to be able to read with a microcontroller the current VDC out voltage
-    vdc_out_voltage_divider_resistor_1 = new Resistor_0603_100K
-    vdc_out_voltage_divider_resistor_2 = new Resistor_0603_20K
-
-
     ###############################################
     ############### Setup power ###################
     ###############################################
@@ -70,3 +37,54 @@ module CYPD3177_WithCoreParts:
     vbus.gnd ~ ic.GND
     vbus.gnd ~ vdd_3_3v.gnd
     signal gnd ~ vbus.gnd
+
+    ###############################################
+    ############### Load switches #################
+    ###############################################
+
+    # TODO connect them
+
+    # Add a 100W load switch for the VDC_OUT
+    vdc_out_load_switch = new CYPD3177_LoadSwitch100W
+
+    # Add the 5V Safe Output load switch
+    safe_5v_load_switch = new CYPD3177_LoadSwitchSafe5V
+
+    
+    ###############################################
+    ############## Other components ###############
+    ###############################################
+
+    # Add 1uF cap for the VCCD (1.8V) to the CYPD3177
+    vccd_cap_1uF = new Capacitor_0603_1uF
+    vccd_cap_1uF.p1 ~ ic.VCCD
+    vccd_cap_1uF.p2 ~ gnd
+
+    # Add 1uF & 0.1uF caps for the VDDD (3.3V) to the CYPD3177
+    vddd_cap_1uF = new Capacitor_0603_1uF
+    vddd_cap_1uF.p1 ~ ic.VDDD
+    vddd_cap_1uF.p2 ~ gnd
+
+    vddd_cap_100nF_1 = new Capacitor_0402_100nF
+    vddd_cap_100nF_1.p1 ~ ic.VDDD
+    vddd_cap_100nF_1.p2 ~ gnd
+
+    vddd_cap_100nF_2 = new Capacitor_0402_100nF
+    vddd_cap_100nF_2.p1 ~ ic.VDDD
+    vddd_cap_100nF_2.p2 ~ gnd
+
+    # Add a pull down resistor for the FAULT pin, so that it is not floating
+    fault_pull_down_resistor = new Resistor_0603_100K
+    fault_pull_down_resistor.p1 ~ ic.FAULT
+    fault_pull_down_resistor.p2 ~ gnd
+
+    # Add a pull up resistor for the FLIP pin, so that it is not floating
+    flip_pull_up_resistor = new Resistor_0402_2K
+    flip_pull_up_resistor.p1 ~ ic.FLIP
+    flip_pull_up_resistor.p2 ~ vdd_3_3v.vcc
+    
+    # Add a voltage divider, to be able to read with a microcontroller the current VDC out voltage
+    vdc_voltage_read_divider = new Voltage_Divider_0603_100K__20K
+    vdc_out.vcc ~ vdc_voltage_read_divider.power.vcc
+    gnd ~ vdc_voltage_read_divider.power.gnd
+    signal vdc_out_voltage ~ vdc_voltage_read_divider.vout

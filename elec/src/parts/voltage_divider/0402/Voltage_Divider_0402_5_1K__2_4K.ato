@@ -3,9 +3,9 @@ import Resistor_0402_2_4K from "elec/src/parts/resistors/0402/2_4K.ato"
 import Power from "generics/interfaces.ato"
 
 
-module Voltage_Divider_5_1K__2_4K:
+module Voltage_Divider_0402_5_1K__2_4K:
     """
-    This is a voltage divider using a 5.1K resistor and a 1K resistor.
+    This is a voltage divider using a 5.1K resistor and a 2.4K resistor.
     Calculate the output voltage using the following formula:
     Vout = Vin * (R2 / (R1 + R2))
     """
