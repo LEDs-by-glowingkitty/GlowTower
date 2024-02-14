@@ -14,9 +14,21 @@ module CYPD3177_min_9V_2A:
     cypd3177 = new CYPD3177_WithCoreParts
 
     # Request 9V (min)
+    # via pull up resistor
     voltage_request_pull_up_resistor = new Resistor_0402_5_1K
+    cypd3177.vdd_3_3v.vcc ~ voltage_request_pull_up_resistor.p1 
+    cypd3177.ic.VBUS_MIN ~ voltage_request_pull_up_resistor.p2
+    # via pull down resistor
     voltage_request_pull_down_resistor = new Resistor_0402_1K
+    cypd3177.gnd ~ voltage_request_pull_down_resistor.p1 
+    voltage_request_pull_down_resistor.p2 ~ voltage_request_pull_up_resistor.p2
 
     # Request 2A (min)
+    # via pull up resistor
     current_request_pull_up_resistor = new Resistor_0402_5_1K
+    cypd3177.vdd_3_3v.vcc ~ current_request_pull_up_resistor.p1 
+    cypd3177.ic.ISNK_COARSE ~ current_request_pull_up_resistor.p2
+    # via pull down resistor
     current_request_pull_down_resistor = new Resistor_0402_2_4K
+    cypd3177.gnd ~ current_request_pull_down_resistor.p1
+    current_request_pull_down_resistor.p2 ~ current_request_pull_up_resistor.p2
