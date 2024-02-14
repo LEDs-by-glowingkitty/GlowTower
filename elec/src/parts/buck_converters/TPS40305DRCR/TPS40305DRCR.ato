@@ -1,0 +1,21 @@
+component TPS40305DRCR:
+    """
+    This is a buck converter IC from Texas Instruments.
+    Datasheet: https://www.ti.com/lit/ds/symlink/tps40305.pdf
+    """
+    # component TPS40305DRCR
+    footprint = "VSON-10_L3.0-W3.0-P0.50-BL-EP_TPS62410DRCR"
+    lcsc_id = "C140285"
+    mpn = "C140285"
+    # pins
+    signal VDD ~ pin 1
+    signal ENSS ~ pin 2
+    signal PGOOD ~ pin 3
+    signal COMP ~ pin 4
+    signal FB ~ pin 5
+    signal BOOT ~ pin 6
+    signal HDRV ~ pin 7
+    signal SW ~ pin 8
+    signal LDRVOC ~ pin 9
+    signal BP ~ pin 10
+    signal EP ~ pin 11

@@ -1,6 +1,6 @@
+import TPS40305DRCR from "elec/src/parts/buck_converters/TPS40305DRCR/TPS40305DRCR.ato"
 
-
-component BuckConverter_In_9_to_20V_Out_5V_14A:
+module BuckConverter_In_9_to_20V_Out_5V_14A:
     """
     This is a buck converter, which is setup for the following requirements:
     - IC: TPS40305DRCR
@@ -9,21 +9,6 @@ component BuckConverter_In_9_to_20V_Out_5V_14A:
     - Output voltage: 5V
     - Output current: 14A max
     """
-    # component TPS40305DRCR
-    footprint = "VSON-10_L3.0-W3.0-P0.50-BL-EP_TPS62410DRCR"
-    lcsc_id = "C140285"
-    mpn = "C140285"
+    ic = new TPS40305DRCR
 
-    # pins
-    signal VDD ~ pin 1
-    signal ENSS ~ pin 2
-    signal PGOOD ~ pin 3
-    signal COMP ~ pin 4
-    signal FB ~ pin 5
-    signal BOOT ~ pin 6
-    signal HDRV ~ pin 7
-    signal SW ~ pin 8
-    signal LDRVOC ~ pin 9
-    signal BP ~ pin 10
-    signal EP ~ pin 11
-
+    # TODO add missing components based on TI webench
