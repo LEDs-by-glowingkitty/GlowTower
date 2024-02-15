@@ -2,6 +2,8 @@ import TPS40305DRCR from "elec/src/parts/buck_converters/TPS40305DRCR/TPS40305DR
 import CSD16301Q2 from "elec/src/parts/mosfets/CSD16301Q2.ato"
 import CSD17581Q3AT from "elec/src/parts/mosfets/CSD17581Q3AT.ato"
 import TMPC1206HP_1R5MG_D from "elec/src/parts/inductors/TMPC1206HP_1R5MG_D.ato"
+import Voltage_Divider_0402_10K_1_37K from "elec/src/parts/voltage_dividers/0402/Voltage_Divider_0402_10K_1_37K.ato"
+import Resistor_0402_12_1K from "elec/src/parts/resistors/0402/12_1K.ato"
 
 module BuckConverter_In_9_to_20V_Out_5V_14A:
     """
@@ -16,16 +18,44 @@ module BuckConverter_In_9_to_20V_Out_5V_14A:
 
     # TODO add missing components based on TI webench
 
-    # add HDRV MOSFETs
+    # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
     hdrv_n_channel_mosfet_1 = new CSD16301Q2
     hdrv_n_channel_mosfet_2 = new CSD16301Q2
 
-    # add LDRV MOSFET
+    # (M2) add LDRV MOSFET. This MOSFET is used to drive the low side of the buck converter
     ldrv_n_channel_mosfet = new CSD17581Q3AT
 
-    # add output inductor
+    # (Rs) add sense resistor, which is used to measure the output current
+    rs_sense_resistor = new Resistor_0402_12_1K
+
+    # (Cbst) add bootstrap capacitor
+
+    # (Cbyp) add bypass capacitor
+
+    # (Rpgood) add resistor connected to PGOOD and BP and GND (via capacitor).
+
+    # (Rcomp) add compensation resistor
+
+    # (Ccomp) add compensation capacitor
+
+    # (Ccomp2) add compensation capacitor
+
+    # (Css) add soft start capacitor
+
+    # (Cin) add input capacitors
+
+    # (Cvcc) add VDD capacitor
+
+    # (L1) add output inductor, which is used to store energy and smooth out the output voltage
     output_inductor = new TMPC1206HP_1R5MG_D
 
-    # add resistors to set requested output voltage
+    # (Rfbt, Rfbb) set 5V output voltage via voltage divider
+    voltage_config_divider = new Voltage_Divider_0402_10K_1_37K
+
+    # (Rcomp2) add compensation resistor
+
+    # (Ccomp3) add compensation capacitor
+
+    # (Cout) add output capacitors
 
     # add caps
