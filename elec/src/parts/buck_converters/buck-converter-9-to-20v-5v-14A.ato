@@ -3,7 +3,18 @@ import CSD16301Q2 from "elec/src/parts/mosfets/CSD16301Q2.ato"
 import CSD17581Q3AT from "elec/src/parts/mosfets/CSD17581Q3AT.ato"
 import TMPC1206HP_1R5MG_D from "elec/src/parts/inductors/TMPC1206HP_1R5MG_D.ato"
 import Voltage_Divider_0402_10K_1_37K from "elec/src/parts/voltage_dividers/0402/Voltage_Divider_0402_10K_1_37K.ato"
+import Resistor_0402_432 from "elec/src/parts/resistors/0402/432.ato"
+import Resistor_0402_1_54K from "elec/src/parts/resistors/0402/1_54K.ato"
 import Resistor_0402_12_1K from "elec/src/parts/resistors/0402/12_1K.ato"
+import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
+import Capacitor_0402_220pF from "elec/src/parts/capacitors/0402/220pF.ato"
+import Capacitor_0402_820pF from "elec/src/parts/capacitors/0402/820pF.ato"
+import Capacitor_0402_5_6nF from "elec/src/parts/capacitors/0402/5_6nF.ato"
+import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
+import Capacitor_0603_3_3nF from "elec/src/parts/capacitors/0603/3_3nF.ato"
+import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
+import Capacitor_0603_2_2uF from "elec/src/parts/capacitors/0603/2_2uF.ato"
+import Capacitor_1206_10uF from "elec/src/parts/capacitors/1206/10uF.ato"
 
 module BuckConverter_In_9_to_20V_Out_5V_14A:
     """
@@ -26,25 +37,36 @@ module BuckConverter_In_9_to_20V_Out_5V_14A:
     ldrv_n_channel_mosfet = new CSD17581Q3AT
 
     # (Rs) add sense resistor, which is used to measure the output current
-    rs_sense_resistor = new Resistor_0402_12_1K
+    rs_resistor = new Resistor_0402_12_1K
 
     # (Cbst) add bootstrap capacitor
+    cbst_capacitor = new Capacitor_0402_100nF
 
     # (Cbyp) add bypass capacitor
+    cbyp_capacitor = new Capacitor_0603_2_2uF
 
     # (Rpgood) add resistor connected to PGOOD and BP and GND (via capacitor).
+    rpgood_resistor = new Resistor_0402_100K
 
     # (Rcomp) add compensation resistor
+    rcomp_resistor = new Resistor_0402_1_54K
 
     # (Ccomp) add compensation capacitor
+    ccomp_capacitor = new Capacitor_0402_5_6nF
 
     # (Ccomp2) add compensation capacitor
+    ccomp2_capacitor = new Capacitor_0402_220pF
 
     # (Css) add soft start capacitor
+    css_capacitor = new Capacitor_0603_3_3nF
 
-    # (Cin) add input capacitors
+    # (Cin) add input capacitors, capable of up to 50V input voltage
+    cin_capacitor1 = new Capacitor_1206_10uF
+    cin_capacitor2 = new Capacitor_1206_10uF
+    cin_capacitor3 = new Capacitor_1206_10uF
 
     # (Cvcc) add VDD capacitor
+    cvcc_capacitor = new Capacitor_0603_1uF
 
     # (L1) add output inductor, which is used to store energy and smooth out the output voltage
     output_inductor = new TMPC1206HP_1R5MG_D
@@ -53,9 +75,11 @@ module BuckConverter_In_9_to_20V_Out_5V_14A:
     voltage_config_divider = new Voltage_Divider_0402_10K_1_37K
 
     # (Rcomp2) add compensation resistor
+    rcomp2_resistor = new Resistor_0402_432
 
     # (Ccomp3) add compensation capacitor
+    ccomp3_capacitor = new Capacitor_0402_820pF
 
     # (Cout) add output capacitors
-
-    # add caps
+    cout_capacitor1 = new Capacitor_1206_10uF
+    cout_capacitor2 = new Capacitor_1206_10uF
