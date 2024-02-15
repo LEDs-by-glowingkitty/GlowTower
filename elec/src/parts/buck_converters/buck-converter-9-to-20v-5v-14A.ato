@@ -1,4 +1,7 @@
 import TPS40305DRCR from "elec/src/parts/buck_converters/TPS40305DRCR/TPS40305DRCR.ato"
+import CSD16301Q2 from "elec/src/parts/mosfets/CSD16301Q2.ato"
+import CSD17581Q3AT from "elec/src/parts/mosfets/CSD17581Q3AT.ato"
+import TMPC1206HP_1R5MG_D from "elec/src/parts/inductors/TMPC1206HP_1R5MG_D.ato"
 
 module BuckConverter_In_9_to_20V_Out_5V_14A:
     """
@@ -12,3 +15,17 @@ module BuckConverter_In_9_to_20V_Out_5V_14A:
     ic = new TPS40305DRCR
 
     # TODO add missing components based on TI webench
+
+    # add HDRV MOSFETs
+    hdrv_n_channel_mosfet_1 = new CSD16301Q2
+    hdrv_n_channel_mosfet_2 = new CSD16301Q2
+
+    # add LDRV MOSFET
+    ldrv_n_channel_mosfet = new CSD17581Q3AT
+
+    # add output inductor
+    output_inductor = new TMPC1206HP_1R5MG_D
+
+    # add resistors to set requested output voltage
+
+    # add caps

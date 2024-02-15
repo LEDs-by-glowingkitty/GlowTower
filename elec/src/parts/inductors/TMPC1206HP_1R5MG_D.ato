@@ -1,0 +1,17 @@
+component TMPC1206HP_1R5MG_D:
+    """
+    This is an inductor with the following specs:
+    - Inductance: 1.5uH (±20%)
+    - I rms: 26A
+    - I sat 1: 43A
+    - I sat 2: 50A
+    - DCR: 2.7mΩ - 3.2mΩ
+    Datasheet: https://datasheet.lcsc.com/lcsc/2009171439_TAI-TECH-TMPC1206HP-1R5MG-D_C357260.pdf
+    """
+    # component TMPC1206HP-1R5MG-D
+    footprint = "IND-SMD_L13.5-W12.6_TMPC1206HP-1R5MG-D"
+    lcsc_id = "C357260"
+    mpn = "C357260"
+    # pins
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2

@@ -1,0 +1,19 @@
+component CSD17581Q3AT:
+    """
+    CSD17581Q3A is an N-Channel power MOSFET from Texas Instruments.
+    Datasheet: https://www.ti.com/lit/ds/symlink/csd17581q3a.pdf
+    """
+    # component CSD17581Q3AT
+    footprint = "PDFN-8_L3.2-W3.0-P0.65-LS3.3-BL-1"
+    lcsc_id = "C2866708"
+    mpn = "C2866708"
+    # pins
+    signal S ~ pin 1
+    S ~ pin 2
+    S ~ pin 3
+    signal G ~ pin 4
+    signal D ~ pin 5
+    D ~ pin 6
+    D ~ pin 7
+    D ~ pin 8
+    D ~ pin 9
