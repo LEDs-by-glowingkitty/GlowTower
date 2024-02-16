@@ -16,7 +16,7 @@ import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
 import Capacitor_0603_2_2uF from "elec/src/parts/capacitors/0603/2_2uF.ato"
 import Capacitor_1206_10uF from "elec/src/parts/capacitors/1206/10uF.ato"
 
-module BuckConverter_In_9_to_20V_Out_5V_14A:
+module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     """
     This is a buck converter, which is setup for the following requirements:
     - IC: TPS40305DRCR
@@ -27,7 +27,7 @@ module BuckConverter_In_9_to_20V_Out_5V_14A:
     """
     ic = new TPS40305DRCR
 
-    # TODO add missing components based on TI webench
+    # TODO connect components
 
     # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
     hdrv_n_channel_mosfet_1 = new CSD16301Q2

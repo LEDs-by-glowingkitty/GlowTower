@@ -1,5 +1,5 @@
 import Resistor from "generics/resistors.ato"
-import BuckConverter_In_9_to_20V_Out_5V_14A from "elec/src/parts/buck_converters/buck-converter-9-to-20v-5v-14A.ato"
+import TPS40305DRCR_In_9_to_20V_Out_5V_14A from "elec/src/parts/buck_converters/TPS40305DRCR/TPS40305DRCR_In_9_to_20V_Out_5V_14A.ato"
 import ESP32_WROOM_32E_N8R2 from "elec/src/parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
 import CP2102N from "elec/src/parts/usb_to_serial/CP2102N.ato"
 import USB_C_Connector_5A from "elec/src/parts/usb_connectors/USB-C_5A.ato"
@@ -26,7 +26,7 @@ module MainPCB:
 
     # Add USB-C PD (min 9V 2A input) to 5V (max 14A output)
     usb_pd = new CYPD3177_min_9V_2A
-    buck_converter = new BuckConverter_In_9_to_20V_Out_5V_14A
+    buck_converter = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
 
     # 5V to 3.3V
 
