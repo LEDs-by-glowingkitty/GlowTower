@@ -6,6 +6,7 @@ import USB_C_Connector_5A from "elec/src/parts/usb_connectors/USB-C_5A.ato"
 import CYPD3177_min_9V_2A from "elec/src/parts/usb_pd_ics/CYPD3177/CYPD3177_min_9V_2A.ato"
 import AMS1117_3_3 from "elec/src/parts/ldo_converters/AMS1117-3.3.ato"
 import MSM261D4030H1CPM from "elec/src/parts/microphones/MSM261D4030H1CPM.ato"
+import SN74LVC2T45DCUR from "elec/src/parts/levelshifters/SN74LVC2T45DCUR.ato"
 
 module MainPCB:
     """
@@ -38,11 +39,17 @@ module MainPCB:
     # Microphone
     microphone = new MSM261D4030H1CPM
 
-    # LED levelshifter
+    # LED levelshifters
+    levelshifter_1 = new SN74LVC2T45DCUR
+    levelshifter_2 = new SN74LVC2T45DCUR
+    levelshifter_3 = new SN74LVC2T45DCUR
+
+
+    # Actionbutton + inverter
+
 
     # Pin headers
 
-    # Actionbutton + inverter
 
     # Pads
 
