@@ -34,8 +34,6 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     signal gnd ~ vin.gnd
     gnd ~ vout.gnd
 
-    # TODO connect components
-
     # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
     hdrv_n_channel_mosfet_1 = new CSD16301Q2
     hdrv_n_channel_mosfet_2 = new CSD16301Q2
