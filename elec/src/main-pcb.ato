@@ -35,14 +35,15 @@ module MainPCB:
     ldo_3v3 = new AMS1117_3_3
 
     # (?) MOSFETs to turn off the LED strips?
+    
 
     # Microphone
     microphone = new MSM261D4030H1CPM
 
     # LED levelshifters
-    levelshifter_1 = new SN74LVC2T45DCUR
-    levelshifter_2 = new SN74LVC2T45DCUR
-    levelshifter_3 = new SN74LVC2T45DCUR
+    levelshifter_1 = new SN74LVC2T45DCUR # for LED strip 1 + 2
+    levelshifter_2 = new SN74LVC2T45DCUR # for LED strip 3 + 4
+    levelshifter_3 = new SN74LVC2T45DCUR # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
 
 
     # Actionbutton + inverter
