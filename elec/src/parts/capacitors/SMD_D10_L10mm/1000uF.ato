@@ -1,0 +1,8 @@
+component Capacitor_SMD_D10_L10_1000uF:
+    # component UWT1A102MNL1GS
+    footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    lcsc_id = "C445078"
+    mpn = "C445078"
+    # pins
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2

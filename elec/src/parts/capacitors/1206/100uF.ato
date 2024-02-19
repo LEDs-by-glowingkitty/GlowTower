@@ -1,0 +1,7 @@
+import Capacitor from "generics/capacitors.ato"
+
+component Capacitor_1206_100uF from Capacitor:
+
+    capacitance = 100uF +/- 20%
+    footprint = "C1206"
+    mpn = "C15008" # max voltage 6.3V

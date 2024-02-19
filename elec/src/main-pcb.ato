@@ -55,7 +55,13 @@ module MainPCB:
     boot_action_button_pull_up_resistor = new Resistor_0402_100K
 
     # LED capacitors
-    
+    # TODO test adding capacitors to the LED strips and see impact
+    led_strip_capacitor_1 = new Capacitor_SMD_D10_L10_1000uF
+    led_strip_capacitor_2 = new Capacitor_SMD_D10_L10_1000uF
+    led_strip_capacitor_3 = new Capacitor_SMD_D10_L10_1000uF
+    led_strip_capacitor_4 = new Capacitor_SMD_D10_L10_1000uF
+    led_ring_capacitor = new Capacitor_1206_100uF
+
 
     # Pin headers
 
