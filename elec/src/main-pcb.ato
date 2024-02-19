@@ -11,6 +11,8 @@ import MOSFETcircuitPowerOnOff_4x_3_5A from "elec/src/parts/power_mosfet_circuit
 import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
 import _74LVC2G04DW_7 from "elec/src/parts/inverters/74LVC2G04DW_7.ato"
 import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
+import Capacitor_SMD_D10_L10_1000uF from "elec/src/parts/capacitors/SMD_D10_L10mm/1000uF.ato"
+import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
 
 module MainPCB:
     """
@@ -63,7 +65,8 @@ module MainPCB:
     led_ring_capacitor = new Capacitor_1206_100uF
 
 
-    # Pin headers
+    # Pin headers, 2.54mm pitch
+
 
 
     # Pads
