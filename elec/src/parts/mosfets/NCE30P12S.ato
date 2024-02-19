@@ -1,0 +1,19 @@
+component NCE30P12S:
+    """
+    This is a P-Channel MOSFET.
+    30V 12A 15mΩ@10V,10A 3W P Channel SOP-8  MOSFETs ROHS
+    Datasheet: https://datasheet.lcsc.com/lcsc/1810251712_Wuxi-NCE-Power-Semiconductor-NCE30P12S_C167515.pdf
+    """
+    # component NCE30P12S
+    footprint = "SOIC-8_L4.9-W3.9-P1.27-LS6.0-BL"
+    lcsc_id = "C167515"
+    mpn = "C167515"
+    # pins
+    signal S ~ pin 1
+    S ~ pin 2
+    S ~ pin 3
+    signal G ~ pin 4
+    signal D ~ pin 5
+    D ~ pin 6
+    D ~ pin 7
+    D ~ pin 8

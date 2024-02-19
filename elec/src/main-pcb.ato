@@ -7,6 +7,7 @@ import CYPD3177_min_9V_2A from "elec/src/parts/usb_pd_ics/CYPD3177/CYPD3177_min_
 import AMS1117_3_3 from "elec/src/parts/ldo_converters/AMS1117-3.3.ato"
 import MSM261D4030H1CPM from "elec/src/parts/microphones/MSM261D4030H1CPM.ato"
 import SN74LVC2T45DCUR from "elec/src/parts/levelshifters/SN74LVC2T45DCUR.ato"
+import MOSFETcircuitPowerOnOff_4x_3_5A from "elec/src/parts/power_mosfet_circuits/power_on_off_4x_3_5A.ato"
 
 module MainPCB:
     """
@@ -34,8 +35,8 @@ module MainPCB:
     # 5V to 3.3V LDO, to power the ESP32 and microphone
     ldo_3v3 = new AMS1117_3_3
 
-    # (?) MOSFETs to turn off the LED strips?
-    
+    # MOSFETs to turn off the LED strips?
+    power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
 
     # Microphone
     microphone = new MSM261D4030H1CPM
@@ -48,6 +49,7 @@ module MainPCB:
 
     # Actionbutton + inverter
 
+    # LED capacitors
 
     # Pin headers
 
