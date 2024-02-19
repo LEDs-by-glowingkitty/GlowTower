@@ -1,12 +1,12 @@
 import Capacitor from "generics/capacitors.ato"
 import Resistor from "generics/resistors.ato"
-import SmallPushButton from "../buttons/small-pushbutton.ato"
+import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
 import Power from "generics/interfaces.ato"
-import Capacitor_0603_1uF from "../capacitors/0603/1uF.ato"
-import Capacitor_0603_10uF from "../capacitors/0603/10uF.ato"
-import Resistor_0402_5_1K from "../resistors/0402/5_1K.ato"
+import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
+import Capacitor_0603_10uF from "elec/src/parts/capacitors/0603/10uF.ato"
+import Resistor_0402_5_1K from "elec/src/parts/resistors/0402/5_1K.ato"
 
-component ESP32_WROOM_32E_N8R2:
+component _ESP32_WROOM_32E_N8R2:
     """
     This is the ESP32 WROOM 32E N8R2 module from Espressif.
     It has 8MB flash and 2MB PSRAM.
@@ -20,23 +20,10 @@ component ESP32_WROOM_32E_N8R2:
     To save even more space on a PCB, you can use the IC directly (ESP32-D0WDQ6) and add the required components (crystal, capacitors, resistors, etc.) manually.
     However, the module is recommended for most projects, as it is easier to implement and has a built-in antenna.
     """
-
     # component ESP32-WROOM-32E-N8R2
     footprint = "WIFI-SMD_ESP32-WROOM-32E"
     lcsc_id = "C5361945"
     mpn = "C5361945"
-
-    # Add capacitor for 3.3V input of ESP32
-    vin_cap = new Capacitor_0603_10uF
-
-    # Add the reset button
-    reset_button = new SmallPushButton
-
-    # Add a delay capacitor for the EN pin
-    delay_cap = new Capacitor_0603_1uF
-
-    # Add a pull up resistor for the EN pin
-    en_pullup_resistor = new Resistor_0402_5_1K
 
     # pins
     # INFO: Many of the disconnected pins are required to be low or high on boot, or else prevent the ESP32 from booting. Therefore shouldn't be used.
@@ -87,6 +74,27 @@ component ESP32_WROOM_32E_N8R2:
     power.vcc ~ _3V3
     power.gnd ~ GND
 
+
+
+module ESP32_WROOM_32E_N8R2:
+    ic = new _ESP32_WROOM_32E_N8R2
+
+    # add power interface
+    power = new Power
+    power ~ ic.power
+
+    # Add capacitor for 3.3V input of ESP32
+    vin_cap = new Capacitor_0603_10uF
+
+    # Add the reset button
+    reset_button = new TS_1185EC_C_D_B
+
+    # Add a delay capacitor for the EN pin
+    delay_cap = new Capacitor_0603_1uF
+
+    # Add a pull up resistor for the EN pin
+    en_pullup_resistor = new Resistor_0402_5_1K
+
     # connect 1uF capacitor to the 3.3V input of the ESP32
     vin_cap.p1 ~ power.vcc
     vin_cap.p2 ~ power.gnd
@@ -95,7 +103,7 @@ component ESP32_WROOM_32E_N8R2:
     reset_button._1 ~ power.gnd
 
     # connect the delay capacitor to the EN pin and GND, so that it is pulled low after a delay
-    delay_cap.p1 ~ EN
+    delay_cap.p1 ~ ic.EN
     delay_cap.p1 ~ en_pullup_resistor.p1
     delay_cap.p2 ~ power.gnd
 

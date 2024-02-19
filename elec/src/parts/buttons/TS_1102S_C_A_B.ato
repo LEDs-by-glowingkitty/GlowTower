@@ -1,4 +1,4 @@
-component LargePushButton:
+component TS_1102S_C_A_B:
     """
     This is a larger push button switch with 4 pins. It is a surface mount component.
     If the button is pressed, the pins 1 and 2 are connected with 3 and 4.

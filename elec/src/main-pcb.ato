@@ -8,6 +8,9 @@ import AMS1117_3_3 from "elec/src/parts/ldo_converters/AMS1117-3.3.ato"
 import MSM261D4030H1CPM from "elec/src/parts/microphones/MSM261D4030H1CPM.ato"
 import SN74LVC2T45DCUR from "elec/src/parts/levelshifters/SN74LVC2T45DCUR.ato"
 import MOSFETcircuitPowerOnOff_4x_3_5A from "elec/src/parts/power_mosfet_circuits/power_on_off_4x_3_5A.ato"
+import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
+import _74LVC2G04DW_7 from "elec/src/parts/inverters/74LVC2G04DW_7.ato"
+import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
 
 module MainPCB:
     """
@@ -19,7 +22,7 @@ module MainPCB:
     ################# Parts ####################
     ############################################
 
-    # Add ESP32
+    # Add ESP32 (incl. EN button)
     esp32 = new ESP32_WROOM_32E_N8R2
 
     # Add USB to serial via CP2102N
@@ -34,8 +37,8 @@ module MainPCB:
 
     # 5V to 3.3V LDO, to power the ESP32 and microphone
     ldo_3v3 = new AMS1117_3_3
-
-    # MOSFETs to turn off the LED strips?
+    
+    # MOSFETs to turn off the LED strips (LED ring on action button will stay connected to power)
     power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
 
     # Microphone
@@ -46,10 +49,13 @@ module MainPCB:
     levelshifter_2 = new SN74LVC2T45DCUR # for LED strip 3 + 4
     levelshifter_3 = new SN74LVC2T45DCUR # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
 
-
-    # Actionbutton + inverter
+    # Boot/Actionbutton + inverter
+    boot_action_button = new TS_1185EC_C_D_B
+    inverter = new _74LVC2G04DW_7
+    boot_action_button_pull_up_resistor = new Resistor_0402_100K
 
     # LED capacitors
+    
 
     # Pin headers
 
@@ -62,3 +68,10 @@ module MainPCB:
     ############################################
     ############### Connections ################
     ############################################
+    
+    # Connnect the inverter
+    ldo_3v3.vout ~ inverter.power
+
+    # Connect the pull up resistor to the boot pin of the ESP32
+    esp32.ic.IO0 ~ boot_action_button_pull_up_resistor.p1
+    ldo_3v3.vout.vcc ~ boot_action_button_pull_up_resistor.p2

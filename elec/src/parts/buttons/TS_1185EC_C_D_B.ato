@@ -1,4 +1,4 @@
-component SmallPushButton:
+component TS_1185EC_C_D_B:
     """
     This is a small push button. While pressed, signal 1 and signal 2 are connected.
     """
