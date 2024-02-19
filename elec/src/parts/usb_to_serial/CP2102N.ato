@@ -9,7 +9,7 @@ import Resistor_0402_1K from "../resistors/0402/1K.ato"
 import Resistor_0402_2K from "../resistors/0402/2K.ato"
 import Resistor_0402_5_1K from "../resistors/0402/5_1K.ato"
 
-component CP2102N:
+component CP2102N_A02_GQFN24R:
     """
     This is the CP2102N USB to serial IC from Silicon Labs.
     In comparison to the CP2102, the CP2102N has an increased maximum data rate of 3Mbps (vs 2Mbps) and a few additional features.
@@ -22,32 +22,6 @@ component CP2102N:
     footprint = "QFN-24_L4.0-W4.0-P0.50-TL-EP2.6"
     lcsc_id = "C969151"
     mpn = "C969151"
-
-    # Add capacitors for the VREGIN and VDD pins
-    small_cap = new Capacitor_0402_100nF
-    large_cap = new Capacitor_0603_10uF
-
-    # Add voltage divider for VBUS pin
-    # TODO: check with real hardware testing if the values work. Theory: if VBUS is 5V -> 5V * (5100 / (5100 + 20000)) = 1.1V, if VBUS is 20V -> 20V * (5100 / (5100 + 20000)) = 4.4V
-    # Test plan:
-    # - unsolder the existing voltage divider on the Adafruit CP2102N board
-    # - connect variable power supply to VBUS pin
-    # - test flashing with 1.1V input
-    # - test flashing with 3.3V input
-    # - test flashing with 4.2V input
-    # - then also test disconnecting VBUS from REGIN and connect REGIN and VDD to fixed 3.3V input
-    # TODO: consider turning on/off CP2102N with MOSFETs, like with GlowSign PCB (I think inspired by Adafruit)
-    voltage_divider_r1 = new Resistor_0402_2K
-    voltage_divider_r2 = new Resistor_0402_5_1K
-
-    # Add a pull up resistor for the RSTb pin.
-    pull_up_resistor = new Resistor_0402_1K
-
-    # Add ESD protection for the D+ and D- lines
-    esd_protection = new SP0503BAHTG
-
-    # Add auto-reset dual transistor
-    auto_reset_transistor = new UMH3N
 
     # pins
     signal RI_CLK ~ pin 1           # Ring Indicator/Clock Input
@@ -88,35 +62,79 @@ component CP2102N:
     power_3_3v.vcc ~ VIO
     power_3_3v.gnd ~ GND
 
+    # Connect the CP2102N to VBUS
+    power_vbus.gnd ~ GND
+    
+
+
+module CP2102N:
+    
+    ic = new CP2102N_A02_GQFN24R
+
+    # add power
+    power_3_3v = new Power
+    power_vbus = new Power
+    power_3_3v ~ ic.power_3_3v
+    power_vbus ~ ic.power_vbus
+    signal gnd ~ ic.GND
+
+
+    # Add capacitors for the VREGIN and VDD pins
+    small_cap = new Capacitor_0402_100nF
+    large_cap = new Capacitor_0603_10uF
+
+    # Add voltage divider for VBUS pin
+    # TODO: check with real hardware testing if the values work. Theory: if VBUS is 5V -> 5V * (5100 / (5100 + 20000)) = 1.1V, if VBUS is 20V -> 20V * (5100 / (5100 + 20000)) = 4.4V
+    # Test plan:
+    # - unsolder the existing voltage divider on the Adafruit CP2102N board
+    # - connect variable power supply to VBUS pin
+    # - test flashing with 1.1V input
+    # - test flashing with 3.3V input
+    # - test flashing with 4.2V input
+    # - then also test disconnecting VBUS from REGIN and connect REGIN and VDD to fixed 3.3V input
+    # TODO: consider turning on/off CP2102N with MOSFETs, like with GlowSign PCB (I think inspired by Adafruit)
+    voltage_divider_r1 = new Resistor_0402_2K
+    voltage_divider_r2 = new Resistor_0402_5_1K
+
+    # Add a pull up resistor for the RSTb pin.
+    pull_up_resistor = new Resistor_0402_1K
+
+    # Add ESD protection for the D+ and D- lines
+    esd_protection = new SP0503BAHTG
+
+    # Add auto-reset dual transistor
+    auto_reset_transistor = new UMH3N
+
+
     # Connect the CP2102N to VBUS via a voltage divider, to protect the CP2102N from overvoltage
     power_vbus.vcc ~ voltage_divider_r1.p1
-    power_vbus.gnd ~ GND
+    
 
     # Connect the voltage divider to the CP2102N
     voltage_divider_r1.p2 ~ voltage_divider_r2.p1
-    voltage_divider_r1.p2 ~ VBUS
-    voltage_divider_r2.p2 ~ GND
+    voltage_divider_r1.p2 ~ power_vbus.vcc
+    voltage_divider_r2.p2 ~ gnd
 
     # Connect the capacitors to the input voltage for the CP2102N
     small_cap.p1 ~ power_3_3v.vcc
-    small_cap.p2 ~ power_3_3v.gnd
+    small_cap.p2 ~ gnd
     large_cap.p1 ~ power_3_3v.vcc
-    large_cap.p2 ~ power_3_3v.gnd
+    large_cap.p2 ~ gnd
 
     # Connect the pull up resistor to the RSTb pin, so it is high by default
-    pull_up_resistor.p1 ~ RSTb
+    pull_up_resistor.p1 ~ ic.RSTb
     pull_up_resistor.p2 ~ power_3_3v.vcc
 
     # Connect the ESD protection SP0503BAHTG to the D+ and D- lines
-    esd_protection.p1 ~ GND
-    esd_protection.p2 ~ Dplus
-    esd_protection.p3 ~ Dminus
+    esd_protection.p1 ~ gnd
+    esd_protection.p2 ~ ic.Dplus
+    esd_protection.p3 ~ ic.Dminus
 
     # Connect the auto-reset UMH3N dual transistor to CP2102N
-    auto_reset_transistor.p1 ~ RTS
-    auto_reset_transistor.p2 ~ DTR
-    auto_reset_transistor.p4 ~ DTR
-    auto_reset_transistor.p5 ~ RTS
+    auto_reset_transistor.p1 ~ ic.RTS
+    auto_reset_transistor.p2 ~ ic.DTR
+    auto_reset_transistor.p4 ~ ic.DTR
+    auto_reset_transistor.p5 ~ ic.RTS
     # Auto program:
     # DTR   RTS -->	EN 	IO0
     # 1	    1		1	1
