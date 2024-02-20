@@ -42,11 +42,11 @@ module CYPD3177_LoadSwitch100W:
     ###############################################
 
     # Add the power interfaces
-    vbus_in = new Power
-    vdc_out = new Power
+    vin = new Power
+    vout = new Power
 
     # And connect the GNDs together
-    vbus_in.gnd ~ vdc_out.gnd
+    vin.gnd ~ vout.gnd
 
 
     ###############################################
@@ -54,13 +54,13 @@ module CYPD3177_LoadSwitch100W:
     ###############################################
 
     # Connect the load switch Drain 1 to VBUS
-    load_switch_mosfet.D1 ~ vbus_in.vcc
+    load_switch_mosfet.D1 ~ vin.vcc
     # Connect the load switch Drain 2 to VDC_OUT
-    load_switch_mosfet.D2 ~ vdc_out.vcc
+    load_switch_mosfet.D2 ~ vout.vcc
 
     # Connect the capacitor for VBUS
-    vbus_cap.p1 ~ vbus_in.vcc
-    vbus_cap.p2 ~ vbus_in.gnd
+    vbus_cap.p1 ~ vin.vcc
+    vbus_cap.p2 ~ vin.gnd
 
     # Connect the gates of the load switch
     load_switch_mosfet.G1 ~ load_switch_mosfet.G2
@@ -69,13 +69,13 @@ module CYPD3177_LoadSwitch100W:
     load_switch_mosfet.S1 ~ load_switch_mosfet.S2
 
     # Connect the caps for the load switch
-    load_switch_input_cap_1uF.p1 ~ vbus_in.vcc
+    load_switch_input_cap_1uF.p1 ~ vin.vcc
     load_switch_input_cap_1uF.p2 ~ load_switch_mosfet.G1
-    load_switch_output_cap_1uF.p1 ~ vdc_out.vcc
+    load_switch_output_cap_1uF.p1 ~ vout.vcc
     load_switch_output_cap_1uF.p2 ~ load_switch_mosfet.G1
 
     # Connect the resistor between VBUS and the gate of the load_switch_mosfet
-    vbus_fet_en_resistor.p1 ~ vbus_in.vcc
+    vbus_fet_en_resistor.p1 ~ vin.vcc
     vbus_fet_en_resistor.p2 ~ load_switch_mosfet.G1
 
     # Connect the resistor between the gate of the load_switch_mosfet

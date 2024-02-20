@@ -16,7 +16,7 @@ import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
 import SolderPad_2mm_3_5mm from "elec/src/parts/pads/SolderPad_2mm_3_5mm.ato"
 import PinHeader_2_54mm_2pins from "elec/src/parts/pin_headers/PinHeader_2_54mm_2pins.ato"
 import PinHeader_2_54mm_3pins from "elec/src/parts/pin_headers/PinHeader_2_54mm_3pins.ato"
-
+import Power from "generics/interfaces.ato"
 
 module MainPCB:
     """
@@ -52,15 +52,29 @@ module MainPCB:
     ################## Power ###################
     ############################################
 
+    power_vbus = new Power
+    power_5v = new Power
+    power_3_3v = new Power
+    signal gnd ~ power_vbus.gnd
+    gnd ~ power_5v.gnd
+    gnd ~ power_3_3v.gnd
+
     # Add USB-C connector that can handle up to 5A at 20V (100W)
     usb_c_connector = new USB_C_Connector_5A
 
     # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
     usb_pd = new CYPD3177_min_9V_2A
+    usb_c_connector.power ~ usb_pd.vin
+    power_vbus ~ usb_pd.vout_vbus
+    power_5v ~ usb_pd.vout_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
     buck_converter_5v = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
+    power_vbus ~ buck_converter_5v.vin
+    power_5v ~ buck_converter_5v.vout
 
     # 5V to 3.3V LDO, to power the ESP32 and microphone
     ldo_3v3 = new AMS1117_3_3
+    power_5v ~ ldo_3v3.vin
+    power_3_3v ~ ldo_3v3.vout
     
     # MOSFETs to turn off the LED strips (LED ring on action button will stay connected to power)
     power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
@@ -147,6 +161,7 @@ module MainPCB:
     pad_extra_led_strip_data_out.p1 ~ levelshifter_3.led_data_in_2 # External (optional) LED strip
 
     # Connect the boot/action button
+    gnd ~ boot_action_button._1
     
     # Connnect the inverter
     ldo_3v3.vout ~ inverter.power
