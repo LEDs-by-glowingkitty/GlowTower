@@ -105,25 +105,26 @@ module MainPCB:
     pin_header_male_led_ring = new PinHeader_2_54mm_2pins
 
     # Pads, for soldering external components to the PCB (power source, sensors, LED strips, etc.)
-    pad_1 = new SolderPad_2mm_3_5mm
-    pad_2 = new SolderPad_2mm_3_5mm
-    pad_3 = new SolderPad_2mm_3_5mm
-    pad_4 = new SolderPad_2mm_3_5mm
-    pad_5 = new SolderPad_2mm_3_5mm
-    pad_6 = new SolderPad_2mm_3_5mm
-    pad_7 = new SolderPad_2mm_3_5mm
-    pad_8 = new SolderPad_2mm_3_5mm
-    pad_9 = new SolderPad_2mm_3_5mm
-    pad_10 = new SolderPad_2mm_3_5mm
-    pad_11 = new SolderPad_2mm_3_5mm
-    pad_12 = new SolderPad_2mm_3_5mm
-    pad_13 = new SolderPad_2mm_3_5mm
-    pad_14 = new SolderPad_2mm_3_5mm
-    pad_15 = new SolderPad_2mm_3_5mm
-    pad_16 = new SolderPad_2mm_3_5mm
-    pad_17 = new SolderPad_2mm_3_5mm
-    pad_18 = new SolderPad_2mm_3_5mm
+    pad_power_vbus = new SolderPad_2mm_3_5mm
+    pad_power_5v_1 = new SolderPad_2mm_3_5mm
+    pad_power_5v_2 = new SolderPad_2mm_3_5mm
+    pad_power_3_3v_1 = new SolderPad_2mm_3_5mm
+    pad_power_3_3v_2 = new SolderPad_2mm_3_5mm
+    pad_gnd_1 = new SolderPad_2mm_3_5mm
+    pad_gnd_1 = new SolderPad_2mm_3_5mm
+    pad_gnd_1 = new SolderPad_2mm_3_5mm
+    pad_gnd_1 = new SolderPad_2mm_3_5mm
+    pad_i2c_sda = new SolderPad_2mm_3_5mm
+    pad_i2c_scl = new SolderPad_2mm_3_5mm
+    pad_i2s_ws = new SolderPad_2mm_3_5mm
+    pad_i2s_sck = new SolderPad_2mm_3_5mm
+    pad_i2s_sd = new SolderPad_2mm_3_5mm
+    pad_spi_mosi = new SolderPad_2mm_3_5mm
+    pad_spi_miso = new SolderPad_2mm_3_5mm
+    pad_spi_sck = new SolderPad_2mm_3_5mm
+    pad_spi_cs = new SolderPad_2mm_3_5mm
     pad_19 = new SolderPad_2mm_3_5mm
+    # TODO add pads for JTAG
     pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
 
 
@@ -239,3 +240,7 @@ module MainPCB:
     # Connect GND and the button to the pin headers for the action button
     gnd ~ pin_header_male_action_button._1
     boot_action_button._2 ~ pin_header_male_action_button._2
+
+    # Connect the solder pads to power
+
+    # Connect the solder pads to the ESP32
