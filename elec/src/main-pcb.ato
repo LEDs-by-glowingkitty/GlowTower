@@ -14,6 +14,9 @@ import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
 import Capacitor_SMD_D10_L10_1000uF from "elec/src/parts/capacitors/SMD_D10_L10mm/1000uF.ato"
 import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
 import SolderPad_2mm_3_5mm from "elec/src/parts/pads/SolderPad_2mm_3_5mm.ato"
+import PinHeader_2_54mm_2pins from "elec/src/parts/pin_headers/PinHeader_2_54mm_2pins.ato"
+import PinHeader_2_54mm_3pins from "elec/src/parts/pin_headers/PinHeader_2_54mm_3pins.ato"
+
 
 module MainPCB:
     """
@@ -67,7 +70,14 @@ module MainPCB:
 
 
     # Pin headers, 2.54mm pitch
-    # TODO
+    pin_header_male_led_strip_1 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_2 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_3 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_4 = new PinHeader_2_54mm_3pins
+
+    # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
+    pin_header_male_action_button = new PinHeader_2_54mm_2pins
+    pin_header_male_led_ring = new PinHeader_2_54mm_2pins
 
 
     # Pads, for soldering external components to the PCB (power source, sensors, LED strips, etc.)

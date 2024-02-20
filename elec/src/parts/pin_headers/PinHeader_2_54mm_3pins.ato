@@ -1,0 +1,12 @@
+component PinHeader_2_54mm_3pins:
+    """
+    This is a pin header with 3 pins, 2.54mm pitch, vertical mount, through hole.
+    """
+    # component PZ254V-11-03P_C2937625
+    footprint = "HDR-TH_3P-P2.54-V-M"
+    lcsc_id = "C2937625"
+    mpn = "C2937625"
+    # pins
+    signal _1 ~ pin 1
+    signal _2 ~ pin 2
+    signal _3 ~ pin 3
