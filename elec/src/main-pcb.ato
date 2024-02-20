@@ -122,13 +122,14 @@ module MainPCB:
     ldo_3v3.vout ~ usb_to_serial.power_3_3v
     usb_c_connector.power ~ usb_to_serial.power_vbus
     # Connect the data lines from the USB port to USB to serial
-    usb_c_connector.dplus ~ usb_to_serial.ic.dplus
-    usb_c_connector.dminus ~ usb_to_serial.ic.dminus
+    usb_c_connector.usb ~ usb_to_serial.ic.usb
     # Connect the USB to serial to the ESP32
     esp32.ic.RXD0 ~ usb_to_serial.ic.TXD
     esp32.ic.TXD0 ~ usb_to_serial.ic.RXD
 
     # Connect the microphone
+    ldo_3v3.vout ~ microphone.power
+    esp32.ic.i2s ~ microphone.ic.i2s
 
     # Connect the levelshifters
 

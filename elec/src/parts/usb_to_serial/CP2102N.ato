@@ -8,6 +8,7 @@ import Capacitor_0603_10uF from "../capacitors/0603/10uF.ato"
 import Resistor_0402_1K from "../resistors/0402/1K.ato"
 import Resistor_0402_2K from "../resistors/0402/2K.ato"
 import Resistor_0402_5_1K from "../resistors/0402/5_1K.ato"
+import USB2 from "generics/interfaces.ato"
 
 component CP2102N_A02_GQFN24R:
     """
@@ -64,7 +65,12 @@ component CP2102N_A02_GQFN24R:
 
     # Connect the CP2102N to VBUS
     power_vbus.gnd ~ GND
-    
+
+    # Add USB2
+    usb = new USB2
+    usb.dp ~ dplus
+    usb.dm ~ dminus
+    usb.gnd ~ GND
 
 
 module CP2102N:
