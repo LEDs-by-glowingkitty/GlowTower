@@ -30,6 +30,15 @@ module MainPCB:
 
     # Add ESP32 (incl. EN button)
     esp32 = new ESP32_WROOM_32E_N8R2
+    # Connected pins besides default pins:
+    # IO5: LED Strips power on/off
+    # IO16: LED strip 1 (data out)
+    # IO17: LED strip 2 (data out)
+    # IO18: LED strip 3 (data out)
+    # IO19: LED strip 4 (data out)
+    # IO27: Actionbutton LED ring (data out)
+    # IO32: Actionbutton (high if button pressed, low if not pressed)
+    # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
 
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
@@ -172,6 +181,7 @@ module MainPCB:
     power_vbus ~ usb_pd_ic.vout_vbus
     power_5v ~ usb_pd_ic.vout_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
     esp32.ic.i2c ~ usb_pd_ic.cypd3177.ic.i2c
+    esp32.ic.IO33 ~ usb_pd_ic.cypd3177.vout_vbus_readout # Read the USB PD voltage via a voltage divider
 
     # Connect the buck converter
     power_vbus ~ buck_converter_5v.vin
@@ -186,10 +196,46 @@ module MainPCB:
     power_5v ~ power_mosfet_circuit.vin2
     power_5v ~ power_mosfet_circuit.vin3
     power_5v ~ power_mosfet_circuit.vin4
-    # Connect the output power of the power MOSFETs to the LED strips
+    # Connect the output power of the power MOSFETs to the LED strip pin headers
     pin_header_male_led_strip_1._1 ~ power_mosfet_circuit.vout1.vcc
     pin_header_male_led_strip_2._1 ~ power_mosfet_circuit.vout2.vcc
     pin_header_male_led_strip_3._1 ~ power_mosfet_circuit.vout3.vcc
     pin_header_male_led_strip_4._1 ~ power_mosfet_circuit.vout4.vcc
     # Connect the control pins of the power MOSFETs to the ESP32
     esp32.ic.IO5 ~ power_mosfet_circuit.control
+
+    # Connect the power of the LED ring
+    pin_header_male_led_ring._1 ~ power_5v.vcc
+
+    # Connect the LED strip capacitors
+    pin_header_male_led_strip_1._1 ~ led_strip_capacitor_1.p1
+    pin_header_male_led_strip_2._1 ~ led_strip_capacitor_2.p1
+    pin_header_male_led_strip_3._1 ~ led_strip_capacitor_3.p1
+    pin_header_male_led_strip_4._1 ~ led_strip_capacitor_4.p1
+    gnd ~ led_strip_capacitor_1.p2
+    gnd ~ led_strip_capacitor_2.p2
+    gnd ~ led_strip_capacitor_3.p2
+    gnd ~ led_strip_capacitor_4.p2
+
+    # Connect the LED ring capacitor
+    pin_header_male_led_ring._1 ~ led_ring_capacitor.p1
+    gnd ~ led_ring_capacitor.p2
+
+    # Connect the LED data output to the pin headers for the LED strips
+    levelshifter_1.led_data_out_1 ~ pin_header_male_led_strip_1._2
+    levelshifter_1.led_data_out_2 ~ pin_header_male_led_strip_2._2
+    levelshifter_2.led_data_out_1 ~ pin_header_male_led_strip_3._2
+    levelshifter_2.led_data_out_2 ~ pin_header_male_led_strip_4._2
+
+    # Connect the LED data output to the pin headers for the action button LED ring
+    levelshifter_3.led_data_out_1 ~ pin_header_male_led_ring._2
+
+    # Connect the GND to the LED strip pin headers
+    gnd ~ pin_header_male_led_strip_1._3
+    gnd ~ pin_header_male_led_strip_2._3
+    gnd ~ pin_header_male_led_strip_3._3
+    gnd ~ pin_header_male_led_strip_4._3
+
+    # Connect GND and the button to the pin headers for the action button
+    gnd ~ pin_header_male_action_button._1
+    boot_action_button._2 ~ pin_header_male_action_button._2

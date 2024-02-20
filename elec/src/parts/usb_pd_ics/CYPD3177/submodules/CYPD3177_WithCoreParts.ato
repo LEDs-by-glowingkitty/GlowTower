@@ -95,6 +95,9 @@ module CYPD3177_WithCoreParts:
     vout_3_3v.vcc ~ flip_pull_up_resistor.p2
 
     # Add a voltage divider, to be able to read with a microcontroller the current VDC out voltage
+    # Examples: 
+    # Input: 20V -> Output: 3.3V
+    # Input: 9V -> Output: 1.5V
     vdc_voltage_read_divider = new Voltage_Divider_0603_100K__20K
     vout_vbus ~ vdc_voltage_read_divider.power
-    signal vdc_out_voltage ~ vdc_voltage_read_divider.vout
+    signal vout_vbus_readout ~ vdc_voltage_read_divider.vout
