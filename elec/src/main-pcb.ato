@@ -25,7 +25,7 @@ module MainPCB:
     """
 
     ############################################
-    ################# Parts ####################
+    ######### Processing & Inputs ##############
     ############################################
 
     # Add ESP32 (incl. EN button)
@@ -33,19 +33,6 @@ module MainPCB:
 
     # Add USB to serial via CP2102N
     usb_to_serial_ic = new CP2102N
-
-    # Add USB-C connector that can handle up to 5A at 20V (100W)
-    usb_c_connector = new USB_C_Connector_5A
-
-    # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
-    usb_pd = new CYPD3177_min_9V_2A
-    buck_converter = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
-
-    # 5V to 3.3V LDO, to power the ESP32 and microphone
-    ldo_3v3 = new AMS1117_3_3
-    
-    # MOSFETs to turn off the LED strips (LED ring on action button will stay connected to power)
-    power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
 
     # Microphone
     microphone = new MSM261D4030H1CPM
@@ -60,6 +47,24 @@ module MainPCB:
     inverter = new _74LVC2G04DW_7
     boot_action_button_pull_up_resistor = new Resistor_0402_100K
 
+
+    ############################################
+    ################## Power ###################
+    ############################################
+
+    # Add USB-C connector that can handle up to 5A at 20V (100W)
+    usb_c_connector = new USB_C_Connector_5A
+
+    # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
+    usb_pd = new CYPD3177_min_9V_2A
+    buck_converter_5v = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
+
+    # 5V to 3.3V LDO, to power the ESP32 and microphone
+    ldo_3v3 = new AMS1117_3_3
+    
+    # MOSFETs to turn off the LED strips (LED ring on action button will stay connected to power)
+    power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
+
     # LED capacitors
     # TODO test adding capacitors to the LED strips and see impact
     led_strip_capacitor_1 = new Capacitor_SMD_D10_L10_1000uF
@@ -68,6 +73,10 @@ module MainPCB:
     led_strip_capacitor_4 = new Capacitor_SMD_D10_L10_1000uF
     led_ring_capacitor = new Capacitor_1206_100uF
 
+
+    ############################################
+    ################ Connectors ################
+    ############################################
 
     # Pin headers, 2.54mm pitch
     pin_header_male_led_strip_1 = new PinHeader_2_54mm_3pins
@@ -78,7 +87,6 @@ module MainPCB:
     # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
     pin_header_male_action_button = new PinHeader_2_54mm_2pins
     pin_header_male_led_ring = new PinHeader_2_54mm_2pins
-
 
     # Pads, for soldering external components to the PCB (power source, sensors, LED strips, etc.)
     pad_1 = new SolderPad_2mm_3_5mm
@@ -101,8 +109,6 @@ module MainPCB:
     pad_18 = new SolderPad_2mm_3_5mm
     pad_19 = new SolderPad_2mm_3_5mm
     pad_20 = new SolderPad_2mm_3_5mm
-
-
 
 
     ############################################
