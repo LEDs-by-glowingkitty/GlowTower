@@ -1,13 +1,10 @@
-import Capacitor from "generics/capacitors.ato"
 import Resistor from "generics/resistors.ato"
 import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
-import Power from "generics/interfaces.ato"
 import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
 import Capacitor_0603_10uF from "elec/src/parts/capacitors/0603/10uF.ato"
 import Resistor_0402_5_1K from "elec/src/parts/resistors/0402/5_1K.ato"
-import I2C from "generics/interfaces.ato"
-import SPI from "generics/interfaces.ato"
 import I2S from "elec/src/interfaces/interfaces.ato"
+from "generics/interfaces.ato" import Power, I2C, SPI
 
 component _ESP32_WROOM_32E_N8R2:
     """
@@ -97,6 +94,9 @@ component _ESP32_WROOM_32E_N8R2:
     spi.sck ~ IO4
     spi.cs ~ IO15 #TODO check if that pin is ok
     spi.gnd ~ GND
+
+    # add JTAG interface
+
 
 
 module ESP32_WROOM_32E_N8R2:
