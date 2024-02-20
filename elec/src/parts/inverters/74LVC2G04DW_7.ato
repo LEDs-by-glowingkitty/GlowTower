@@ -21,3 +21,9 @@ component _74LVC2G04DW_7:
     power = new Power
     power.vcc ~ VCC
     power.gnd ~ GND
+
+    # add synonyms
+    signal input_1 ~ _1A
+    signal input_2 ~ _2A
+    signal output_1 ~ _1Y
+    signal output_2 ~ _2Y

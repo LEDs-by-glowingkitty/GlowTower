@@ -162,12 +162,14 @@ module MainPCB:
 
     # Connect the boot/action button
     gnd ~ boot_action_button._1
+    esp32.ic.IO0 ~ boot_action_button._2
     
     # Connnect the inverter
     power_3_3v ~ inverter.power
+    boot_action_button._2 ~ inverter.input_1
+    esp32.ic.IO32 ~ inverter.output_1 # If the action button is pressed, IO32 will be pulled high
+    gnd ~ inverter.input_2 # Make sure the pin is not floating
 
     # Connect the pull up resistor to the boot pin of the ESP32
     esp32.ic.IO0 ~ boot_action_button_pull_up_resistor.p1
     power_3_3v.vcc ~ boot_action_button_pull_up_resistor.p2
-
-    # TODO connect the rest of the parts
