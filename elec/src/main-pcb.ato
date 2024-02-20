@@ -32,7 +32,7 @@ module MainPCB:
     esp32 = new ESP32_WROOM_32E_N8R2
 
     # Add USB to serial via CP2102N
-    usb_to_serial_ic = new CP2102N
+    usb_to_serial = new CP2102N
 
     # Microphone
     microphone = new MSM261D4030H1CPM
@@ -114,6 +114,25 @@ module MainPCB:
     ############################################
     ############### Connections ################
     ############################################
+
+    # Connect the ESP32
+    ldo_3v3.vout ~ esp32.power
+
+    # Connect the power to USB to serial
+    ldo_3v3.vout ~ usb_to_serial.power_3_3v
+    usb_c_connector.power ~ usb_to_serial.power_vbus
+    # Connect the data lines from the USB port to USB to serial
+    usb_c_connector.dplus ~ usb_to_serial.ic.dplus
+    usb_c_connector.dminus ~ usb_to_serial.ic.dminus
+    # Connect the USB to serial to the ESP32
+    esp32.ic.RXD0 ~ usb_to_serial.ic.TXD
+    esp32.ic.TXD0 ~ usb_to_serial.ic.RXD
+
+    # Connect the microphone
+
+    # Connect the levelshifters
+
+    # Connect the boot/action button
     
     # Connnect the inverter
     ldo_3v3.vout ~ inverter.power

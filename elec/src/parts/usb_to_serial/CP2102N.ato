@@ -26,8 +26,8 @@ component CP2102N_A02_GQFN24R:
     # pins
     signal RI_CLK ~ pin 1           # Ring Indicator/Clock Input
     signal GND ~ pin 2              # Ground
-    signal Dplus ~ pin 3            # Data+ Line
-    signal Dminus ~ pin 4           # Data- Line
+    signal dplus ~ pin 3            # Data+ Line
+    signal dminus ~ pin 4           # Data- Line
     signal VIO ~ pin 5              # Voltage Input/Output
     signal VDD ~ pin 6              # Power Supply
     signal VREGIN ~ pin 7           # Voltage Regulator Input
@@ -105,8 +105,8 @@ module CP2102N:
     # Add auto-reset dual transistor
     auto_reset_transistor = new UMH3N
 
-
-    # Connect the CP2102N to VBUS via a voltage divider, to protect the CP2102N from overvoltage
+    # TODO make sure the CP2102N is not connected directly to the VBUS (up to 20V) without a voltage divider or MOSFETs
+    # to protect the CP2102N from overvoltage
     power_vbus.vcc ~ voltage_divider_r1.p1
     
 
@@ -127,8 +127,8 @@ module CP2102N:
 
     # Connect the ESD protection SP0503BAHTG to the D+ and D- lines
     esd_protection.p1 ~ gnd
-    esd_protection.p2 ~ ic.Dplus
-    esd_protection.p3 ~ ic.Dminus
+    esd_protection.p2 ~ ic.dplus
+    esd_protection.p3 ~ ic.dminus
 
     # Connect the auto-reset UMH3N dual transistor to CP2102N
     auto_reset_transistor.p1 ~ ic.RTS

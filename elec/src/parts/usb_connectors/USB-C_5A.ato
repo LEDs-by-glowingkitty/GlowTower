@@ -40,7 +40,7 @@ component USB_C_Connector_5A:
     power.gnd ~ GND 
 
     # Add a single D+ and D- signal
-    signal Dplus ~ DP1
-    signal Dminus ~ DN1
-    Dplus ~ DP2
-    Dminus ~ DN2
+    signal dplus ~ DP1
+    signal dminus ~ DN1
+    dplus ~ DP2
+    dminus ~ DN2
