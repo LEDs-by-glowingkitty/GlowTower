@@ -13,6 +13,7 @@ import _74LVC2G04DW_7 from "elec/src/parts/inverters/74LVC2G04DW_7.ato"
 import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
 import Capacitor_SMD_D10_L10_1000uF from "elec/src/parts/capacitors/SMD_D10_L10mm/1000uF.ato"
 import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
+import SolderPad_2mm_3_5mm from "elec/src/parts/pads/SolderPad_2mm_3_5mm.ato"
 
 module MainPCB:
     """
@@ -66,10 +67,30 @@ module MainPCB:
 
 
     # Pin headers, 2.54mm pitch
+    # TODO
 
 
-
-    # Pads
+    # Pads, for soldering external components to the PCB (power source, sensors, LED strips, etc.)
+    pad_1 = new SolderPad_2mm_3_5mm
+    pad_2 = new SolderPad_2mm_3_5mm
+    pad_3 = new SolderPad_2mm_3_5mm
+    pad_4 = new SolderPad_2mm_3_5mm
+    pad_5 = new SolderPad_2mm_3_5mm
+    pad_6 = new SolderPad_2mm_3_5mm
+    pad_7 = new SolderPad_2mm_3_5mm
+    pad_8 = new SolderPad_2mm_3_5mm
+    pad_9 = new SolderPad_2mm_3_5mm
+    pad_10 = new SolderPad_2mm_3_5mm
+    pad_11 = new SolderPad_2mm_3_5mm
+    pad_12 = new SolderPad_2mm_3_5mm
+    pad_13 = new SolderPad_2mm_3_5mm
+    pad_14 = new SolderPad_2mm_3_5mm
+    pad_15 = new SolderPad_2mm_3_5mm
+    pad_16 = new SolderPad_2mm_3_5mm
+    pad_17 = new SolderPad_2mm_3_5mm
+    pad_18 = new SolderPad_2mm_3_5mm
+    pad_19 = new SolderPad_2mm_3_5mm
+    pad_20 = new SolderPad_2mm_3_5mm
 
 
 
@@ -84,3 +105,5 @@ module MainPCB:
     # Connect the pull up resistor to the boot pin of the ESP32
     esp32.ic.IO0 ~ boot_action_button_pull_up_resistor.p1
     ldo_3v3.vout.vcc ~ boot_action_button_pull_up_resistor.p2
+
+    # TODO connect the rest of the parts
