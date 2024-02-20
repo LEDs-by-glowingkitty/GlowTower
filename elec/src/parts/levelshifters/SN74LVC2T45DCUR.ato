@@ -21,27 +21,30 @@ component _SN74LVC2T45DCUR:
     signal B1 ~ pin 7
     signal VCCB ~ pin 8
 
+    # Set direction from B to A
+    DIR ~ GND
+
 
 module SN74LVC2T45DCUR:
 
     ic = new _SN74LVC2T45DCUR
 
     # add power interfaces
-    vcca = new Power
-    vccb = new Power
-    vcca.vcc ~ ic.VCCA
-    vccb.vcc ~ ic.VCCB
+    vin = new Power
+    vout = new Power
+    vin.vcc ~ ic.VCCB
+    vout.vcc ~ ic.VCCA
     signal gnd ~ ic.GND
-    gnd ~ vcca.gnd
-    gnd ~ vccb.gnd
+    gnd ~ vin.gnd
+    gnd ~ vout.gnd
 
     # add caps
-    vcca_cap = new Capacitor_0402_100nF
-    vccb_cap = new Capacitor_0402_100nF
-    vcca.vcc ~ vcca_cap.p1
-    vccb.vcc ~ vccb_cap.p1
-    gnd ~ vcca_cap.p2
-    gnd ~ vccb_cap.p2
+    vin_cap = new Capacitor_0402_100nF
+    vout_cap = new Capacitor_0402_100nF
+    vin.vcc ~ vin_cap.p1
+    vout.vcc ~ vout_cap.p1
+    gnd ~ vin_cap.p2
+    gnd ~ vout_cap.p2
 
     # add data resistors for WS2812B LEDs
     led_data_1_resistor = new Resistor_0402_62

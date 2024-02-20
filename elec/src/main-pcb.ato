@@ -108,7 +108,7 @@ module MainPCB:
     pad_17 = new SolderPad_2mm_3_5mm
     pad_18 = new SolderPad_2mm_3_5mm
     pad_19 = new SolderPad_2mm_3_5mm
-    pad_20 = new SolderPad_2mm_3_5mm
+    pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
 
 
     ############################################
@@ -131,7 +131,20 @@ module MainPCB:
     ldo_3v3.vout ~ microphone.power
     esp32.ic.i2s ~ microphone.ic.i2s
 
-    # Connect the levelshifters
+    # Connect the power to the levelshifters
+    ldo_3v3.vout ~ levelshifter_1.vin
+    ldo_3v3.vout ~ levelshifter_2.vin
+    ldo_3v3.vout ~ levelshifter_3.vin
+    buck_converter_5v.vout ~ levelshifter_1.vout
+    buck_converter_5v.vout ~ levelshifter_2.vout
+    buck_converter_5v.vout ~ levelshifter_3.vout
+    # Connect the levelshifters to the ESP32 pins for the LED strips
+    esp32.ic.IO16 ~ levelshifter_1.led_data_in_1 # LED strip 1
+    esp32.ic.IO17 ~ levelshifter_1.led_data_in_2 # LED strip 2
+    esp32.ic.IO18 ~ levelshifter_2.led_data_in_1 # LED strip 3
+    esp32.ic.IO19 ~ levelshifter_2.led_data_in_2 # LED strip 4
+    esp32.ic.IO27 ~ levelshifter_3.led_data_in_1 # Actionbutton LED ring
+    pad_extra_led_strip_data_out.p1 ~ levelshifter_3.led_data_in_2 # External (optional) LED strip
 
     # Connect the boot/action button
     
