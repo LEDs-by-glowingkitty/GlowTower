@@ -64,36 +64,36 @@ module CYPD3177_WithCoreParts:
 
     # Add 3.3uF cap for the VBUS of the USB-C port
     vbus_cap_3_3uF = new Capacitor_0805_3_3uF
-    vbus_cap_3_3uF.power ~ vin
+    vin ~ vbus_cap_3_3uF.power
 
     # Add 1uF cap for the VCCD (1.8V) to the CYPD3177
     vccd_cap_1uF = new Capacitor_0603_1uF
-    vccd_cap_1uF.p1 ~ ic.VCCD
-    vccd_cap_1uF.p2 ~ gnd
+    ic.VCCD ~ vccd_cap_1uF.p1
+    gnd ~ vccd_cap_1uF.p2
 
     # Add 1uF & 0.1uF caps for the VDDD (3.3V) to the CYPD3177
     vddd_cap_1uF = new Capacitor_0603_1uF
-    vddd_cap_1uF.p1 ~ ic.VDDD
-    vddd_cap_1uF.p2 ~ gnd
+    ic.VDDD ~ vddd_cap_1uF.p1
+    gnd ~ vddd_cap_1uF.p2
 
     vddd_cap_100nF_1 = new Capacitor_0402_100nF
-    vddd_cap_100nF_1.p1 ~ ic.VDDD
-    vddd_cap_100nF_1.p2 ~ gnd
+    ic.VDDD ~ vddd_cap_100nF_1.p1
+    gnd ~ vddd_cap_100nF_1.p2
 
     vddd_cap_100nF_2 = new Capacitor_0402_100nF
-    vddd_cap_100nF_2.p1 ~ ic.VDDD
-    vddd_cap_100nF_2.p2 ~ gnd
+    ic.VDDD ~ vddd_cap_100nF_2.p1
+    gnd ~ vddd_cap_100nF_2.p2
 
     # Add a pull down resistor for the FAULT pin, so that it is not floating
     fault_pull_down_resistor = new Resistor_0603_100K
-    fault_pull_down_resistor.p1 ~ ic.FAULT
-    fault_pull_down_resistor.p2 ~ gnd
+    ic.FAULT ~ fault_pull_down_resistor.p1
+    gnd ~ fault_pull_down_resistor.p2
 
     # Add a pull up resistor for the FLIP pin, so that it is not floating
     flip_pull_up_resistor = new Resistor_0402_2K
-    flip_pull_up_resistor.p1 ~ ic.FLIP
-    flip_pull_up_resistor.p2 ~ vout_3_3v.vcc
-    
+    ic.FLIP ~ flip_pull_up_resistor.p1
+    vout_3_3v.vcc ~ flip_pull_up_resistor.p2
+
     # Add a voltage divider, to be able to read with a microcontroller the current VDC out voltage
     vdc_voltage_read_divider = new Voltage_Divider_0603_100K__20K
     vout_vbus ~ vdc_voltage_read_divider.power
