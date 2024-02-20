@@ -1,4 +1,5 @@
 import I2C from "generics/interfaces.ato"
+import USB_PD from "generics/interfaces.ato"
 
 component CYPD3177:
     """
@@ -77,3 +78,10 @@ component CYPD3177:
     i2c.sda ~ HPI_SDA
     i2c.scl ~ HPI_SCL
     i2c.gnd ~ GND
+
+    # Add the USB PD interface
+    usb_pd = new USB_PD
+    usb_pd.cc1 ~ CC1
+    usb_pd.cc2 ~ CC2
+    usb_pd.vbus ~ VBUS_IN
+    usb_pd.gnd ~ GND

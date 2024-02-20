@@ -63,18 +63,11 @@ module MainPCB:
     usb_c_connector = new USB_C_Connector_5A
 
     # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
-    usb_pd = new CYPD3177_min_9V_2A
-    usb_c_connector.power ~ usb_pd.vin
-    power_vbus ~ usb_pd.vout_vbus
-    power_5v ~ usb_pd.vout_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
+    usb_pd_ic = new CYPD3177_min_9V_2A
     buck_converter_5v = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
-    power_vbus ~ buck_converter_5v.vin
-    power_5v ~ buck_converter_5v.vout
 
     # 5V to 3.3V LDO, to power the ESP32 and microphone
     ldo_3v3 = new AMS1117_3_3
-    power_5v ~ ldo_3v3.vin
-    power_3_3v ~ ldo_3v3.vout
     
     # MOSFETs to turn off the LED strips (LED ring on action button will stay connected to power)
     power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
@@ -173,3 +166,30 @@ module MainPCB:
     # Connect the pull up resistor to the boot pin of the ESP32
     esp32.ic.IO0 ~ boot_action_button_pull_up_resistor.p1
     power_3_3v.vcc ~ boot_action_button_pull_up_resistor.p2
+
+    # Connect the USB PD IC (CYPD3177)
+    usb_c_connector.usb_pd ~ usb_pd_ic.cypd3177.ic.usb_pd
+    power_vbus ~ usb_pd_ic.vout_vbus
+    power_5v ~ usb_pd_ic.vout_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
+    esp32.ic.i2c ~ usb_pd_ic.cypd3177.ic.i2c
+
+    # Connect the buck converter
+    power_vbus ~ buck_converter_5v.vin
+    power_5v ~ buck_converter_5v.vout
+
+    # Connect the LDO converter
+    power_5v ~ ldo_3v3.vin
+    power_3_3v ~ ldo_3v3.vout
+
+    # Connect the input power to the power MOSFETs
+    power_5v ~ power_mosfet_circuit.vin1
+    power_5v ~ power_mosfet_circuit.vin2
+    power_5v ~ power_mosfet_circuit.vin3
+    power_5v ~ power_mosfet_circuit.vin4
+    # Connect the output power of the power MOSFETs to the LED strips
+    pin_header_male_led_strip_1._1 ~ power_mosfet_circuit.vout1.vcc
+    pin_header_male_led_strip_2._1 ~ power_mosfet_circuit.vout2.vcc
+    pin_header_male_led_strip_3._1 ~ power_mosfet_circuit.vout3.vcc
+    pin_header_male_led_strip_4._1 ~ power_mosfet_circuit.vout4.vcc
+    # Connect the control pins of the power MOSFETs to the ESP32
+    esp32.ic.IO5 ~ power_mosfet_circuit.control
