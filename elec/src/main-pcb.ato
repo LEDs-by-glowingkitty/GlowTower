@@ -9,7 +9,6 @@ import SN74LVC2T45DCUR from "elec/src/parts/levelshifters/SN74LVC2T45DCUR.ato"
 import MOSFETcircuitPowerOnOff_4x_3_5A from "elec/src/parts/power_mosfet_circuits/power_on_off_4x_3_5A.ato"
 import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
 import _74LVC2G04DW_7 from "elec/src/parts/inverters/74LVC2G04DW_7.ato"
-import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
 import Capacitor_SMD_D10_L10_1000uF from "elec/src/parts/capacitors/SMD_D10_L10mm/1000uF.ato"
 import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
 import SolderPad_2mm_3_5mm from "elec/src/parts/pads/SolderPad_2mm_3_5mm.ato"
@@ -49,10 +48,8 @@ module MainPCB:
     levelshifter_2 = new SN74LVC2T45DCUR # for LED strip 3 + 4
     levelshifter_3 = new SN74LVC2T45DCUR # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
 
-    # Boot/Actionbutton + inverter
-    boot_action_button = new TS_1185EC_C_D_B
+    # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
-    boot_action_button_pull_up_resistor = new Resistor_0402_100K
 
 
     ############################################
@@ -108,7 +105,6 @@ module MainPCB:
     pad_power_5v_2 = new SolderPad_2mm_3_5mm
     pad_power_3_3v_1 = new SolderPad_2mm_3_5mm
     pad_power_3_3v_2 = new SolderPad_2mm_3_5mm
-    pad_power_3_3v_3 = new SolderPad_2mm_3_5mm
     pad_gnd_1 = new SolderPad_2mm_3_5mm
     pad_gnd_1 = new SolderPad_2mm_3_5mm
     pad_gnd_1 = new SolderPad_2mm_3_5mm
@@ -125,12 +121,11 @@ module MainPCB:
     pad_io4_spi_sck = new SolderPad_2mm_3_5mm
     pad_io15_spi_cs_jtag_tdo = new SolderPad_2mm_3_5mm
     pad_io12_jtag_tdi = new SolderPad_2mm_3_5mm
+    pad_io0_boot_button = new SolderPad_2mm_3_5mm
     pad_esp32_en_jtag_reset = new SolderPad_2mm_3_5mm
     pad_uart_tx = new SolderPad_2mm_3_5mm
     pad_uart_rx = new SolderPad_2mm_3_5mm
     pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
-
-    # TODO pad for boot button (IO0) and maybe pad for action button?
 
 
     ############################################
@@ -167,19 +162,11 @@ module MainPCB:
     esp32.ic.IO27 ~ levelshifter_3.signal_in_1.io # Actionbutton LED ring
     pad_extra_led_strip_data_out.p1 ~ levelshifter_3.signal_in_2.io # External (optional) LED strip
 
-    # Connect the boot/action button
-    gnd ~ boot_action_button._1
-    esp32.ic.IO0 ~ boot_action_button._2
-    
     # Connnect the inverter
     power_3_3v ~ inverter.power
-    boot_action_button._2 ~ inverter.input_1
+    esp32.boot_button._1 ~ inverter.input_1
     esp32.ic.IO32 ~ inverter.output_1 # If the action button is pressed, IO32 will be pulled high
     gnd ~ inverter.input_2 # Make sure the pin is not floating
-
-    # Connect the pull up resistor to the boot pin of the ESP32
-    esp32.ic.IO0 ~ boot_action_button_pull_up_resistor.p1
-    power_3_3v.vcc ~ boot_action_button_pull_up_resistor.p2
 
     # Connect the USB PD IC (CYPD3177)
     usb_c_connector.usb_pd ~ usb_pd_ic.usb_pd
@@ -243,7 +230,7 @@ module MainPCB:
 
     # Connect GND and the button to the pin headers for the action button
     gnd ~ pin_header_male_action_button._1
-    boot_action_button._2 ~ pin_header_male_action_button._2
+    esp32.boot_button._1 ~ pin_header_male_action_button._2
 
     # Connect the solder pads to power
 
