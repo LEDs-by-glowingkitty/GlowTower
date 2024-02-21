@@ -74,6 +74,8 @@ module MainPCB:
     boot_action_button.button_output ~ micro.action_button_input
     boot_action_button.button_invert_output ~ micro.action_button_inverter_input
 
+    # >>>>>>> Tim here: might want to continue refactor the code below using some of the techniques shows above
+
 
     ############################################
     ################## Power ###################
@@ -227,6 +229,13 @@ module LevelShifterBlock:
 
 
 module MicroWithInterface:
+    """
+    Putting a specific micro into a module is useful for multiple reasons:
+    - You can add useful interfaces to the rest of the system
+    - It easy to swap the mirco whitout having to go through the entire project
+    - It great to inspect what is connected with the ato inspect command
+    ato inspect --inspect micro.esp32.ic --context micro.esp32
+    """
     # Add ESP32 (incl. EN button)
     esp32 = new ESP32_WROOM_32E_N8R2
     # Connected pins besides default pins:
@@ -282,6 +291,9 @@ module MicroWithInterface:
     led_data_actionbutton.gnd ~ power.gnd
 
 module BootButton:
+    """
+    Tim here: I would recommend breaking this even further and using the generics we already have
+    """
     power = new Power
     # Boot/Actionbutton + inverter
     boot_action_button = new TS_1185EC_C_D_B
