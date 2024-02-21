@@ -34,9 +34,12 @@ module MainPCB:
     # IO18: LED strip 3 (data out)
     # IO19: LED strip 4 (data out)
     # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)
-    # IO15: Actionbutton LED ring (data out)
+    # IO2: Actionbutton LED ring (data out)
     # IO32: Actionbutton (high if button pressed, low if not pressed)
     # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
+
+    # TODO: Add direct connection pads for parts of the pcb which might be broken otherwise
+    # Example: alternative direct power connection for USB to serial IC, if mosfet setup doesn't work
 
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
@@ -162,8 +165,8 @@ module MainPCB:
     esp32.ic.IO17 ~ levelshifter_1.signal_in_2.io # LED strip 2
     esp32.ic.IO18 ~ levelshifter_2.signal_in_1.io # LED strip 3
     esp32.ic.IO19 ~ levelshifter_2.signal_in_2.io # LED strip 4
-    esp32.ic.IO15 ~ levelshifter_3.signal_in_1.io # Actionbutton LED ring
-    # TODO: test if IO15 can be safely used for the external LED strip
+    esp32.ic.IO2 ~ levelshifter_3.signal_in_1.io # Actionbutton LED ring
+    # TODO: test if IO2 can be safely used for the external LED strip
     pad_extra_led_strip_data_out.p1 ~ levelshifter_3.signal_in_2.io # External (optional) LED strip
 
     # Connnect the inverter

@@ -1,12 +1,13 @@
 import Capacitor from "generics/capacitors.ato"
 import Resistor from "generics/resistors.ato"
-import SP0503BAHTG from "../esd_protection/SP0503BAHTG.ato"
-import UMH3N from "../transistors/UMH3N.ato"
-import Capacitor_0402_100nF from "../capacitors/0402/100nF.ato"
-import Capacitor_0603_10uF from "../capacitors/0603/10uF.ato"
-import Resistor_0402_1K from "../resistors/0402/1K.ato"
-import Resistor_0402_2K from "../resistors/0402/2K.ato"
-import Resistor_0402_5_1K from "../resistors/0402/5_1K.ato"
+import SP0503BAHTG from "elec/src/parts/esd_protection/SP0503BAHTG.ato"
+import UMH3N from "elec/src/parts/transistors/UMH3N.ato"
+import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
+import Capacitor_0603_10uF from "elec/src/parts/capacitors/0603/10uF.ato"
+import Resistor_0402_1K from "elec/src/parts/resistors/0402/1K.ato"
+import Resistor_0402_2K from "elec/src/parts/resistors/0402/2K.ato"
+import Resistor_0402_5_1K from "elec/src/parts/resistors/0402/5_1K.ato"
+import MOSFETcircuitPowerOnOff_1x_1A from "elec/src/parts/power_mosfet_circuits/power_on_off_1x_1A.ato"
 from "generics/interfaces.ato" import USB2, Power, UART
 
 component CP2102N_A02_GQFN24R:
@@ -50,21 +51,6 @@ component CP2102N_A02_GQFN24R:
     signal DCD ~ pin 24             # Data Carrier Detect
     GND ~ pin 25                    # Ground
 
-    # Add a 3.3V power supply
-    power_3_3v = new Power
-
-    # Add a VBUS power supply
-    power_vbus = new Power
-
-    # Connect the CP2102N to 3.3V
-    power_3_3v.vcc ~ VREGIN
-    power_3_3v.vcc ~ VDD
-    power_3_3v.vcc ~ VIO
-    power_3_3v.gnd ~ GND
-
-    # Connect the CP2102N to VBUS
-    power_vbus.gnd ~ GND
-
     # Add USB2
     usb = new USB2
     usb.dp ~ dplus
@@ -85,9 +71,9 @@ module CP2102N:
     # add power
     power_3_3v = new Power
     power_vbus = new Power
-    power_3_3v ~ ic.power_3_3v
-    power_vbus ~ ic.power_vbus
     signal gnd ~ ic.GND
+    power_3_3v.gnd ~ gnd
+    power_vbus.gnd ~ gnd
 
     uart = new UART
     uart ~ ic.uart
@@ -101,19 +87,16 @@ module CP2102N:
     power_3_3v ~ small_cap.power
     power_3_3v ~ large_cap.power
 
-    # Add voltage divider for VBUS pin
-    # TODO: check with real hardware testing if the values work. Theory: if VBUS is 5V -> 5V * (5100 / (5100 + 20000)) = 1.1V, if VBUS is 20V -> 20V * (5100 / (5100 + 20000)) = 4.4V
-    # Test plan:
-    # - unsolder the existing voltage divider on the Adafruit CP2102N board
-    # - connect variable power supply to VBUS pin
-    # - test flashing with 1.1V input
-    # - test flashing with 3.3V input
-    # - test flashing with 4.2V input
-    # - then also test disconnecting VBUS from REGIN and connect REGIN and VDD to fixed 3.3V input
-    # TODO: consider turning on/off CP2102N with MOSFETs, like with GlowSign PCB (I think inspired by Adafruit)
-    voltage_divider_r1 = new Resistor_0402_2K
-    voltage_divider_r2 = new Resistor_0402_5_1K
-
+    # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
+    power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
+    power_3_3v ~ power_mosfet_circuit.vin
+    power_vbus.vcc ~ power_mosfet_circuit.control
+    # Connect the CP2102N to 3.3V
+    ic.VBUS ~ power_mosfet_circuit.vout.vcc
+    ic.VREGIN ~ power_mosfet_circuit.vout.vcc
+    ic.VDD ~ power_mosfet_circuit.vout.vcc
+    ic.VIO ~ power_mosfet_circuit.vout.vcc
+    
     # Add a pull up resistor for the RSTb pin.
     pull_up_resistor = new Resistor_0402_1K
 
@@ -123,19 +106,9 @@ module CP2102N:
     # Add auto-reset dual transistor
     auto_reset_transistor = new UMH3N
 
-    # TODO make sure the CP2102N is not connected directly to the VBUS (up to 20V) without a voltage divider or MOSFETs
-    # to protect the CP2102N from overvoltage
-    power_vbus.vcc ~ voltage_divider_r1.p1
-    
-
-    # Connect the voltage divider to the CP2102N
-    voltage_divider_r1.p2 ~ voltage_divider_r2.p1
-    voltage_divider_r1.p2 ~ power_vbus.vcc
-    voltage_divider_r2.p2 ~ gnd
-
     # Connect the pull up resistor to the RSTb pin, so it is high by default
     pull_up_resistor.p1 ~ ic.RSTb
-    pull_up_resistor.p2 ~ power_3_3v.vcc
+    pull_up_resistor.p2 ~ power_mosfet_circuit.vout.vcc
 
     # Connect the ESD protection SP0503BAHTG to the D+ and D- lines
     esd_protection.p1 ~ gnd

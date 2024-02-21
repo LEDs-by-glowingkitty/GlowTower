@@ -1,0 +1,49 @@
+import Power from "generics/interfaces.ato"
+import AO3400A from "elec/src/parts/mosfets/AO3400A.ato"
+import AO3401A from "elec/src/parts/mosfets/AO3401A.ato"
+import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
+
+module MOSFETcircuitPowerOnOff_1x_1A:
+    """
+    This circuit is used to turn on/off power to 1 load of up to 1A.
+    The circuit can also handle a higher current, but the MOSFETs will get hotter.
+    """
+    # add the power interfaces for the input and the 1 outputs
+    vin = new Power
+    vout = new Power
+
+    # connect the GNDs of the power interfaces
+    signal gnd ~ vin.gnd
+    gnd ~ vout.gnd
+
+    # the N channel mosfet controls the p channel mosfets
+    power_n_mosfet = new AO3400A
+    # the P channel mosfet controls the load
+    power_p_mosfet = new AO3401A
+
+    # add the resistors for the N channel mosfet and the P channel mosfets
+    power_n_mosfet_resistor = new Resistor_0402_100K
+    power_p_mosfet_resistor = new Resistor_0402_100K
+
+    # connect the control input to the gate of the N channel mosfet
+    signal control ~ power_n_mosfet.G
+
+    # connect the source of the N channel mosfet to the GND
+    gnd ~ power_n_mosfet.S
+
+    # connect the resistor for the N channel mosfet to the gate of the N channel mosfet
+    power_n_mosfet.G ~ power_n_mosfet_resistor.p1
+    gnd ~ power_n_mosfet_resistor.p2
+
+    # connect the drain of the N channel mosfet to the gates of the P channel mosfets.
+    power_n_mosfet.D ~ power_p_mosfet.G
+
+    # connect the input voltages to the sources of the P channel mosfets
+    vin.vcc ~ power_p_mosfet.S
+
+    # connect the drains of the P channel mosfets to the output voltages
+    vout.vcc ~ power_p_mosfet.D
+
+    # connect the resistor for the P channel mosfet between the gate and the source of the P channel mosfet
+    power_p_mosfet.G ~ power_p_mosfet_resistor.p1
+    power_p_mosfet.S ~ power_p_mosfet_resistor.p2
