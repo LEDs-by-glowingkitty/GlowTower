@@ -33,7 +33,8 @@ module MainPCB:
     # IO17: LED strip 2 (data out)
     # IO18: LED strip 3 (data out)
     # IO19: LED strip 4 (data out)
-    # IO27: Actionbutton LED ring (data out)
+    # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)
+    # IO15: Actionbutton LED ring (data out)
     # IO32: Actionbutton (high if button pressed, low if not pressed)
     # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
 
@@ -121,6 +122,7 @@ module MainPCB:
     pad_io4_spi_sck = new SolderPad_2mm_3_5mm
     pad_io15_spi_cs_jtag_tdo = new SolderPad_2mm_3_5mm
     pad_io12_jtag_tdi = new SolderPad_2mm_3_5mm
+    pad_io27 = new SolderPad_2mm_3_5mm
     pad_io0_boot_button = new SolderPad_2mm_3_5mm
     pad_esp32_en_jtag_reset = new SolderPad_2mm_3_5mm
     pad_uart_tx = new SolderPad_2mm_3_5mm
@@ -159,7 +161,8 @@ module MainPCB:
     esp32.ic.IO17 ~ levelshifter_1.signal_in_2.io # LED strip 2
     esp32.ic.IO18 ~ levelshifter_2.signal_in_1.io # LED strip 3
     esp32.ic.IO19 ~ levelshifter_2.signal_in_2.io # LED strip 4
-    esp32.ic.IO27 ~ levelshifter_3.signal_in_1.io # Actionbutton LED ring
+    esp32.ic.IO15 ~ levelshifter_3.signal_in_1.io # Actionbutton LED ring
+    # TODO: test if IO15 can be safely used for the external LED strip
     pad_extra_led_strip_data_out.p1 ~ levelshifter_3.signal_in_2.io # External (optional) LED strip
 
     # Connnect the inverter
@@ -254,6 +257,7 @@ module MainPCB:
     esp32.ic.IO4 ~ pad_io4_spi_sck.p1
     esp32.ic.IO15 ~ pad_io15_spi_cs_jtag_tdo.p1
     esp32.ic.IO12 ~ pad_io12_jtag_tdi.p1
+    esp32.ic.IO27 ~ pad_io27.p1
     esp32.boot_button._1 ~ pad_io0_boot_button.p1
     esp32.ic.EN ~ pad_esp32_en_jtag_reset.p1
     esp32.uart.tx ~ pad_uart_tx.p1

@@ -87,7 +87,8 @@ component _ESP32_WROOM_32E_N8R2:
     i2s.sd ~ IO26
     i2s.gnd ~ GND
 
-    # add SPI interface
+    # add SPI interface 
+    # (DMX can also be connected via SPI, for example via the SparkFun DMX shield for ESP32)
     spi = new SPI
     spi.miso ~ IO13
     spi.mosi ~ IO14
