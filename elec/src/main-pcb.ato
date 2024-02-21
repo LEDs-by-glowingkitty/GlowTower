@@ -30,7 +30,7 @@ module MainPCB:
 
     # TODO: test all used pins and see if all can be used as intended
 
-    # Add ESP32 (incl. EN button)
+    # Add ESP32 (incl. EN button + BOOT button)
     esp32 = new ESP32_WROOM_32E_N8R2
     # Connected pins besides default pins:
     # IO5: LED Strips power on/off
@@ -60,6 +60,7 @@ module MainPCB:
     levelshifter_2 = new SN74LVC2T45DCUR # for LED strip 3 + 4
     levelshifter_3 = new SN74LVC2T45DCUR # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
 
+    # TODO: test if the inverter is really needed
     # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
 
@@ -88,15 +89,15 @@ module MainPCB:
     # 5V to 3.3V LDO, to power the ESP32 and microphone
     ldo_3v3 = new AMS1117_3_3
     
-    # MOSFETs to turn off the LED strips (LED ring on action button will stay connected to power)
+    # MOSFETs to turn off the LED strips via IO5 (LED ring on action button will stay connected to power)
     led_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
 
     # LED capacitors
     # TODO: test adding capacitors to the LED strips and see impact
-    led_strip_capacitor_1 = new Capacitor_SMD_D10_L10_1000uF
-    led_strip_capacitor_2 = new Capacitor_SMD_D10_L10_1000uF
-    led_strip_capacitor_3 = new Capacitor_SMD_D10_L10_1000uF
-    led_strip_capacitor_4 = new Capacitor_SMD_D10_L10_1000uF
+    led_strip_1_capacitor = new Capacitor_SMD_D10_L10_1000uF
+    led_strip_2_capacitor = new Capacitor_SMD_D10_L10_1000uF
+    led_strip_3_capacitor = new Capacitor_SMD_D10_L10_1000uF
+    led_strip_4_capacitor = new Capacitor_SMD_D10_L10_1000uF
     led_ring_capacitor = new Capacitor_1206_100uF
 
 
@@ -231,14 +232,14 @@ module MainPCB:
     pin_header_male_led_ring._1 ~ power_5v.vcc
 
     # Connect the LED strip capacitors
-    pin_header_male_led_strip_1._1 ~ led_strip_capacitor_1.p1
-    pin_header_male_led_strip_2._1 ~ led_strip_capacitor_2.p1
-    pin_header_male_led_strip_3._1 ~ led_strip_capacitor_3.p1
-    pin_header_male_led_strip_4._1 ~ led_strip_capacitor_4.p1
-    gnd ~ led_strip_capacitor_1.p2
-    gnd ~ led_strip_capacitor_2.p2
-    gnd ~ led_strip_capacitor_3.p2
-    gnd ~ led_strip_capacitor_4.p2
+    pin_header_male_led_strip_1._1 ~ led_strip_1_capacitor.p1
+    pin_header_male_led_strip_2._1 ~ led_strip_2_capacitor.p1
+    pin_header_male_led_strip_3._1 ~ led_strip_3_capacitor.p1
+    pin_header_male_led_strip_4._1 ~ led_strip_4_capacitor.p1
+    gnd ~ led_strip_1_capacitor.p2
+    gnd ~ led_strip_2_capacitor.p2
+    gnd ~ led_strip_3_capacitor.p2
+    gnd ~ led_strip_4_capacitor.p2
 
     # Connect the LED ring capacitor
     pin_header_male_led_ring._1 ~ led_ring_capacitor.p1
