@@ -1,4 +1,6 @@
-import Power from "generics/interfaces.ato"
+from "generics/interfaces.ato" import Power, Pair
+from "generics/capacitors.ato" import Capacitor
+from "generics/resistors.ato" import Resistor
 import Resistor_0402_62 from "elec/src/parts/resistors/0402/62.ato"
 import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
 
@@ -24,35 +26,62 @@ component _SN74LVC2T45DCUR:
     # Set direction from B to A
     DIR ~ GND
 
+    power_in = new Power
+    power_in.vcc ~ VCCB
+    power_in.gnd ~ GND
+
+    power_out = new Power
+    power_out.vcc ~ VCCA
+    power_out.gnd ~ GND
+
 
 module SN74LVC2T45DCUR:
 
     ic = new _SN74LVC2T45DCUR
 
     # add power interfaces
-    vin = new Power
-    vout = new Power
-    vin.vcc ~ ic.VCCB
-    vout.vcc ~ ic.VCCA
-    signal gnd ~ ic.GND
-    gnd ~ vin.gnd
-    gnd ~ vout.gnd
+    power_in = new Power
+    power_in ~ ic.power_in
 
-    # add caps
-    vin_cap = new Capacitor_0402_100nF
-    vout_cap = new Capacitor_0402_100nF
-    vin.vcc ~ vin_cap.p1
-    vout.vcc ~ vout_cap.p1
-    gnd ~ vin_cap.p2
-    gnd ~ vout_cap.p2
+    power_out = new Power
+    power_out ~ ic.power_out
 
-    # add data resistors for WS2812B LEDs
-    led_data_1_resistor = new Resistor_0402_62
-    led_data_2_resistor = new Resistor_0402_62
-    signal led_data_out_1 ~ led_data_1_resistor.p1
-    signal led_data_out_2 ~ led_data_2_resistor.p1
-    led_data_1_resistor.p2 ~ ic.A1
-    led_data_2_resistor.p2 ~ ic.A2
+    # add bypass caps
+    power_in_cap = new Capacitor
+    power_in_cap.package = "0402"
+    power_in_cap.value = 100nF +/- 20%
+    power_in_cap.power ~ power_in
 
-    signal led_data_in_1 ~ ic.B1
-    signal led_data_in_2 ~ ic.B2
+    power_out_cap = new Capacitor
+    power_out_cap.package = "0402"
+    power_out_cap.value = 100nF +/- 20%
+    power_out_cap.power ~ power_out
+
+
+    # Input
+    data_in_1_resistor = new Resistor
+    data_in_1_resistor.value = 62ohm +/- 1%
+    data_in_1_resistor.footprint = "R0402"
+    data_in_1_resistor.mpn = "C4962"
+
+    signal_out_1 = new Pair
+    signal_out_1.io ~ data_in_1_resistor.p1; data_in_1_resistor.p2 ~ ic.A1
+    signal_out_1.gnd ~ power_out.gnd
+
+    data_in_2_resistor = new Resistor
+    data_in_2_resistor.value = 62ohm +/- 1%
+    data_in_2_resistor.footprint = "R0402"
+    data_in_2_resistor.mpn = "C4962"
+
+    signal_out_2 = new Pair
+    signal_out_2.io ~ data_in_2_resistor.p1; data_in_2_resistor.p2 ~ ic.A2
+    signal_out_2.gnd ~ power_out.gnd
+
+    # Output
+    signal_in_1 = new Pair
+    signal_in_1.io ~ ic.B1
+    signal_in_1.gnd ~ power_in.gnd
+
+    signal_in_2 = new Pair
+    signal_in_2.io ~ ic.B2
+    signal_in_2.gnd ~ power_in.gnd

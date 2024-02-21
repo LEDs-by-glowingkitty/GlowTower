@@ -13,52 +13,14 @@ import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
 import Capacitor_SMD_D10_L10_1000uF from "elec/src/parts/capacitors/SMD_D10_L10mm/1000uF.ato"
 import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
 import SolderPad_2mm_3_5mm from "elec/src/parts/pads/SolderPad_2mm_3_5mm.ato"
-import PinHeader_2_54mm_2pins from "elec/src/parts/pin_headers/PinHeader_2_54mm_2pins.ato"
-import PinHeader_2_54mm_3pins from "elec/src/parts/pin_headers/PinHeader_2_54mm_3pins.ato"
-import Power from "generics/interfaces.ato"
+from "elec/src/parts/pin_headers/PinHeader_2_54mm.ato" import PinHeader_2_54mm_2pins, PinHeader_2_54mm_3pins
+from "generics/interfaces.ato" import Power, Pair, I2S, UART, I2C
 
 module MainPCB:
     """
     This is the main PCB of GlowLight & GlowTower. It contains all the power management, the microcontroller and more.
     WS2812B LED strips are connected to this PCB via pin headers.
     """
-
-    ############################################
-    ######### Processing & Inputs ##############
-    ############################################
-
-    # Add ESP32 (incl. EN button)
-    esp32 = new ESP32_WROOM_32E_N8R2
-    # Connected pins besides default pins:
-    # IO5: LED Strips power on/off
-    # IO16: LED strip 1 (data out)
-    # IO17: LED strip 2 (data out)
-    # IO18: LED strip 3 (data out)
-    # IO19: LED strip 4 (data out)
-    # IO27: Actionbutton LED ring (data out)
-    # IO32: Actionbutton (high if button pressed, low if not pressed)
-    # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
-
-    # Add USB to serial via CP2102N
-    usb_to_serial = new CP2102N
-
-    # Microphone
-    microphone = new MSM261D4030H1CPM
-
-    # LED levelshifters
-    levelshifter_1 = new SN74LVC2T45DCUR # for LED strip 1 + 2
-    levelshifter_2 = new SN74LVC2T45DCUR # for LED strip 3 + 4
-    levelshifter_3 = new SN74LVC2T45DCUR # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
-
-    # Boot/Actionbutton + inverter
-    boot_action_button = new TS_1185EC_C_D_B
-    inverter = new _74LVC2G04DW_7
-    boot_action_button_pull_up_resistor = new Resistor_0402_100K
-
-
-    ############################################
-    ################## Power ###################
-    ############################################
 
     power_vbus = new Power
     power_5v = new Power
@@ -67,8 +29,56 @@ module MainPCB:
     gnd ~ power_5v.gnd
     gnd ~ power_3_3v.gnd
 
+    ############################################
+    ######### Processing & Inputs ##############
+    ############################################
+
+    micro = new MicroWithInterface
+    power_3_3v ~ micro.power
+
     # Add USB-C connector that can handle up to 5A at 20V (100W)
     usb_c_connector = new USB_C_Connector_5A
+
+    # Add USB to serial via CP2102N
+    usb_to_serial = new CP2102N
+    power_3_3v ~ usb_to_serial.power_3_3v
+
+    usb_to_serial.uart.tx ~ micro.uart.rx
+    usb_to_serial.uart.rx ~ micro.uart.tx
+    # Connect the data lines from the USB port to USB to serial
+    usb_c_connector.usb ~ usb_to_serial.usb
+    usb_c_connector.power ~ usb_to_serial.power_vbus
+
+    # Microphone
+    microphone = new MSM261D4030H1CPM
+    power_3_3v ~ microphone.power
+    micro.microphone_i2s ~ microphone.ic.i2s
+
+    # LED levelshifters
+    level_shifter_block = new LevelShifterBlock
+    power_3_3v ~ level_shifter_block.power_in
+    power_5v ~ level_shifter_block.power_out
+
+    level_shifter_block.levelshifter_1.signal_in_1 ~ micro.led_data_1
+    level_shifter_block.levelshifter_1.signal_in_2 ~ micro.led_data_2
+    level_shifter_block.levelshifter_2.signal_in_1 ~ micro.led_data_3
+    level_shifter_block.levelshifter_2.signal_in_2 ~ micro.led_data_4
+    level_shifter_block.levelshifter_3.signal_in_1 ~ micro.led_data_actionbutton
+
+    pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
+    level_shifter_block.levelshifter_3.signal_in_2.io ~ pad_extra_led_strip_data_out.p1 # External (optional) LED strip
+
+    # Boot/Actionbutton + inverter
+    boot_action_button = new BootButton
+    boot_action_button.power ~ power_3_3v
+    boot_action_button.button_output ~ micro.action_button_input
+    boot_action_button.button_invert_output ~ micro.action_button_inverter_input
+
+
+    ############################################
+    ################## Power ###################
+    ############################################
+
 
     # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
     usb_pd_ic = new CYPD3177_min_9V_2A
@@ -124,64 +134,19 @@ module MainPCB:
     pad_spi_cs = new SolderPad_2mm_3_5mm
     pad_19 = new SolderPad_2mm_3_5mm
     # TODO add pads for JTAG
-    pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
 
 
     ############################################
     ############### Connections ################
     ############################################
 
-    # Connect the ESP32
-    power_3_3v ~ esp32.power
-
-    # Connect the power to USB to serial
-    power_3_3v ~ usb_to_serial.power_3_3v
-    usb_c_connector.power ~ usb_to_serial.power_vbus
-    # Connect the data lines from the USB port to USB to serial
-    usb_c_connector.usb ~ usb_to_serial.ic.usb
-    # Connect the USB to serial to the ESP32
-    esp32.ic.RXD0 ~ usb_to_serial.ic.TXD
-    esp32.ic.TXD0 ~ usb_to_serial.ic.RXD
-
-    # Connect the microphone
-    power_3_3v ~ microphone.power
-    esp32.ic.i2s ~ microphone.ic.i2s
-
-    # Connect the power to the levelshifters
-    power_3_3v ~ levelshifter_1.vin
-    power_3_3v ~ levelshifter_2.vin
-    power_3_3v ~ levelshifter_3.vin
-    power_5v ~ levelshifter_1.vout
-    power_5v ~ levelshifter_2.vout
-    power_5v ~ levelshifter_3.vout
-    # Connect the levelshifters to the ESP32 pins for the LED strips
-    esp32.ic.IO16 ~ levelshifter_1.led_data_in_1 # LED strip 1
-    esp32.ic.IO17 ~ levelshifter_1.led_data_in_2 # LED strip 2
-    esp32.ic.IO18 ~ levelshifter_2.led_data_in_1 # LED strip 3
-    esp32.ic.IO19 ~ levelshifter_2.led_data_in_2 # LED strip 4
-    esp32.ic.IO27 ~ levelshifter_3.led_data_in_1 # Actionbutton LED ring
-    pad_extra_led_strip_data_out.p1 ~ levelshifter_3.led_data_in_2 # External (optional) LED strip
-
-    # Connect the boot/action button
-    gnd ~ boot_action_button._1
-    esp32.ic.IO0 ~ boot_action_button._2
-    
-    # Connnect the inverter
-    power_3_3v ~ inverter.power
-    boot_action_button._2 ~ inverter.input_1
-    esp32.ic.IO32 ~ inverter.output_1 # If the action button is pressed, IO32 will be pulled high
-    gnd ~ inverter.input_2 # Make sure the pin is not floating
-
-    # Connect the pull up resistor to the boot pin of the ESP32
-    esp32.ic.IO0 ~ boot_action_button_pull_up_resistor.p1
-    power_3_3v.vcc ~ boot_action_button_pull_up_resistor.p2
 
     # Connect the USB PD IC (CYPD3177)
     usb_c_connector.usb_pd ~ usb_pd_ic.cypd3177.ic.usb_pd
     power_vbus ~ usb_pd_ic.vout_vbus
     power_5v ~ usb_pd_ic.vout_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
-    esp32.ic.i2c ~ usb_pd_ic.cypd3177.ic.i2c
-    esp32.ic.IO33 ~ usb_pd_ic.cypd3177.vout_vbus_readout # Read the USB PD voltage via a voltage divider
+    micro.i2c ~ usb_pd_ic.cypd3177.ic.i2c
+    micro.usb_pd_voltage_readout ~ usb_pd_ic.cypd3177.vout_vbus_readout # Read the USB PD voltage via a voltage divider
 
     # Connect the buck converter
     power_vbus ~ buck_converter_5v.vin
@@ -202,7 +167,7 @@ module MainPCB:
     pin_header_male_led_strip_3._1 ~ power_mosfet_circuit.vout3.vcc
     pin_header_male_led_strip_4._1 ~ power_mosfet_circuit.vout4.vcc
     # Connect the control pins of the power MOSFETs to the ESP32
-    esp32.ic.IO5 ~ power_mosfet_circuit.control
+    micro.power_mosfet_control ~ power_mosfet_circuit.control
 
     # Connect the power of the LED ring
     pin_header_male_led_ring._1 ~ power_5v.vcc
@@ -222,13 +187,13 @@ module MainPCB:
     gnd ~ led_ring_capacitor.p2
 
     # Connect the LED data output to the pin headers for the LED strips
-    levelshifter_1.led_data_out_1 ~ pin_header_male_led_strip_1._2
-    levelshifter_1.led_data_out_2 ~ pin_header_male_led_strip_2._2
-    levelshifter_2.led_data_out_1 ~ pin_header_male_led_strip_3._2
-    levelshifter_2.led_data_out_2 ~ pin_header_male_led_strip_4._2
+    level_shifter_block.levelshifter_1.signal_out_1.io ~ pin_header_male_led_strip_1._2
+    level_shifter_block.levelshifter_1.signal_out_2.io ~ pin_header_male_led_strip_2._2
+    level_shifter_block.levelshifter_2.signal_out_1.io ~ pin_header_male_led_strip_3._2
+    level_shifter_block.levelshifter_2.signal_out_2.io ~ pin_header_male_led_strip_4._2
 
     # Connect the LED data output to the pin headers for the action button LED ring
-    levelshifter_3.led_data_out_1 ~ pin_header_male_led_ring._2
+    level_shifter_block.levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring._2
 
     # Connect the GND to the LED strip pin headers
     gnd ~ pin_header_male_led_strip_1._3
@@ -238,8 +203,109 @@ module MainPCB:
 
     # Connect GND and the button to the pin headers for the action button
     gnd ~ pin_header_male_action_button._1
-    boot_action_button._2 ~ pin_header_male_action_button._2
+    boot_action_button.button_output.io ~ pin_header_male_action_button._2
 
     # Connect the solder pads to power
 
     # Connect the solder pads to the ESP32
+
+module LevelShifterBlock:
+    power_in = new Power
+    power_out = new Power
+
+    levelshifter_1 = new SN74LVC2T45DCUR # for LED strip 1 + 2
+    levelshifter_2 = new SN74LVC2T45DCUR # for LED strip 3 + 4
+    levelshifter_3 = new SN74LVC2T45DCUR # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
+
+    power_in ~ levelshifter_1.power_in
+    power_in ~ levelshifter_2.power_in
+    power_in ~ levelshifter_3.power_in
+
+    power_out ~ levelshifter_1.power_out
+    power_out ~ levelshifter_2.power_out
+    power_out ~ levelshifter_3.power_out
+
+
+module MicroWithInterface:
+    # Add ESP32 (incl. EN button)
+    esp32 = new ESP32_WROOM_32E_N8R2
+    # Connected pins besides default pins:
+    # IO5: LED Strips power on/off
+    # IO16: LED strip 1 (data out)
+    # IO17: LED strip 2 (data out)
+    # IO18: LED strip 3 (data out)
+    # IO19: LED strip 4 (data out)
+    # IO27: Actionbutton LED ring (data out)
+    # IO32: Actionbutton (high if button pressed, low if not pressed)
+    # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
+
+    power = new Power
+    power ~ esp32.power
+
+    microphone_i2s = new I2S
+    microphone_i2s ~ esp32.ic.i2s
+
+    i2c = new I2C
+    i2c ~ esp32.ic.i2c
+
+    action_button_inverter_input = new Pair
+    esp32.ic.IO32 ~ action_button_inverter_input.io
+    power.gnd ~ action_button_inverter_input.gnd
+
+    action_button_input = new Pair
+    esp32.ic.IO0 ~ action_button_input.io
+    power.gnd ~ action_button_input.gnd
+
+    uart = new UART
+    uart ~ esp32.ic.uart
+
+    signal usb_pd_voltage_readout ~ esp32.ic.IO33
+
+    signal power_mosfet_control ~ esp32.ic.IO5
+
+    led_data_1 = new Pair
+    led_data_2 = new Pair
+    led_data_3 = new Pair
+    led_data_4 = new Pair
+    led_data_actionbutton = new Pair
+
+    led_data_1.io ~ esp32.ic.IO16
+    led_data_2.io ~ esp32.ic.IO17
+    led_data_3.io ~ esp32.ic.IO18
+    led_data_4.io ~ esp32.ic.IO19
+    led_data_actionbutton.io ~ esp32.ic.IO27
+
+    led_data_1.gnd ~ power.gnd
+    led_data_2.gnd ~ power.gnd
+    led_data_3.gnd ~ power.gnd
+    led_data_4.gnd ~ power.gnd
+    led_data_actionbutton.gnd ~ power.gnd
+
+module BootButton:
+    power = new Power
+    # Boot/Actionbutton + inverter
+    boot_action_button = new TS_1185EC_C_D_B
+    boot_action_button_pull_up_resistor = new Resistor_0402_100K
+
+    button_output = new Pair
+    boot_action_button._2 ~ button_output.io
+    button_output.gnd ~ power.gnd
+    boot_action_button._1 ~ power.gnd
+
+    # Pullup on the button
+    button_output.io ~ boot_action_button_pull_up_resistor.p1
+    power.vcc ~ boot_action_button_pull_up_resistor.p2
+
+    inverter = new _74LVC2G04DW_7
+    inverter.power ~ power
+
+    boot_action_button._2 ~ inverter.input_1
+
+    button_invert_output = new Pair
+    boot_action_button._2 ~ button_invert_output.io
+    button_invert_output.gnd ~ power.gnd
+
+    button_invert_output.io ~ inverter.output_1
+
+    # make sure this pin is not floating
+    power.gnd ~ inverter.input_2
