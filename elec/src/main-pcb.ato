@@ -55,6 +55,8 @@ module MainPCB:
     # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
 
+    # TODO: add switch for between GlowLight & GlowTower mode (which sets number of leds, wifi name, etc.)
+
 
     ############################################
     ################## Power ###################
@@ -81,7 +83,7 @@ module MainPCB:
     power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
 
     # LED capacitors
-    # TODO test adding capacitors to the LED strips and see impact
+    # TODO: test adding capacitors to the LED strips and see impact
     led_strip_capacitor_1 = new Capacitor_SMD_D10_L10_1000uF
     led_strip_capacitor_2 = new Capacitor_SMD_D10_L10_1000uF
     led_strip_capacitor_3 = new Capacitor_SMD_D10_L10_1000uF

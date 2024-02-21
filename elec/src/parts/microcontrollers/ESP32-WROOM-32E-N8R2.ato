@@ -93,7 +93,7 @@ component _ESP32_WROOM_32E_N8R2:
     spi.miso ~ IO13
     spi.mosi ~ IO14
     spi.sck ~ IO4
-    spi.cs ~ IO15 #TODO check if that pin is ok
+    spi.cs ~ IO15
     spi.gnd ~ GND
 
     # add UART
