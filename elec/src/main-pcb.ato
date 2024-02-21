@@ -146,19 +146,19 @@ module MainPCB:
     esp32.ic.i2s ~ microphone.ic.i2s
 
     # Connect the power to the levelshifters
-    power_3_3v ~ levelshifter_1.vin
-    power_3_3v ~ levelshifter_2.vin
-    power_3_3v ~ levelshifter_3.vin
-    power_5v ~ levelshifter_1.vout
-    power_5v ~ levelshifter_2.vout
-    power_5v ~ levelshifter_3.vout
+    power_3_3v ~ levelshifter_1.power_in
+    power_3_3v ~ levelshifter_2.power_in
+    power_3_3v ~ levelshifter_3.power_in
+    power_5v ~ levelshifter_1.power_out
+    power_5v ~ levelshifter_2.power_out
+    power_5v ~ levelshifter_3.power_out
     # Connect the levelshifters to the ESP32 pins for the LED strips
-    esp32.ic.IO16 ~ levelshifter_1.led_data_in_1 # LED strip 1
-    esp32.ic.IO17 ~ levelshifter_1.led_data_in_2 # LED strip 2
-    esp32.ic.IO18 ~ levelshifter_2.led_data_in_1 # LED strip 3
-    esp32.ic.IO19 ~ levelshifter_2.led_data_in_2 # LED strip 4
-    esp32.ic.IO27 ~ levelshifter_3.led_data_in_1 # Actionbutton LED ring
-    pad_extra_led_strip_data_out.p1 ~ levelshifter_3.led_data_in_2 # External (optional) LED strip
+    esp32.ic.IO16 ~ levelshifter_1.signal_in_1.io # LED strip 1
+    esp32.ic.IO17 ~ levelshifter_1.signal_in_2.io # LED strip 2
+    esp32.ic.IO18 ~ levelshifter_2.signal_in_1.io # LED strip 3
+    esp32.ic.IO19 ~ levelshifter_2.signal_in_2.io # LED strip 4
+    esp32.ic.IO27 ~ levelshifter_3.signal_in_1.io # Actionbutton LED ring
+    pad_extra_led_strip_data_out.p1 ~ levelshifter_3.signal_in_2.io # External (optional) LED strip
 
     # Connect the boot/action button
     gnd ~ boot_action_button._1
@@ -220,13 +220,13 @@ module MainPCB:
     gnd ~ led_ring_capacitor.p2
 
     # Connect the LED data output to the pin headers for the LED strips
-    levelshifter_1.led_data_out_1 ~ pin_header_male_led_strip_1._2
-    levelshifter_1.led_data_out_2 ~ pin_header_male_led_strip_2._2
-    levelshifter_2.led_data_out_1 ~ pin_header_male_led_strip_3._2
-    levelshifter_2.led_data_out_2 ~ pin_header_male_led_strip_4._2
+    levelshifter_1.signal_out_1.io ~ pin_header_male_led_strip_1._2
+    levelshifter_1.signal_out_2.io ~ pin_header_male_led_strip_2._2
+    levelshifter_2.signal_out_1.io ~ pin_header_male_led_strip_3._2
+    levelshifter_2.signal_out_2.io ~ pin_header_male_led_strip_4._2
 
     # Connect the LED data output to the pin headers for the action button LED ring
-    levelshifter_3.led_data_out_1 ~ pin_header_male_led_ring._2
+    levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring._2
 
     # Connect the GND to the LED strip pin headers
     gnd ~ pin_header_male_led_strip_1._3
