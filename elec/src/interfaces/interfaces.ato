@@ -1,5 +1,0 @@
-interface I2S:
-    signal ws
-    signal sck
-    signal sd
-    signal gnd
