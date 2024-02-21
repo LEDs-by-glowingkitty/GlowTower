@@ -3,7 +3,7 @@ import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
 import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
 import Capacitor_0603_10uF from "elec/src/parts/capacitors/0603/10uF.ato"
 import Resistor_0402_5_1K from "elec/src/parts/resistors/0402/5_1K.ato"
-from "generics/interfaces.ato" import Power, I2C, SPI, I2S
+from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG
 
 component _ESP32_WROOM_32E_N8R2:
     """
@@ -94,8 +94,21 @@ component _ESP32_WROOM_32E_N8R2:
     spi.cs ~ IO15 #TODO check if that pin is ok
     spi.gnd ~ GND
 
+    # add UART
+    uart = new UART
+    uart.tx ~ TXD0
+    uart.rx ~ RXD0
+    uart.gnd ~ GND
+
     # add JTAG interface
-    # TODO
+    jtag = new JTAG
+    jtag.tck ~ IO13
+    jtag.tms ~ IO14
+    jtag.tdi ~ IO12
+    jtag.tdo ~ IO15
+    jtag.reset ~ EN
+    jtag.vcc ~ _3V3
+    jtag.gnd ~ GND
 
 
 module ESP32_WROOM_32E_N8R2:
@@ -104,6 +117,18 @@ module ESP32_WROOM_32E_N8R2:
     # add power interface
     power = new Power
     power ~ ic.power
+
+    # add interfaces
+    i2c = new I2C
+    i2c ~ ic.i2c
+    i2s = new I2S
+    i2s ~ ic.i2s
+    spi = new SPI
+    spi ~ ic.spi
+    uart = new UART
+    uart ~ ic.uart
+    jtag = new JTAG
+    jtag ~ ic.jtag
 
     # Add capacitor for 3.3V input of ESP32
     vin_cap = new Capacitor_0603_10uF

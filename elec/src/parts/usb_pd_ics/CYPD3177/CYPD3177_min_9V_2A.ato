@@ -2,6 +2,7 @@ import CYPD3177_WithCoreParts from "elec/src/parts/usb_pd_ics/CYPD3177/submodule
 import Voltage_Divider_0402_5_1K__1K from "elec/src/parts/voltage_dividers/0402/Voltage_Divider_0402_5_1K__1K.ato"
 import Voltage_Divider_0402_5_1K__2_4K from "elec/src/parts/voltage_dividers/0402/Voltage_Divider_0402_5_1K__2_4K.ato"
 import Power from "generics/interfaces.ato"
+from "generics/interfaces.ato" import I2C, USB_PD
 
 module CYPD3177_min_9V_2A:
     """
@@ -36,3 +37,9 @@ module CYPD3177_min_9V_2A:
 
     # Request +0mA (via pull down to GND)
     cypd3177.ic.ISNK_FINE ~ gnd
+
+    # Make interfaces easier accessible
+    i2c = new I2C
+    i2c ~ cypd3177.ic.i2c
+    usb_pd = new USB_PD
+    usb_pd ~ cypd3177.ic.usb_pd

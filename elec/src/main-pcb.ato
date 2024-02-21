@@ -137,10 +137,9 @@ module MainPCB:
     power_3_3v ~ usb_to_serial.power_3_3v
     usb_c_connector.power ~ usb_to_serial.power_vbus
     # Connect the data lines from the USB port to USB to serial
-    usb_c_connector.usb ~ usb_to_serial.ic.usb
+    usb_c_connector.usb ~ usb_to_serial.usb
     # Connect the USB to serial to the ESP32
-    esp32.ic.RXD0 ~ usb_to_serial.ic.TXD
-    esp32.ic.TXD0 ~ usb_to_serial.ic.RXD
+    esp32.uart ~ usb_to_serial.uart
 
     # Connect the microphone
     power_3_3v ~ microphone.power
@@ -176,10 +175,10 @@ module MainPCB:
     power_3_3v.vcc ~ boot_action_button_pull_up_resistor.p2
 
     # Connect the USB PD IC (CYPD3177)
-    usb_c_connector.usb_pd ~ usb_pd_ic.cypd3177.ic.usb_pd
+    usb_c_connector.usb_pd ~ usb_pd_ic.usb_pd
     power_vbus ~ usb_pd_ic.vout_vbus
     power_5v ~ usb_pd_ic.vout_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
-    esp32.ic.i2c ~ usb_pd_ic.cypd3177.ic.i2c
+    esp32.i2c ~ usb_pd_ic.i2c
     esp32.ic.IO33 ~ usb_pd_ic.cypd3177.vout_vbus_readout # Read the USB PD voltage via a voltage divider
 
     # Connect the buck converter
