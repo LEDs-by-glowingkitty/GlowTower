@@ -106,9 +106,9 @@ module MainPCB:
     pad_power_3_3v_1 = new SolderPad_2mm_3_5mm
     pad_power_3_3v_2 = new SolderPad_2mm_3_5mm
     pad_gnd_1 = new SolderPad_2mm_3_5mm
-    pad_gnd_1 = new SolderPad_2mm_3_5mm
-    pad_gnd_1 = new SolderPad_2mm_3_5mm
-    pad_gnd_1 = new SolderPad_2mm_3_5mm
+    pad_gnd_2 = new SolderPad_2mm_3_5mm
+    pad_gnd_3 = new SolderPad_2mm_3_5mm
+    pad_gnd_4 = new SolderPad_2mm_3_5mm
 
     # Pads for connecting external components to the ESP32
     pad_io21_i2c_sda = new SolderPad_2mm_3_5mm
@@ -232,6 +232,30 @@ module MainPCB:
     gnd ~ pin_header_male_action_button._1
     esp32.boot_button._1 ~ pin_header_male_action_button._2
 
-    # Connect the solder pads to power
+    # Connect power to the solder pads
+    power_vbus.vcc ~ pad_power_vbus.p1
+    power_5v.vcc ~ pad_power_5v_1.p1
+    power_5v.vcc ~ pad_power_5v_2.p1
+    power_3_3v.vcc ~ pad_power_3_3v_1.p1
+    power_3_3v.vcc ~ pad_power_3_3v_2.p1
+    gnd ~ pad_gnd_1.p1
+    gnd ~ pad_gnd_2.p1
+    gnd ~ pad_gnd_3.p1
+    gnd ~ pad_gnd_4.p1
 
-    # Connect the solder pads to the ESP32
+    # Connect other connections to the solder pads
+    esp32.ic.IO21 ~ pad_io21_i2c_sda.p1
+    esp32.ic.IO22 ~ pad_io22_i2c_scl.p1
+    esp32.ic.IO23 ~ pad_io23_i2s_ws.p1
+    esp32.ic.IO25 ~ pad_io25_i2s_sck.p1
+    esp32.ic.IO26 ~ pad_io26_i2s_sd.p1
+    esp32.ic.IO13 ~ pad_io13_spi_mosi_jtag_tck.p1
+    esp32.ic.IO14 ~ pad_io14_spi_miso_jtag_tms.p1
+    esp32.ic.IO4 ~ pad_io4_spi_sck.p1
+    esp32.ic.IO15 ~ pad_io15_spi_cs_jtag_tdo.p1
+    esp32.ic.IO12 ~ pad_io12_jtag_tdi.p1
+    esp32.boot_button._1 ~ pad_io0_boot_button.p1
+    esp32.ic.EN ~ pad_esp32_en_jtag_reset.p1
+    esp32.uart.tx ~ pad_uart_tx.p1
+    esp32.uart.rx ~ pad_uart_rx.p1
+    levelshifter_3.signal_out_2.io ~ pad_extra_led_strip_data_out.p1
