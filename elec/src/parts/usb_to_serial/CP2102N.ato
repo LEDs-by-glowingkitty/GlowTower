@@ -7,7 +7,6 @@ import Capacitor_0603_10uF from "elec/src/parts/capacitors/0603/10uF.ato"
 import Resistor_0402_1K from "elec/src/parts/resistors/0402/1K.ato"
 import Resistor_0402_2K from "elec/src/parts/resistors/0402/2K.ato"
 import Resistor_0402_5_1K from "elec/src/parts/resistors/0402/5_1K.ato"
-import MOSFETcircuitPowerOnOff_1x_1A from "elec/src/parts/power_mosfet_circuits/power_on_off_1x_1A.ato"
 from "generics/interfaces.ato" import USB2, Power, UART
 
 component CP2102N_A02_GQFN24R:
@@ -87,16 +86,11 @@ module CP2102N:
     power_3_3v ~ small_cap.power
     power_3_3v ~ large_cap.power
 
-    # TODO move this out of the CP2102N module, since not every time this is needed
-    # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
-    power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
-    power_3_3v ~ power_mosfet_circuit.vin
-    power_vbus.vcc ~ power_mosfet_circuit.control
     # Connect the CP2102N to 3.3V
-    ic.VBUS ~ power_mosfet_circuit.vout.vcc
-    ic.VREGIN ~ power_mosfet_circuit.vout.vcc
-    ic.VDD ~ power_mosfet_circuit.vout.vcc
-    ic.VIO ~ power_mosfet_circuit.vout.vcc
+    ic.VBUS ~ power_3_3v.vcc
+    ic.VREGIN ~ power_3_3v.vcc
+    ic.VDD ~ power_3_3v.vcc
+    ic.VIO ~ power_3_3v.vcc
     
     # Add a pull up resistor for the RSTb pin.
     pull_up_resistor = new Resistor_0402_1K
@@ -109,7 +103,7 @@ module CP2102N:
 
     # Connect the pull up resistor to the RSTb pin, so it is high by default
     pull_up_resistor.p1 ~ ic.RSTb
-    pull_up_resistor.p2 ~ power_mosfet_circuit.vout.vcc
+    pull_up_resistor.p2 ~ power_3_3v.vcc
 
     # Connect the ESD protection SP0503BAHTG to the D+ and D- lines
     esd_protection.p1 ~ gnd

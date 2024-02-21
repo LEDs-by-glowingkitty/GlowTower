@@ -6,6 +6,7 @@ import CYPD3177_min_9V_2A from "elec/src/parts/usb_pd_ics/CYPD3177/CYPD3177_min_
 import AMS1117_3_3 from "elec/src/parts/ldo_converters/AMS1117-3.3.ato"
 import MSM261D4030H1CPM from "elec/src/parts/microphones/MSM261D4030H1CPM.ato"
 import SN74LVC2T45DCUR from "elec/src/parts/levelshifters/SN74LVC2T45DCUR.ato"
+import MOSFETcircuitPowerOnOff_1x_1A from "elec/src/parts/power_mosfet_circuits/power_on_off_1x_1A.ato"
 import MOSFETcircuitPowerOnOff_4x_3_5A from "elec/src/parts/power_mosfet_circuits/power_on_off_4x_3_5A.ato"
 import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
 import _74LVC2G04DW_7 from "elec/src/parts/inverters/74LVC2G04DW_7.ato"
@@ -47,8 +48,9 @@ module MainPCB:
     # Example: alternative direct power connection for USB to serial IC, if mosfet setup doesn't work
 
     # Add USB to serial via CP2102N
-    # TODO move power mosfet outside
     usb_to_serial = new CP2102N
+    # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
+    usbserial_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
 
     # Microphone
     microphone = new MSM261D4030H1CPM
@@ -87,7 +89,7 @@ module MainPCB:
     ldo_3v3 = new AMS1117_3_3
     
     # MOSFETs to turn off the LED strips (LED ring on action button will stay connected to power)
-    power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
+    led_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
 
     # LED capacitors
     # TODO: test adding capacitors to the LED strips and see impact
@@ -149,9 +151,10 @@ module MainPCB:
     # Connect the ESP32
     power_3_3v ~ esp32.power
 
-    # Connect the power to USB to serial
-    power_3_3v ~ usb_to_serial.power_3_3v
-    usb_c_connector.power ~ usb_to_serial.power_vbus
+    # Connect the power to the USB to serial, if USB is connected
+    power_3_3v ~ usbserial_power_mosfet_circuit.vin
+    usb_c_connector.power.vcc ~ usbserial_power_mosfet_circuit.control
+    usb_to_serial.power_3_3v ~ usbserial_power_mosfet_circuit.vout
     # Connect the data lines from the USB port to USB to serial
     usb_c_connector.usb ~ usb_to_serial.usb
     # Connect the USB to serial to the ESP32
@@ -212,17 +215,17 @@ module MainPCB:
     power_3_3v ~ ldo_3v3.vout
 
     # Connect the input power to the power MOSFETs
-    power_5v ~ power_mosfet_circuit.vin1
-    power_5v ~ power_mosfet_circuit.vin2
-    power_5v ~ power_mosfet_circuit.vin3
-    power_5v ~ power_mosfet_circuit.vin4
+    power_5v ~ led_power_mosfet_circuit.vin1
+    power_5v ~ led_power_mosfet_circuit.vin2
+    power_5v ~ led_power_mosfet_circuit.vin3
+    power_5v ~ led_power_mosfet_circuit.vin4
     # Connect the output power of the power MOSFETs to the LED strip pin headers
-    pin_header_male_led_strip_1._1 ~ power_mosfet_circuit.vout1.vcc
-    pin_header_male_led_strip_2._1 ~ power_mosfet_circuit.vout2.vcc
-    pin_header_male_led_strip_3._1 ~ power_mosfet_circuit.vout3.vcc
-    pin_header_male_led_strip_4._1 ~ power_mosfet_circuit.vout4.vcc
+    pin_header_male_led_strip_1._1 ~ led_power_mosfet_circuit.vout1.vcc
+    pin_header_male_led_strip_2._1 ~ led_power_mosfet_circuit.vout2.vcc
+    pin_header_male_led_strip_3._1 ~ led_power_mosfet_circuit.vout3.vcc
+    pin_header_male_led_strip_4._1 ~ led_power_mosfet_circuit.vout4.vcc
     # Connect the control pins of the power MOSFETs to the ESP32
-    esp32.ic.IO5 ~ power_mosfet_circuit.control
+    esp32.ic.IO5 ~ led_power_mosfet_circuit.control
 
     # Connect the power of the LED ring
     pin_header_male_led_ring._1 ~ power_5v.vcc
