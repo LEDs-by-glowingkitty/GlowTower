@@ -41,6 +41,7 @@ module MainPCB:
     # IO2: Actionbutton LED ring (data out)
     # IO32: Actionbutton (high if button pressed, low if not pressed)
     # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
+    # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)
 
     # TODO: Add direct connection pads for parts of the pcb which might be broken otherwise
     # Example: alternative direct power connection for USB to serial IC, if mosfet setup doesn't work
