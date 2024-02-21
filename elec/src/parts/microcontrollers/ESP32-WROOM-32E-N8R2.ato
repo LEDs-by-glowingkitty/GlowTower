@@ -131,28 +131,20 @@ module ESP32_WROOM_32E_N8R2:
     jtag ~ ic.jtag
 
     # Add capacitor for 3.3V input of ESP32
-    vin_cap = new Capacitor_0603_10uF
+    power_cap = new Capacitor_0603_10uF
+    power ~ power_cap.power
 
     # Add the reset button
     reset_button = new TS_1185EC_C_D_B
+    ic.EN ~ reset_button._1
+    power.gnd ~ reset_button._2
 
     # Add a delay capacitor for the EN pin
     delay_cap = new Capacitor_0603_1uF
+    ic.EN ~ delay_cap.p1
+    power.gnd ~ delay_cap.p2
 
     # Add a pull up resistor for the EN pin
     en_pullup_resistor = new Resistor_0402_5_1K
-
-    # connect 1uF capacitor to the 3.3V input of the ESP32
-    vin_cap.p1 ~ power.vcc
-    vin_cap.p2 ~ power.gnd
-
-    # connect the reset button to GND, so it gets pulled low when pressed
-    reset_button._1 ~ power.gnd
-
-    # connect the delay capacitor to the EN pin and GND, so that it is pulled low after a delay
-    delay_cap.p1 ~ ic.EN
-    delay_cap.p1 ~ en_pullup_resistor.p1
-    delay_cap.p2 ~ power.gnd
-
-    # connect the pull up resistor to 3.3V, so that the EN pin is pulled high by default
-    en_pullup_resistor.p2 ~ power.vcc
+    power.vcc ~ en_pullup_resistor.p1
+    delay_cap.p1 ~ en_pullup_resistor.p2

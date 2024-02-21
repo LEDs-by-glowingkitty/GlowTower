@@ -102,28 +102,35 @@ module MainPCB:
     pin_header_male_action_button = new PinHeader_2_54mm_2pins
     pin_header_male_led_ring = new PinHeader_2_54mm_2pins
 
-    # Pads, for soldering external components to the PCB (power source, sensors, LED strips, etc.)
+    # Pads for powering external components
     pad_power_vbus = new SolderPad_2mm_3_5mm
     pad_power_5v_1 = new SolderPad_2mm_3_5mm
     pad_power_5v_2 = new SolderPad_2mm_3_5mm
     pad_power_3_3v_1 = new SolderPad_2mm_3_5mm
     pad_power_3_3v_2 = new SolderPad_2mm_3_5mm
+    pad_power_3_3v_3 = new SolderPad_2mm_3_5mm
     pad_gnd_1 = new SolderPad_2mm_3_5mm
     pad_gnd_1 = new SolderPad_2mm_3_5mm
     pad_gnd_1 = new SolderPad_2mm_3_5mm
     pad_gnd_1 = new SolderPad_2mm_3_5mm
-    pad_i2c_sda = new SolderPad_2mm_3_5mm
-    pad_i2c_scl = new SolderPad_2mm_3_5mm
-    pad_i2s_ws = new SolderPad_2mm_3_5mm
-    pad_i2s_sck = new SolderPad_2mm_3_5mm
-    pad_i2s_sd = new SolderPad_2mm_3_5mm
-    pad_spi_mosi = new SolderPad_2mm_3_5mm
-    pad_spi_miso = new SolderPad_2mm_3_5mm
-    pad_spi_sck = new SolderPad_2mm_3_5mm
-    pad_spi_cs = new SolderPad_2mm_3_5mm
-    pad_19 = new SolderPad_2mm_3_5mm
-    # TODO add pads for JTAG
+
+    # Pads for connecting external components to the ESP32
+    pad_io21_i2c_sda = new SolderPad_2mm_3_5mm
+    pad_io22_i2c_scl = new SolderPad_2mm_3_5mm
+    pad_io23_i2s_ws = new SolderPad_2mm_3_5mm
+    pad_io25_i2s_sck = new SolderPad_2mm_3_5mm
+    pad_io26_i2s_sd = new SolderPad_2mm_3_5mm
+    pad_io13_spi_mosi_jtag_tck = new SolderPad_2mm_3_5mm
+    pad_io14_spi_miso_jtag_tms = new SolderPad_2mm_3_5mm
+    pad_io4_spi_sck = new SolderPad_2mm_3_5mm
+    pad_io15_spi_cs_jtag_tdo = new SolderPad_2mm_3_5mm
+    pad_io12_jtag_tdi = new SolderPad_2mm_3_5mm
+    pad_esp32_en_jtag_reset = new SolderPad_2mm_3_5mm
+    pad_uart_tx = new SolderPad_2mm_3_5mm
+    pad_uart_rx = new SolderPad_2mm_3_5mm
     pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
+
+    # TODO pad for boot button (IO0) and maybe pad for action button?
 
 
     ############################################
