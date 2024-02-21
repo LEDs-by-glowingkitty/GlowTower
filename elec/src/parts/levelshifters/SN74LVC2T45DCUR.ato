@@ -58,7 +58,7 @@ module SN74LVC2T45DCUR:
     power_out_cap.power ~ power_out
 
 
-    # Input
+    # Out
     data_in_1_resistor = new Resistor
     data_in_1_resistor.value = 62ohm +/- 1%
     data_in_1_resistor.footprint = "R0402"
@@ -77,7 +77,7 @@ module SN74LVC2T45DCUR:
     signal_out_2.io ~ data_in_2_resistor.p1; data_in_2_resistor.p2 ~ ic.A2
     signal_out_2.gnd ~ power_out.gnd
 
-    # Output
+    # In
     signal_in_1 = new Pair
     signal_in_1.io ~ ic.B1
     signal_in_1.gnd ~ power_in.gnd
