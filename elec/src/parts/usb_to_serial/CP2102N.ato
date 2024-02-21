@@ -98,6 +98,8 @@ module CP2102N:
     # Add capacitors for the VREGIN and VDD pins
     small_cap = new Capacitor_0402_100nF
     large_cap = new Capacitor_0603_10uF
+    power_3_3v ~ small_cap.power
+    power_3_3v ~ large_cap.power
 
     # Add voltage divider for VBUS pin
     # TODO: check with real hardware testing if the values work. Theory: if VBUS is 5V -> 5V * (5100 / (5100 + 20000)) = 1.1V, if VBUS is 20V -> 20V * (5100 / (5100 + 20000)) = 4.4V
@@ -130,12 +132,6 @@ module CP2102N:
     voltage_divider_r1.p2 ~ voltage_divider_r2.p1
     voltage_divider_r1.p2 ~ power_vbus.vcc
     voltage_divider_r2.p2 ~ gnd
-
-    # Connect the capacitors to the input voltage for the CP2102N
-    small_cap.p1 ~ power_3_3v.vcc
-    small_cap.p2 ~ gnd
-    large_cap.p1 ~ power_3_3v.vcc
-    large_cap.p2 ~ gnd
 
     # Connect the pull up resistor to the RSTb pin, so it is high by default
     pull_up_resistor.p1 ~ ic.RSTb
