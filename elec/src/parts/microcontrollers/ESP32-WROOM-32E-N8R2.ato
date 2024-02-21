@@ -29,11 +29,11 @@ component _ESP32_WROOM_32E_N8R2:
     # INFO: Many of the disconnected pins are required to be low or high on boot, or else prevent the ESP32 from booting. Therefore shouldn't be used.
     signal GND ~ pin 1          # Ground
     signal _3V3 ~ pin 2         # 3.3V power supply
-    signal EN ~ pin 3           # High: On, enables the chip. | Low: Off, the chip powers off | Note: Do not leave the pin floating.
-    signal SENSOR_VP ~ pin 4    # GPIO36, ADC1_CH0, RTC_GPIO0
-    signal SENSOR_VN ~ pin 5    # GPIO39, ADC1_CH3, RTC_GPIO3
-    signal IO34 ~ pin 6         # GPIO34, ADC1_CH6, RTC_GPIO4
-    signal IO35 ~ pin 7         # GPIO35, ADC1_CH7, RTC_GPIO5
+    signal EN ~ pin 3           # (INPUT ONLY) High: On, enables the chip. | Low: Off, the chip powers off | Note: Do not leave the pin floating.
+    signal SENSOR_VP ~ pin 4    # (INPUT ONLY) GPIO36, ADC1_CH0, RTC_GPIO0
+    signal SENSOR_VN ~ pin 5    # (INPUT ONLY) GPIO39, ADC1_CH3, RTC_GPIO3
+    signal IO34 ~ pin 6         # (INPUT ONLY) GPIO34, ADC1_CH6, RTC_GPIO4
+    signal IO35 ~ pin 7         # (INPUT ONLY) GPIO35, ADC1_CH7, RTC_GPIO5
     signal IO32 ~ pin 8         # GPIO32, XTAL_32K_P (32.768 kHz crystal oscillator input), ADC1_CH4, TOUCH9, RTC_GPIO9
     signal IO33 ~ pin 9         # GPIO33, XTAL_32K_N (32.768 kHz crystal oscillator output), ADC1_CH5, TOUCH8, RTC_GPIO8
     signal IO25 ~ pin 10        # GPIO25, DAC_1, ADC2_CH8, RTC_GPIO6, EMAC_RXD0
@@ -111,6 +111,8 @@ component _ESP32_WROOM_32E_N8R2:
     jtag.vcc ~ _3V3
     jtag.gnd ~ GND
 
+    # INFO: Ethernet is not added here because it could cause conflicts with I2S and I2C devices.
+    # If you plan on adding ethernet, make sure it doesn't cause any conflicts.
 
 module ESP32_WROOM_32E_N8R2:
     ic = new _ESP32_WROOM_32E_N8R2
