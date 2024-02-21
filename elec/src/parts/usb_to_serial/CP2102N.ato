@@ -87,6 +87,7 @@ module CP2102N:
     power_3_3v ~ small_cap.power
     power_3_3v ~ large_cap.power
 
+    # TODO move this out of the CP2102N module, since not every time this is needed
     # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
     power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
     power_3_3v ~ power_mosfet_circuit.vin
