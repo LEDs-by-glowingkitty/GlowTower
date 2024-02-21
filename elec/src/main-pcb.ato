@@ -143,7 +143,8 @@ module MainPCB:
     # Connect the data lines from the USB port to USB to serial
     usb_c_connector.usb ~ usb_to_serial.usb
     # Connect the USB to serial to the ESP32
-    esp32.uart ~ usb_to_serial.uart
+    esp32.uart.tx ~ usb_to_serial.uart.rx
+    esp32.uart.rx ~ usb_to_serial.uart.tx
 
     # Connect the microphone
     power_3_3v ~ microphone.power
