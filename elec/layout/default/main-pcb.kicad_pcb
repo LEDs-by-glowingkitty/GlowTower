@@ -2063,8 +2063,8 @@
       (net 1 "gnd") (pintype "stereo") (tstamp f5551ad4-a2e4-44c5-bf3d-abd1b8a4596d))
     (pad "16" smd rect (at -5.11 -1.66 270) (size 2.18 2) (layers "F.Cu" "F.Paste" "F.Mask")
       (net 1 "gnd") (pintype "stereo") (tstamp dddda9e3-4d25-4ff6-8f15-f25c5964044e))
-    (model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/USB-C-SMD_TYPE-C-31-M-22.wrl"
-      (offset (xyz 0 -1.27 0.7))
+    (model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/USB-C-SMD_TYPE-C-31-M-22.step"
+      (offset (xyz 0 -1 1.6))
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
     )
