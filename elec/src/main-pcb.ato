@@ -85,6 +85,8 @@ module MainPCB:
 
     # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
     usb_pd_ic = new CYPD3177_min_9V_2A
+    # TODO: test what happens if 5V SAFE output from USB PD pin and Buck converter output have 5V from external source connected
+    # -> Dev 2 Edition actually has the 5V Safe output circuit
     buck_converter_5v = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
 
     # 5V to 3.3V LDO, to power the ESP32 and microphone
