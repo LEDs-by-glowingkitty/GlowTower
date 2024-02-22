@@ -13,73 +13,48 @@ module CYPD3177_LoadSwitch100W:
     This is a submodule for the CYPD3177. It adds a load switch for up to 100W output.
     """
 
-    # Add the Load Switch for up to 100W output
-    # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
-    load_switch_mosfet = new HSM4805
-
-    # Add a cap for VBUS
-    vbus_cap = new Capacitor_0805_3_3uF
-
-    # Add the caps for the load switch
-    load_switch_input_cap_1uF = new Capacitor_0603_1uF
-    load_switch_output_cap_1uF = new Capacitor_0603_1uF
-
-    # Add a resistor for between the gate of the load_switch_mosfet and VBUS
-    fet_gate_vbus_resistor = new Resistor_0603_10K
-
-    # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
-    vbus_fet_en_resistor = new Resistor_0603_1K
-
-    # Add a resistor for between the source and the gate of the load_switch_mosfet
-    fet_src_gate_resistor = new Resistor_0603_49_9K
-
-    # Add a zener diode for between the source and the gate of the load_switch_mosfet
-    esd_protection_fet_src_gate_zener_diode = new BZT52C10
-
-
-    ###############################################
-    ############### Setup power ###################
-    ###############################################
-
     # Add the power interfaces
     vin = new Power
     vout = new Power
-
-    # And connect the GNDs together
     vin.gnd ~ vout.gnd
 
-
-    ###############################################
-    ## Connect Load Switch for up to 100W output ##
-    ###############################################
-
-    # Connect the load switch Drain 1 to VBUS
+    # Add the Load Switch for up to 100W output
+    # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
+    load_switch_mosfet = new HSM4805
     load_switch_mosfet.D1 ~ vin.vcc
-    # Connect the load switch Drain 2 to VDC_OUT
     load_switch_mosfet.D2 ~ vout.vcc
+    load_switch_mosfet.G1 ~ load_switch_mosfet.G2
+    load_switch_mosfet.S1 ~ load_switch_mosfet.S2
 
-    # Connect the capacitor for VBUS
+    # Add a cap for VBUS
+    vbus_cap = new Capacitor_0805_3_3uF
     vbus_cap.p1 ~ vin.vcc
     vbus_cap.p2 ~ vin.gnd
 
-    # Connect the gates of the load switch
-    load_switch_mosfet.G1 ~ load_switch_mosfet.G2
-
-    # Connect the sources of the load switch
-    load_switch_mosfet.S1 ~ load_switch_mosfet.S2
-
-    # Connect the caps for the load switch
+    # Add the caps for the load switch
+    load_switch_input_cap_1uF = new Capacitor_0603_1uF
     load_switch_input_cap_1uF.p1 ~ vin.vcc
     load_switch_input_cap_1uF.p2 ~ load_switch_mosfet.G1
+    load_switch_output_cap_1uF = new Capacitor_0603_1uF
     load_switch_output_cap_1uF.p1 ~ vout.vcc
     load_switch_output_cap_1uF.p2 ~ load_switch_mosfet.G1
 
-    # Connect the resistor between VBUS and the gate of the load_switch_mosfet
+    # Add a resistor for between the gate of the load_switch_mosfet and VBUS
+    fet_gate_vbus_resistor = new Resistor_0603_10K
+    fet_gate_vbus_resistor.p1 ~ load_switch_mosfet.G1
+    signal en ~ fet_gate_vbus_resistor.p2
+
+    # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
+    vbus_fet_en_resistor = new Resistor_0603_1K
     vbus_fet_en_resistor.p1 ~ vin.vcc
     vbus_fet_en_resistor.p2 ~ load_switch_mosfet.G1
 
-    # Connect the resistor between the gate of the load_switch_mosfet
-    fet_gate_vbus_resistor.p1 ~ load_switch_mosfet.G1
+    # Add a resistor for between the source and the gate of the load_switch_mosfet
+    fet_src_gate_resistor = new Resistor_0603_49_9K
+    fet_src_gate_resistor.p1 ~ load_switch_mosfet.S1
+    fet_src_gate_resistor.p2 ~ load_switch_mosfet.G1
 
-    # Create an EN pin to control the load switch
-    signal en ~ fet_gate_vbus_resistor.p2
+    # Add a zener diode for between the source and the gate of the load_switch_mosfet
+    esd_protection_fet_src_gate_zener_diode = new BZT52C10
+    esd_protection_fet_src_gate_zener_diode.anode ~ load_switch_mosfet.S1
+    esd_protection_fet_src_gate_zener_diode.cathode ~ load_switch_mosfet.G1
