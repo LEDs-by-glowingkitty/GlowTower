@@ -22,7 +22,7 @@ component _ESP32_WROOM_32E_N8R2:
     However, the module is recommended for most projects, as it is easier to implement and has a built-in antenna.
     """
     # component ESP32-WROOM-32E-N8R2
-    footprint = "WIFI-SMD_ESP32-WROOM-32E"
+    footprint = "ESP32-WROOM-32E"
     lcsc_id = "C5361945"
     mpn = "C5361945"
 
