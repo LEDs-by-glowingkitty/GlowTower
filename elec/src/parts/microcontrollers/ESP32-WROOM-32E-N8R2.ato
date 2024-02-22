@@ -2,6 +2,7 @@ import Resistor from "generics/resistors.ato"
 import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
 import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
 import Capacitor_0603_10uF from "elec/src/parts/capacitors/0603/10uF.ato"
+import Resistor_0402_2K from "elec/src/parts/resistors/0402/2K.ato"
 import Resistor_0402_5_1K from "elec/src/parts/resistors/0402/5_1K.ato"
 import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
 from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG
@@ -162,3 +163,11 @@ module ESP32_WROOM_32E_N8R2:
     boot_pullup_resistor = new Resistor_0402_100K
     ic.IO0 ~ boot_pullup_resistor.p1
     power.vcc ~ boot_pullup_resistor.p2
+
+    # Add pull up resistors for the I2C interface
+    i2c_pullup_resistor_sda = new Resistor_0402_2K
+    i2c.sda ~ i2c_pullup_resistor_sda.p1
+    power.vcc ~ i2c_pullup_resistor_sda.p2
+    i2c_pullup_resistor_scl = new Resistor_0402_2K
+    i2c.scl ~ i2c_pullup_resistor_scl.p1
+    power.vcc ~ i2c_pullup_resistor_scl.p2

@@ -45,7 +45,7 @@ module MainPCB:
     # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)
 
     # TODO: Add direct connection pads for parts of the pcb which might be broken otherwise
-    # Example: alternative direct power connection for USB to serial IC, if mosfet setup doesn't work
+    # - power -> CP2102N (in case the mosfet setup doesn't work)
 
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
@@ -53,6 +53,7 @@ module MainPCB:
     usbserial_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
 
     # Microphone
+    # TODO: test that microphone works with ESP32 and those pins via I2S
     microphone = new MSM261D4030H1CPM
 
     # LED levelshifters
@@ -205,7 +206,7 @@ module MainPCB:
     power_vbus ~ usb_pd_ic.vout_vbus
     power_5v ~ usb_pd_ic.vout_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
     esp32.i2c ~ usb_pd_ic.i2c
-    esp32.ic.IO33 ~ usb_pd_ic.cypd3177.vout_vbus_readout # Read the USB PD voltage via a voltage divider
+    esp32.ic.IO33 ~ usb_pd_ic.vout_vbus_readout # Read the USB PD voltage via a voltage divider
 
     # Connect the buck converter
     power_vbus ~ buck_converter_5v.vin

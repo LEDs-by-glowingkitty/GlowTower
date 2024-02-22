@@ -43,3 +43,6 @@ module CYPD3177_min_9V_2A:
     i2c ~ cypd3177.ic.i2c
     usb_pd = new USB_PD
     usb_pd ~ cypd3177.ic.usb_pd
+
+    # Make the readout signals easier accessible
+    signal vout_vbus_readout ~ cypd3177.vout_vbus_readout
