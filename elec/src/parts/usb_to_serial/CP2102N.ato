@@ -94,27 +94,21 @@ module CP2102N:
     
     # Add a pull up resistor for the RSTb pin.
     pull_up_resistor = new Resistor_0402_1K
+    ic.RSTb ~ pull_up_resistor.p1; pull_up_resistor.p2 ~ power_3_3v.vcc
 
     # Add ESD protection for the D+ and D- lines
     esd_protection = new SP0503BAHTG
-
-    # Add auto-reset dual transistor
-    auto_reset_transistor = new UMH3N
-
-    # Connect the pull up resistor to the RSTb pin, so it is high by default
-    pull_up_resistor.p1 ~ ic.RSTb
-    pull_up_resistor.p2 ~ power_3_3v.vcc
-
-    # Connect the ESD protection SP0503BAHTG to the D+ and D- lines
     esd_protection.p1 ~ gnd
     esd_protection.p2 ~ ic.dplus
     esd_protection.p3 ~ ic.dminus
 
-    # Connect the auto-reset UMH3N dual transistor to CP2102N
+    # Add auto-reset dual transistor
+    auto_reset_transistor = new UMH3N
     auto_reset_transistor.p1 ~ ic.RTS
     auto_reset_transistor.p2 ~ ic.DTR
     auto_reset_transistor.p4 ~ ic.DTR
     auto_reset_transistor.p5 ~ ic.RTS
+    
     # Auto program:
     # DTR   RTS -->	EN 	IO0
     # 1	    1		1	1
