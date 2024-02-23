@@ -44,9 +44,6 @@ module MainPCB:
     # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
     # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)
 
-    # TODO: Add direct connection pads for parts of the pcb which might be broken otherwise
-    # - power -> CP2102N (in case the mosfet setup doesn't work)
-
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
     # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
@@ -97,7 +94,6 @@ module MainPCB:
     led_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
 
     # LED capacitors
-    # TODO: test adding capacitors to the LED strips and see impact
     led_strip_1_capacitor = new Capacitor_SMD_D10_L10_1000uF
     led_strip_2_capacitor = new Capacitor_SMD_D10_L10_1000uF
     led_strip_3_capacitor = new Capacitor_SMD_D10_L10_1000uF
@@ -114,10 +110,13 @@ module MainPCB:
     pin_header_male_led_strip_2 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_3 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_4 = new PinHeader_2_54mm_3pins
+    # TODO: add reverse polarity protection to 3-pin pin headers, to protect the LED strips
 
     # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
     pin_header_male_action_button = new PinHeader_2_54mm_2pins
     pin_header_male_led_ring = new PinHeader_2_54mm_2pins
+    # TODO: add reverse polarity protection to pin header where 5V and data are connected to the LED ring
+    # TODO: test - does it even harm the LED ring if 5V and data are connected in reverse polarity?
 
     # Pads for powering external components
     pad_power_vbus = new SolderPad_2mm_3_5mm
