@@ -6765,7 +6765,7 @@
   (gr_text "20V/3.3V" (at 170.68 76.29) (layer "In4.Cu") (tstamp 69222ac0-011c-4102-9587-65417e0761ef)
     (effects (font (size 1.5 1.5) (thickness 0.3) bold) (justify left bottom))
   )
-  (gr_text "GND" (at 187.52 76.29) (layer "B.Cu") (tstamp 777b2d04-5d4e-4576-a0bd-4694b183abd4)
+  (gr_text "GND + Signal" (at 198.92 76.15) (layer "B.Cu") (tstamp 777b2d04-5d4e-4576-a0bd-4694b183abd4)
     (effects (font (size 1.5 1.5) (thickness 0.3) bold) (justify left bottom mirror))
   )
   (gr_text "{{GITHASH}}" (at 122.92 77.54) (layer "F.SilkS") (tstamp d894e23f-c5ed-4336-947e-ac38e533f04c)
