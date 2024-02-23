@@ -105,14 +105,13 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     cin_capacitor2.power ~ vin
     cin_capacitor3.power ~ vin
 
+    # (Cvcc) connect the vdd capacitor
+    cvcc_capacitor.power ~ vin
+    ic.VDD ~ vin.vcc
+
     # (Cout) connect the output capacitors
     cout_capacitor1.power ~ vout
     cout_capacitor2.power ~ vout
-
-    # (Cvcc) connect the vdd capacitor
-    cvcc_capacitor.p1 ~ vin.vcc
-    cvcc_capacitor.p1 ~ ic.VDD
-    cvcc_capacitor.p2 ~ gnd
 
     # (Css) connect the soft start capacitor
     ic.ENSS ~ css_capacitor.p1; css_capacitor.p2 ~ gnd
