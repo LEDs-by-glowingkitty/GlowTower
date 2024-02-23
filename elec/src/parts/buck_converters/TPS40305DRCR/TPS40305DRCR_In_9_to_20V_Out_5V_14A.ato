@@ -105,6 +105,10 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     cin_capacitor2.power ~ vin
     cin_capacitor3.power ~ vin
 
+    # (Cout) connect the output capacitors
+    cout_capacitor1.power ~ vout
+    cout_capacitor2.power ~ vout
+
     # (Cvcc) connect the vdd capacitor
     cvcc_capacitor.p1 ~ vin.vcc
     cvcc_capacitor.p1 ~ ic.VDD
@@ -141,7 +145,3 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     # (Rfbt, Rfbb) connect the voltage divider (which sets the output voltage)
     voltage_config_divider.power ~ vout
     voltage_config_divider.vout ~ ic.FB
-
-    # (Cout) connect the output capacitors
-    cout_capacitor1.power ~ vout
-    cout_capacitor2.power ~ vout
