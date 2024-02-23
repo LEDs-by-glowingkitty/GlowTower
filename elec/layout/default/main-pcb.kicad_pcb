@@ -6776,7 +6776,7 @@
     (effects (font (size 2 2) (thickness 0.1)) (justify left bottom))
   )
 
-  (zone (net 0) (net_name "") (layers "F.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "B.Cu") (tstamp aad23d0b-0785-4c41-a013-df9ef4491712) (name "Antenna, no copper") (hatch edge 0.5)
+  (zone locked (net 0) (net_name "") (layers "F.Cu" "In1.Cu" "In2.Cu" "In3.Cu" "In4.Cu" "B.Cu") (tstamp aad23d0b-0785-4c41-a013-df9ef4491712) (name "Antenna, no copper") (hatch edge 0.5)
     (connect_pads (clearance 0))
     (min_thickness 0.25) (filled_areas_thickness no)
     (keepout (tracks not_allowed) (vias not_allowed) (pads not_allowed) (copperpour not_allowed) (footprints allowed))
@@ -6790,7 +6790,7 @@
       )
     )
   )
-  (zone (net 1) (net_name "gnd") (layer "B.Cu") (tstamp 88a3d30f-14f0-4739-a9fc-70bc88bade74) (hatch edge 0.5)
+  (zone locked (net 1) (net_name "gnd") (layer "B.Cu") (tstamp 88a3d30f-14f0-4739-a9fc-70bc88bade74) (hatch edge 0.5)
     (connect_pads (clearance 0.5))
     (min_thickness 0.25) (filled_areas_thickness no)
     (fill yes (thermal_gap 0.5) (thermal_bridge_width 0.5))
