@@ -60,6 +60,7 @@ module MainPCB:
     levelshifter_3 = new SN74LVC2T45DCUR # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
 
     # TODO: test if the inverter is really needed
+    # - set BOOT/IO0 button in wled and see if this causes problems, on the esp32 wroom 32e
     # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
 
@@ -110,13 +111,10 @@ module MainPCB:
     pin_header_male_led_strip_2 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_3 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_4 = new PinHeader_2_54mm_3pins
-    # TODO: add reverse polarity protection to 3-pin pin headers, to protect the LED strips
 
     # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
     pin_header_male_action_button = new PinHeader_2_54mm_2pins
     pin_header_male_led_ring = new PinHeader_2_54mm_2pins
-    # TODO: add reverse polarity protection to pin header where 5V and data are connected to the LED ring
-    # TODO: test - does it even harm the LED ring if 5V and data are connected in reverse polarity?
 
     # Pads for powering external components
     pad_power_vbus = new SolderPad_2mm_3_5mm
