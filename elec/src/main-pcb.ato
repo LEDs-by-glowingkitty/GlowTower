@@ -84,7 +84,10 @@ module MainPCB:
 
     # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
     usb_pd_ic = new CYPD3177_min_9V_2A
+    # TODO: add schottky diode to 5V SAFE output (only needs to handle 900mA, so should be fine?)
     # TODO: test what happens if 5V SAFE output from USB PD pin and Buck converter output have 5V from external source connected
+    # TODO: should I add a mosfet to turn off the buck converter if the USB PD IC gives out Safe 5V?
+    # -> ideal diode IC like LM74700-Q1 needed?
     # -> Dev 2 Edition actually has the 5V Safe output circuit
     buck_converter_5v = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
 
@@ -111,6 +114,8 @@ module MainPCB:
     pin_header_male_led_strip_2 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_3 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_4 = new PinHeader_2_54mm_3pins
+    # TODO: add reverse polarity protection to 3-pin pin headers, to protect the LED strips
+    # TODO: test polarity protection from GlowSign battery extension
 
     # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
     pin_header_male_action_button = new PinHeader_2_54mm_2pins
