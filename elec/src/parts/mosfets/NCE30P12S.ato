@@ -5,7 +5,7 @@ component NCE30P12S:
     Datasheet: https://datasheet.lcsc.com/lcsc/1810251712_Wuxi-NCE-Power-Semiconductor-NCE30P12S_C167515.pdf
     """
     # component NCE30P12S
-    footprint = "SOIC-8_L4.9-W3.9-P1.27-LS6.0-BL"
+    footprint = "SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
     lcsc_id = "C167515"
     mpn = "C167515"
     # pins
