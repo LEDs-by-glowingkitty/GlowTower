@@ -51,6 +51,7 @@ module CYPD3177_WithCoreParts:
 
 
     # Add the 5V Safe Output load switch
+    # TODO: test 5V safe output via old PCB Dev 2 Edition
     vout_5v_load_switch = new CYPD3177_LoadSwitchSafe5V
     ic.SAFE_PWR_EN ~ vout_5v_load_switch.en
     vin ~ vout_5v_load_switch.vin
@@ -60,6 +61,9 @@ module CYPD3177_WithCoreParts:
     ###############################################
     ############## Other components ###############
     ###############################################
+
+    # TODO: Add reverse flow protection via schottky diode
+
 
     # Add 3.3uF cap for the VBUS of the USB-C port
     vbus_cap_3_3uF = new Capacitor_0805_3_3uF

@@ -87,6 +87,10 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     cout_capacitor1 = new Capacitor_1206_10uF
     cout_capacitor2 = new Capacitor_1206_10uF
 
+    # TODO: add reverse flow protection via ideal diode
+    # ideal diode IC like LM74700-Q1 needed? together with CSD17581Q3AT n-channel mosfet?
+    
+
 
     ############################################################
     ### Connect components
