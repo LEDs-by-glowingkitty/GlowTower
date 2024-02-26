@@ -63,9 +63,9 @@ module CYPD3177_WithCoreParts:
     ###############################################
 
     # Add reverse flow protection via schottky diode
-    vout_5v_reverse_flow_protection = new SS54
-    vout_5v_reverse_flow_protection.input ~ vout_5v_load_switch.vout.vcc
-    vout_5v_reverse_flow_protection.output ~ vout_5v.vcc
+    vout_5v_reverse_flow_protection_schottky_diode = new SS54
+    vout_5v_reverse_flow_protection_schottky_diode.input ~ vout_5v_load_switch.vout.vcc
+    vout_5v_reverse_flow_protection_schottky_diode.output ~ vout_5v.vcc
 
 
     # Add 3.3uF cap for the VBUS of the USB-C port
