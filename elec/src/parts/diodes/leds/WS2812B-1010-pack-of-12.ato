@@ -1,5 +1,5 @@
 import Power from "generics/interfaces.ato"
-import WS2812B_1010 from "WS2812B-1010.ato"
+import WS2812B_1010 from "elec/src/parts/diodes/leds/WS2812B-1010.ato"
 
 module WS2812B_1010_pack_of_12:
     """

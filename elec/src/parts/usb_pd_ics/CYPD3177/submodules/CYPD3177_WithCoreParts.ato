@@ -6,6 +6,7 @@ import Voltage_Divider_0603_100K__20K from "elec/src/parts/voltage_dividers/0603
 import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
 import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
 import Capacitor_0805_3_3uF from "elec/src/parts/capacitors/0805/3_3uF.ato"
+import SS54 from "elec/src/parts/diodes/schottky/SS54.ato"
 import CYPD3177_LoadSwitchSafe5V from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitchSafe5V.ato"
 import CYPD3177_LoadSwitch100W from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitch100W.ato"
 
@@ -55,14 +56,16 @@ module CYPD3177_WithCoreParts:
     vout_5v_load_switch = new CYPD3177_LoadSwitchSafe5V
     ic.SAFE_PWR_EN ~ vout_5v_load_switch.en
     vin ~ vout_5v_load_switch.vin
-    vout_5v ~ vout_5v_load_switch.vout
 
     
     ###############################################
     ############## Other components ###############
     ###############################################
 
-    # TODO: Add reverse flow protection via schottky diode
+    # Add reverse flow protection via schottky diode
+    vout_5v_reverse_flow_protection = new SS54
+    vout_5v_reverse_flow_protection.input ~ vout_5v_load_switch.vout.vcc
+    vout_5v_reverse_flow_protection.output ~ vout_5v.vcc
 
 
     # Add 3.3uF cap for the VBUS of the USB-C port

@@ -5,7 +5,7 @@ import Resistor_0603_10K from "elec/src/parts/resistors/0603/10K.ato"
 import Resistor_0603_49_9K from "elec/src/parts/resistors/0603/49_9K.ato"
 import Capacitor_0805_3_3uF from "elec/src/parts/capacitors/0805/3_3uF.ato"
 import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
-import BZT52C10 from "elec/src/parts/zener_diodes/BZT52C10.ato"
+import BZT52C10 from "elec/src/parts/diodes/zener/BZT52C10.ato"
 
 
 module CYPD3177_LoadSwitch100W:
