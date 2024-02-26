@@ -24467,7 +24467,7 @@
 			(at 0 4 45)
 			(layer "B.SilkS")
 			(hide yes)
-			(uuid "39edaf06-2446-472f-ac48-76a07885a83c")
+			(uuid "1b37a148-3c48-4bb5-b439-276b77075747")
 			(effects
 				(font
 					(size 1 1)
@@ -24479,7 +24479,7 @@
 		(property "Value" ""
 			(at 0 -4 45)
 			(layer "B.Fab")
-			(uuid "fdd4d109-b4a1-4ad2-bc79-415ad2460438")
+			(uuid "8634f0b6-5050-4f69-92a7-5e931189f3c4")
 			(effects
 				(font
 					(size 1 1)
@@ -24493,7 +24493,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "2c7888fc-9693-40f4-af7a-69ff1b309e66")
+			(uuid "42183b37-be3c-4c91-a27d-5232923ec91f")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24505,7 +24505,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "ef41d96c-7e24-40c9-b276-d8ab3dcacc78")
+			(uuid "9dce5d42-fac3-4763-a94f-6cd829a62fed")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24517,7 +24517,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "99310e67-bc28-4d78-aed3-3fd28e882ae0")
+			(uuid "b7d97593-1fc7-447d-ad1a-3c30838b7f46")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24528,53 +24528,53 @@
 		(attr through_hole)
 		(fp_line
 			(start -4.02 -1.27)
-			(end 4.02 -1.27)
+			(end -4.02 1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "0ffddc39-11aa-4b2e-ac44-5315ea5bb594")
+			(uuid "2a13295e-3a2a-451f-a08e-ea9532523228")
 		)
 		(fp_line
-			(start -4.02 1.27)
+			(start -1.25 -1.27)
+			(end -1.25 1.27)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "9b219590-325d-4e03-a722-23e73ab58975")
+		)
+		(fp_line
+			(start 4.02 -1.27)
 			(end -4.02 -1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "a6c4114a-4a2d-42bc-ace2-5746157ab306")
+			(uuid "0510893b-621b-4b6f-8eb0-18c5ce091486")
 		)
 		(fp_line
-			(start -4.02 1.27)
+			(start 4.02 -1.27)
 			(end 4.02 1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "16f1820d-a4ef-432b-a4d0-7ef215d6220e")
-		)
-		(fp_line
-			(start -1.25 1.27)
-			(end -1.25 -1.27)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "1a1d42a0-fac3-4946-86d5-fc6db84811c2")
+			(uuid "ea0c0246-6b78-458c-9fc8-c33a91248205")
 		)
 		(fp_line
 			(start 4.02 1.27)
-			(end 4.02 -1.27)
+			(end -4.02 1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "c7eeebcc-be94-445d-8928-50efed854bf2")
+			(uuid "6c9bb06e-789e-4666-97ac-86bd26dffc91")
 		)
 		(fp_circle
 			(center -3.81 -1.25)
@@ -24585,12 +24585,12 @@
 			)
 			(fill none)
 			(layer "B.Fab")
-			(uuid "221f4de0-2c84-4750-bcf4-0004a412a12b")
+			(uuid "4b9670d2-1dcc-45cc-b08b-5f00fae4c47c")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 45)
 			(layer "B.Fab")
-			(uuid "c01dcd58-7732-49c8-a62b-ba965cafc7e0")
+			(uuid "400dd6e4-0899-4ba2-851f-47732cb7b69f")
 			(effects
 				(font
 					(size 1 1)
@@ -24607,7 +24607,7 @@
 			(remove_unused_layers no)
 			(net 114 "vcc-19")
 			(pintype "stereo")
-			(uuid "50d2c979-eedc-4654-a121-14814344ac27")
+			(uuid "92e4931a-e736-4139-b097-0baa9385466d")
 		)
 		(pad "2" thru_hole circle
 			(at 0 0 45)
@@ -24617,7 +24617,7 @@
 			(remove_unused_layers no)
 			(net 109 "vcc-6")
 			(pintype "stereo")
-			(uuid "d1ee4d23-1fc8-4915-990f-8e01d030138c")
+			(uuid "fce14a8a-59ce-49c1-b196-a45cf39d8329")
 		)
 		(pad "3" thru_hole circle
 			(at 2.54 0 45)
@@ -24627,9 +24627,9 @@
 			(remove_unused_layers no)
 			(net 1 "gnd")
 			(pintype "stereo")
-			(uuid "b1c9fe06-904a-434d-8dd7-e7658db3a0a7")
+			(uuid "aa58aa2d-d606-4eb1-9b67-e4c2fbe86f0c")
 		)
-		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_3P-P2.54-M-LI-1X3P.wrl"
+		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_3P-P2.54-V-M.step"
 			(offset
 				(xyz 0 -0 0)
 			)
@@ -24831,7 +24831,7 @@
 			(at 0 4 45)
 			(layer "B.SilkS")
 			(hide yes)
-			(uuid "3a1583d4-f8c9-4412-a1f3-53f332c35a72")
+			(uuid "5cf4e996-111c-450c-8d4e-b1fc1c6144f7")
 			(effects
 				(font
 					(size 1 1)
@@ -24843,7 +24843,7 @@
 		(property "Value" ""
 			(at 0 -4 45)
 			(layer "B.Fab")
-			(uuid "50e90217-d746-4afd-861a-4b4269c44efc")
+			(uuid "02d17778-e3d7-4c34-836c-916983d3dec7")
 			(effects
 				(font
 					(size 1 1)
@@ -24857,7 +24857,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "cb798a8f-584d-46aa-ab11-ae47402dfdee")
+			(uuid "0442a924-53d9-44cb-bda9-fce5507b3c70")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24869,7 +24869,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "2e8afcb0-d061-45e3-a68c-5392c9fff6b6")
+			(uuid "4e66f103-24cb-4f9a-8b7e-b7ae0a72e00b")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24881,7 +24881,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "714f6174-1cc5-47b0-b326-65fd5e9dc62a")
+			(uuid "f63b1967-047a-47bf-b7aa-1471290292ca")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24892,53 +24892,53 @@
 		(attr through_hole)
 		(fp_line
 			(start 4.02 1.27)
-			(end 4.02 -1.27)
+			(end -4.02 1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "85f5ae3e-4f8f-4c7a-aec9-7ccd2615a94b")
+			(uuid "b57f4fb5-7197-4ac1-879f-1c9782a58549")
 		)
 		(fp_line
-			(start -1.25 1.27)
-			(end -1.25 -1.27)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "de07af57-4222-468b-880a-48af5a3f0132")
-		)
-		(fp_line
-			(start -4.02 1.27)
+			(start 4.02 -1.27)
 			(end 4.02 1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "a094f258-e50f-4171-b2a2-374cbcc5ffc4")
+			(uuid "fc1d024a-f9ab-4073-a772-b0fa5333d159")
 		)
 		(fp_line
-			(start -4.02 1.27)
+			(start 4.02 -1.27)
 			(end -4.02 -1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "6da1ee8f-f1c0-4228-ae48-3b30390d95ed")
+			(uuid "56ff5bf9-27a1-47a9-b1f1-d6c2464ae053")
 		)
 		(fp_line
-			(start -4.02 -1.27)
-			(end 4.02 -1.27)
+			(start -1.25 -1.27)
+			(end -1.25 1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "03ae46e6-9768-414f-84d0-79f70989846f")
+			(uuid "c67f6be4-4716-4918-bbe3-6ea5371a8122")
+		)
+		(fp_line
+			(start -4.02 -1.27)
+			(end -4.02 1.27)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "9b3fcc86-4a32-42bb-8497-49848530474c")
 		)
 		(fp_circle
 			(center -3.81 -1.25)
@@ -24949,12 +24949,12 @@
 			)
 			(fill none)
 			(layer "B.Fab")
-			(uuid "039cdc27-8daf-43cb-a66f-ddffd2ddfacb")
+			(uuid "b3693baf-af33-4159-89c6-4cd18a095e1f")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 45)
 			(layer "B.Fab")
-			(uuid "fbf1b295-d916-4538-afc9-920b68f4a2fe")
+			(uuid "280d0141-9ff7-4c47-8ec3-a17ff04b37a9")
 			(effects
 				(font
 					(size 1 1)
@@ -24971,7 +24971,7 @@
 			(remove_unused_layers no)
 			(net 112 "vcc-18")
 			(pintype "stereo")
-			(uuid "bd603637-960c-4c5b-b23a-4bcdbd10f096")
+			(uuid "1f37ad32-0736-45fa-8c63-9939ceb0990d")
 		)
 		(pad "2" thru_hole circle
 			(at 0 0 225)
@@ -24981,7 +24981,7 @@
 			(remove_unused_layers no)
 			(net 71 "vcc-5")
 			(pintype "stereo")
-			(uuid "1ee75917-5d46-423c-a3ab-10d9561216ac")
+			(uuid "71b205d9-2775-407b-a615-307059cba810")
 		)
 		(pad "3" thru_hole circle
 			(at 2.54 0 225)
@@ -24991,9 +24991,9 @@
 			(remove_unused_layers no)
 			(net 1 "gnd")
 			(pintype "stereo")
-			(uuid "2f0cd910-792d-4e64-9a31-3becc0064ac1")
+			(uuid "878cabed-3f28-4098-900d-33839217a93c")
 		)
-		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_3P-P2.54-M-LI-1X3P.wrl"
+		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_3P-P2.54-V-M.step"
 			(offset
 				(xyz 0 -0 0)
 			)
@@ -25195,7 +25195,7 @@
 			(at 0 4 45)
 			(layer "B.SilkS")
 			(hide yes)
-			(uuid "865c859a-7910-4895-90e7-5d26cd3f1d4e")
+			(uuid "b3881071-ab85-486c-897c-8b9a17c11d08")
 			(effects
 				(font
 					(size 1 1)
@@ -25207,7 +25207,7 @@
 		(property "Value" ""
 			(at 0 -4 45)
 			(layer "B.Fab")
-			(uuid "955defca-e67e-463b-9653-96d6f8fa3277")
+			(uuid "9decd241-240c-47dc-aee9-e25aa0b8492b")
 			(effects
 				(font
 					(size 1 1)
@@ -25221,7 +25221,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "9eaaaf7a-c25a-4ca1-872a-cdece224968a")
+			(uuid "03007cbc-2c23-47b1-b2a7-9490fbf946f3")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25233,7 +25233,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "6f36590d-49da-4dcb-9a1a-e290410a71bd")
+			(uuid "221fc1bd-e414-485a-bc03-914cf37656fc")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25245,7 +25245,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "d3a524cf-24f4-4bb3-88bd-1390fb999ff9")
+			(uuid "83dcd154-d483-49f4-baab-55e1fcd2cfe2")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25256,53 +25256,53 @@
 		(attr through_hole)
 		(fp_line
 			(start -2.54 -1.27)
-			(end -2.54 1.27)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "3f566c7b-e38b-4808-beeb-a19b8e47a727")
-		)
-		(fp_line
-			(start -2.54 1.27)
-			(end -0.64 1.27)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "0ff28d58-98cb-4270-af5a-2fea5568615d")
-		)
-		(fp_line
-			(start 2.54 -1.27)
-			(end -2.54 -1.27)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "3a126933-06b0-47ad-951d-38f39ddaee38")
-		)
-		(fp_line
-			(start 2.54 1.27)
-			(end -0.64 1.27)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "c438c945-5f9a-4858-9c37-d0ec7ce3bf73")
-		)
-		(fp_line
-			(start 2.54 1.27)
 			(end 2.54 -1.27)
 			(stroke
 				(width 0.2)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "ea003024-6935-40e7-8d42-1bce334cfb3c")
+			(uuid "b6f1a81d-bd22-4e6d-a2a0-a7221681ab0d")
+		)
+		(fp_line
+			(start -2.54 1.27)
+			(end -2.54 -1.27)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "36eab91f-08a0-45b0-a8b0-ecdf9f40c90e")
+		)
+		(fp_line
+			(start -0.64 1.27)
+			(end -2.54 1.27)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "edd9c090-2a69-4d45-bb4b-12d19b0afdbe")
+		)
+		(fp_line
+			(start -0.64 1.27)
+			(end 2.54 1.27)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "a467a638-deb1-43dd-9f1b-d938356ec4a7")
+		)
+		(fp_line
+			(start 2.54 -1.27)
+			(end 2.54 1.27)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "5b6b3d3c-4e30-45ab-93cd-ff8d705666ab")
 		)
 		(fp_circle
 			(center -2.54 -1.25)
@@ -25313,12 +25313,12 @@
 			)
 			(fill none)
 			(layer "B.Fab")
-			(uuid "7ce99cf7-9bac-4c0b-9a41-5fc0265034eb")
+			(uuid "438e5d4a-7bf6-4d00-bf82-e8f6fdbfbc4b")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 45)
 			(layer "B.Fab")
-			(uuid "7b21e439-bfc8-405a-ad3b-0aae6ae8abb6")
+			(uuid "b30e35cc-6a1b-4154-99a2-264825feb57d")
 			(effects
 				(font
 					(size 1 1)
@@ -25335,7 +25335,7 @@
 			(remove_unused_layers no)
 			(net 40 "vcc-3")
 			(pintype "stereo")
-			(uuid "37adcee9-8cc7-4d16-85e8-8ee4818f9881")
+			(uuid "ea50d04e-3f0e-48e2-a8fb-11f72c6aced3")
 		)
 		(pad "2" thru_hole circle
 			(at 1.270001 0 45)
@@ -25345,11 +25345,11 @@
 			(remove_unused_layers no)
 			(net 3 "vcc-9")
 			(pintype "stereo")
-			(uuid "ebf6ce28-1c76-40bb-a11b-f2961fd17613")
+			(uuid "4cf5ce02-e59c-4ed4-8748-104be819c233")
 		)
-		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR2.54-M-LI-1X2P.wrl"
+		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_2P-P2.54-V-M.step"
 			(offset
-				(xyz 0 -0 0)
+				(xyz 1.27 0 0)
 			)
 			(scale
 				(xyz 1 1 1)
@@ -25458,7 +25458,7 @@
 			(at 0 4 45)
 			(layer "B.SilkS")
 			(hide yes)
-			(uuid "b7054af9-e486-4059-ad99-5194079cebd1")
+			(uuid "fdefee86-9aa9-45b8-80a9-55262320323d")
 			(effects
 				(font
 					(size 1 1)
@@ -25470,7 +25470,7 @@
 		(property "Value" ""
 			(at 0 -4 45)
 			(layer "B.Fab")
-			(uuid "1d6bbb3c-d846-48c3-b0dd-4bc6bdb2923e")
+			(uuid "cabcc217-5f7f-4577-9231-15e8cc0c511e")
 			(effects
 				(font
 					(size 1 1)
@@ -25484,7 +25484,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "ea8e6a2b-a632-43a0-8dfe-f1dbc1589613")
+			(uuid "caa860f5-c751-470b-a0b1-6e16e949b001")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25496,7 +25496,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "270b6a01-3404-4149-942e-fd71b151fcc5")
+			(uuid "71b64736-68b3-47b4-82be-0b514ed64b50")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25508,7 +25508,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "c5cd1189-939f-4d72-9e75-6d0201d9a55e")
+			(uuid "c7f0a038-2203-409b-8ca1-f6c7b459e758")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25518,54 +25518,54 @@
 		(path "/c0ac1dcf-d918-57eb-778a-2bf16e57113a/c0ac1dcf-d918-57eb-778a-2bf16e57113a")
 		(attr through_hole)
 		(fp_line
-			(start 2.54 1.27)
-			(end 2.54 -1.27)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "4bc4ea09-d36a-4643-87a6-fa2d251a7e05")
-		)
-		(fp_line
-			(start 2.54 1.27)
-			(end -0.64 1.27)
-			(stroke
-				(width 0.2)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "ae6f616c-5964-4e11-8510-c77629af861f")
-		)
-		(fp_line
 			(start 2.54 -1.27)
-			(end -2.54 -1.27)
+			(end 2.54 1.27)
 			(stroke
 				(width 0.2)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "04de24be-b702-4dc8-ac7d-81beb507d5d0")
+			(uuid "57ae63c0-2e40-4146-9e8c-1890d16236e2")
 		)
 		(fp_line
-			(start -2.54 1.27)
-			(end -0.64 1.27)
+			(start -0.64 1.27)
+			(end 2.54 1.27)
 			(stroke
 				(width 0.2)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "d9445ffc-ab0a-4f2b-9b0e-b3e70d4c0c15")
+			(uuid "f9724e64-35e9-4af2-883a-0aedcfd29df5")
 		)
 		(fp_line
-			(start -2.54 -1.27)
+			(start -0.64 1.27)
 			(end -2.54 1.27)
 			(stroke
 				(width 0.2)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "fe9aa206-c24b-403e-802a-0a34ab7e6801")
+			(uuid "206a7418-c1ab-43c2-9905-9fbfc3098421")
+		)
+		(fp_line
+			(start -2.54 1.27)
+			(end -2.54 -1.27)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "47e1e5ea-5214-4717-b4fc-823d8bc322d3")
+		)
+		(fp_line
+			(start -2.54 -1.27)
+			(end 2.54 -1.27)
+			(stroke
+				(width 0.2)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "6b077161-be3c-42b7-94b6-bfaf7f375439")
 		)
 		(fp_circle
 			(center -2.54 -1.25)
@@ -25576,12 +25576,12 @@
 			)
 			(fill none)
 			(layer "B.Fab")
-			(uuid "05cba145-34eb-4848-a654-856126cdf05c")
+			(uuid "23d206d6-6d30-4b79-b59c-81cd3652d780")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 45)
 			(layer "B.Fab")
-			(uuid "26646650-1ec2-4c8a-b2dd-a5afe7e0fe8d")
+			(uuid "b410a406-c4a7-40fe-967b-1a8545d02ad4")
 			(effects
 				(font
 					(size 1 1)
@@ -25598,7 +25598,7 @@
 			(remove_unused_layers no)
 			(net 1 "gnd")
 			(pintype "stereo")
-			(uuid "ed4731bb-9739-40f9-81c1-e54135298350")
+			(uuid "f0283499-d42c-4f1c-9879-89898c0d0bb3")
 		)
 		(pad "2" thru_hole circle
 			(at 1.270001 0 225)
@@ -25608,11 +25608,11 @@
 			(remove_unused_layers no)
 			(net 110 "_2-1")
 			(pintype "stereo")
-			(uuid "21ba8682-eab6-41cb-836c-7f05c54c9920")
+			(uuid "96d0b0a8-c3ab-4766-85f7-34fab76c6e1f")
 		)
-		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR2.54-M-LI-1X2P.wrl"
+		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_2P-P2.54-V-M.step"
 			(offset
-				(xyz 0 -0 0)
+				(xyz 1.27 0 0)
 			)
 			(scale
 				(xyz 1 1 1)
@@ -26995,7 +26995,7 @@
 			(at 0 4 135)
 			(layer "B.SilkS")
 			(hide yes)
-			(uuid "c56e398c-2e3a-40f3-8697-1c4249b65822")
+			(uuid "21ade9c5-75e2-48e8-8d3c-83294dba1179")
 			(effects
 				(font
 					(size 1 1)
@@ -27007,7 +27007,7 @@
 		(property "Value" ""
 			(at 0 -4 135)
 			(layer "B.Fab")
-			(uuid "57f61bc4-4926-46ec-a9ac-f61815338c1e")
+			(uuid "b00842d0-c3d9-42af-ae02-0f724270eb12")
 			(effects
 				(font
 					(size 1 1)
@@ -27021,7 +27021,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "d16a7241-f881-407b-8a9a-0088102dc138")
+			(uuid "3ace910d-b939-4665-83c5-474035f014af")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -27033,7 +27033,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "1398aa9a-08d4-42db-8795-20e92686ce53")
+			(uuid "613044ee-6c92-4c43-b716-54fd789ee2fb")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -27045,7 +27045,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "d43ef436-2d60-46a4-83ff-cef2579b59b3")
+			(uuid "1778fa94-6c14-4750-bff8-a181a15f2d3a")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -27055,54 +27055,54 @@
 		(path "/25296130-da35-7eda-2d2d-dc99958c12c9/25296130-da35-7eda-2d2d-dc99958c12c9")
 		(attr through_hole)
 		(fp_line
-			(start 4.02 1.27)
-			(end 4.02 -1.27)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "17b3398c-47c4-469f-9f5f-9d873e91f876")
-		)
-		(fp_line
-			(start -1.25 1.27)
-			(end -1.25 -1.27)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "ae9e4d8c-87db-4e25-8b22-bc7944fdffd3")
-		)
-		(fp_line
-			(start -4.02 -1.27)
-			(end 4.02 -1.27)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "565a2eac-62e8-42a7-aa09-78cf77e16bd2")
-		)
-		(fp_line
-			(start -4.02 1.27)
+			(start 4.02 -1.27)
 			(end 4.02 1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "5f101af3-1a14-4d54-9d2d-e47f0dc624ca")
+			(uuid "7df49a30-9355-4d1b-a338-929864deb23f")
 		)
 		(fp_line
-			(start -4.02 1.27)
+			(start 4.02 -1.27)
 			(end -4.02 -1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "214988dc-1fa6-4eb0-a985-f33caaea4428")
+			(uuid "c911f3c0-7304-44a6-99e4-ebdfbddb33ab")
+		)
+		(fp_line
+			(start 4.02 1.27)
+			(end -4.02 1.27)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "29efbe5f-763b-412e-8eba-684302dfea6b")
+		)
+		(fp_line
+			(start -1.25 -1.27)
+			(end -1.25 1.27)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "b92c01ac-6bff-4b96-b4ce-a854a0f662c6")
+		)
+		(fp_line
+			(start -4.02 -1.27)
+			(end -4.02 1.27)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "1da0b2c5-6eb0-41de-ac99-541f20ae09a4")
 		)
 		(fp_circle
 			(center -3.81 -1.25)
@@ -27113,12 +27113,12 @@
 			)
 			(fill none)
 			(layer "B.Fab")
-			(uuid "0e019445-0a39-4a14-b196-dfc628bf11b5")
+			(uuid "da39fffe-bdad-4bec-bb4c-61b4523df6e7")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 135)
 			(layer "B.Fab")
-			(uuid "a3272c34-c52d-4ee9-8cc3-9e7e3ee08a12")
+			(uuid "a0bd4f03-036e-4f22-bd1a-be70bc37090f")
 			(effects
 				(font
 					(size 1 1)
@@ -27135,7 +27135,7 @@
 			(remove_unused_layers no)
 			(net 116 "vcc-20")
 			(pintype "stereo")
-			(uuid "db986d6f-459e-48e2-a3ec-f516a54201ac")
+			(uuid "493347f7-d7b7-405a-bd14-572c2b5a29da")
 		)
 		(pad "2" thru_hole circle
 			(at 0 0 135)
@@ -27145,7 +27145,7 @@
 			(remove_unused_layers no)
 			(net 65 "vcc-7")
 			(pintype "stereo")
-			(uuid "d285b5fc-b46e-4272-bfdf-27f96f79d582")
+			(uuid "b15c2198-39d1-492c-8d4f-a54651a52760")
 		)
 		(pad "3" thru_hole circle
 			(at 2.54 0 135)
@@ -27155,9 +27155,9 @@
 			(remove_unused_layers no)
 			(net 1 "gnd")
 			(pintype "stereo")
-			(uuid "bd9841ab-d983-4019-98a3-8ce3414dbd6c")
+			(uuid "11a7c5bb-3dae-4ac1-96a3-5aee011ae5fb")
 		)
-		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_3P-P2.54-M-LI-1X3P.wrl"
+		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_3P-P2.54-V-M.step"
 			(offset
 				(xyz 0 -0 0)
 			)
@@ -27541,7 +27541,7 @@
 			(at 0 4 135)
 			(layer "B.SilkS")
 			(hide yes)
-			(uuid "64380909-fcac-4d2e-8dad-cf3a9875d82f")
+			(uuid "afb65134-918e-4d6d-9c33-04696d074f31")
 			(effects
 				(font
 					(size 1 1)
@@ -27553,7 +27553,7 @@
 		(property "Value" ""
 			(at 0 -4 135)
 			(layer "B.Fab")
-			(uuid "f780903e-40e4-4467-b51c-dde47f4419eb")
+			(uuid "016d62a2-15eb-4f13-b198-c69cea5a2e16")
 			(effects
 				(font
 					(size 1 1)
@@ -27567,7 +27567,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "677e429c-5a03-4889-918f-e02713c4970a")
+			(uuid "bf72bfac-da78-4257-8376-6bda29fa40d9")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -27579,7 +27579,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "9259eb4b-63a9-4144-b372-31d0c44dd1ec")
+			(uuid "f67d13d9-cfea-4eec-9f3e-9fc3eb9c3f6a")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -27591,7 +27591,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "70bc6965-0c48-47e7-ac0b-7e97f7116326")
+			(uuid "32dca130-c2be-4ab7-8554-78e4805e95c8")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -27601,54 +27601,54 @@
 		(path "/7b7c065a-4d71-df74-8196-1ca2425b6e05/7b7c065a-4d71-df74-8196-1ca2425b6e05")
 		(attr through_hole)
 		(fp_line
-			(start -4.02 1.27)
+			(start -4.02 -1.27)
+			(end -4.02 1.27)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "c3942b59-d5e4-4535-a67f-b516ffcfa364")
+		)
+		(fp_line
+			(start -1.25 -1.27)
+			(end -1.25 1.27)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "e6a4b050-9cda-4c49-8f71-9b0c8a74213c")
+		)
+		(fp_line
+			(start 4.02 1.27)
+			(end -4.02 1.27)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "f762a985-7215-41ee-9d64-6db9141765b0")
+		)
+		(fp_line
+			(start 4.02 -1.27)
 			(end -4.02 -1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "64efff36-3d73-4ba3-b6a9-316cca91393e")
+			(uuid "d7487498-72da-4359-9295-cabba286d891")
 		)
 		(fp_line
-			(start -4.02 1.27)
+			(start 4.02 -1.27)
 			(end 4.02 1.27)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "B.SilkS")
-			(uuid "e7e51e59-d753-49cf-978e-f8d20625b0c5")
-		)
-		(fp_line
-			(start -4.02 -1.27)
-			(end 4.02 -1.27)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "f2dc0038-54a0-4da3-9755-dacaaed180db")
-		)
-		(fp_line
-			(start -1.25 1.27)
-			(end -1.25 -1.27)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "284c331f-0855-417d-ac72-40badd43842c")
-		)
-		(fp_line
-			(start 4.02 1.27)
-			(end 4.02 -1.27)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "B.SilkS")
-			(uuid "ec4d8c32-6834-4734-b654-04fd17f22f6a")
+			(uuid "8d16f58c-7c69-4a94-8f01-b40696d4674e")
 		)
 		(fp_circle
 			(center -3.81 -1.25)
@@ -27659,12 +27659,12 @@
 			)
 			(fill none)
 			(layer "B.Fab")
-			(uuid "534ee573-0060-4ff1-bdd0-8958db5a3d88")
+			(uuid "acbf2e06-30f4-4ce9-9b6e-9b5f76ecbfcd")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 135)
 			(layer "B.Fab")
-			(uuid "488d79ae-1572-4274-ae1e-8b109333baa4")
+			(uuid "4b2d3d8d-ddff-4530-b3a6-2f042e2ad974")
 			(effects
 				(font
 					(size 1 1)
@@ -27681,7 +27681,7 @@
 			(remove_unused_layers no)
 			(net 102 "vcc-17")
 			(pintype "stereo")
-			(uuid "d179f873-bb4d-4b1d-aaed-c6f2fe8c7700")
+			(uuid "d5659ab5-ae6b-4685-b4e2-c1ef79c0d8d0")
 		)
 		(pad "2" thru_hole circle
 			(at 0 0 315)
@@ -27691,7 +27691,7 @@
 			(remove_unused_layers no)
 			(net 50 "vcc-4")
 			(pintype "stereo")
-			(uuid "8bc3c497-b681-4596-87f6-f0c6c9ab3936")
+			(uuid "61226746-acc9-445a-ba57-8166074d8e35")
 		)
 		(pad "3" thru_hole circle
 			(at 2.54 0 315)
@@ -27701,9 +27701,9 @@
 			(remove_unused_layers no)
 			(net 1 "gnd")
 			(pintype "stereo")
-			(uuid "ca048dd7-3b33-4c71-ba6f-e0539815fd11")
+			(uuid "02892044-214a-422d-99cf-22c15c0ef06b")
 		)
-		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_3P-P2.54-M-LI-1X3P.wrl"
+		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/HDR-TH_3P-P2.54-V-M.step"
 			(offset
 				(xyz 0 -0 0)
 			)
