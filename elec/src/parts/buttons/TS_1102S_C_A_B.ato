@@ -13,3 +13,6 @@ component TS_1102S_C_A_B:
     signal _4 ~ pin 4
     signal _1 ~ pin 1
     signal _2 ~ pin 2
+
+    signal input ~ _1
+    signal output ~ _3

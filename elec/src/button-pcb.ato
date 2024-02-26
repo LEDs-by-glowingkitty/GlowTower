@@ -16,39 +16,21 @@ module ButtonPCB:
     The PCB is connected via cables to the main PCB of the lamp.
     """
 
-    ############################################
-    ################# Parts ####################
-    ############################################
-
-    # Define the LEDs. The capacitors are already included in the pack and the LEDs are connected in series.
-    leds = new WS2812B_1010_pack_of_12
-
-    # Define the Actionbutton
-    button = new TS_1102S_C_A_B
-
     # Define the pin headers, which are used to connect the PCB to the main PCB
     pin_headers_leds = new PinHeader_2_54mm_2pins
     pin_headers_button = new PinHeader_2_54mm_2pins
 
-
-    ############################################
-    ############### Connections ################
-    ############################################
-
-    # Define the power supply
+    # Define the 5V power supply
     power = new Power
+    power.vcc ~ pin_headers_leds._1
+    power.gnd ~ pin_headers_button._2
 
-    # Connect power to the LEDs
-    power.vcc ~ leds.VDD_5V
-    power.gnd ~ leds.GND
+    # Define the LEDs. The capacitors are already included in the pack and the LEDs are connected in series.
+    leds = new WS2812B_1010_pack_of_12
+    leds.power.vcc ~ pin_headers_leds._1
+    leds.data ~ pin_headers_leds._2
 
-    # Connect the button to GND (once its pressed)
-    button._3 ~ power.gnd
-
-    # Connect the pin headers for the LEDs
-    pin_headers_leds._1 ~ power.vcc
-    pin_headers_leds._2 ~ leds.DIN
-
-    # Connect the pin headers for the button
-    pin_headers_button._1 ~ power.gnd
-    pin_headers_button._2 ~ button._1
+    # Define the Actionbutton
+    button = new TS_1102S_C_A_B
+    button.input ~ pin_headers_button._1
+    button.output ~ pin_headers_button._2

@@ -6,9 +6,10 @@ module WS2812B_1010_pack_of_12:
     This is a collection of 12 WS2812B LEDs in the 1010 package.
     """
 
-    signal DIN
-    signal VDD_5V
-    signal GND
+    signal data
+    
+    # define the 5V power interface
+    power = new Power
 
     # Define the LEDs (caps are included)
     led_1 = new WS2812B_1010
@@ -23,11 +24,6 @@ module WS2812B_1010_pack_of_12:
     led_10 = new WS2812B_1010
     led_11 = new WS2812B_1010
     led_12 = new WS2812B_1010
-
-    # define the 5V power interface
-    power = new Power
-    VDD_5V ~ power.vcc
-    GND ~ power.gnd
 
     # Connect the LEDs to the power interface
     led_1.VDD ~ power.vcc
@@ -58,7 +54,7 @@ module WS2812B_1010_pack_of_12:
     led_12.GND ~ power.gnd
 
     # Connect the LED data lines
-    DIN ~ led_1.DIN
+    data ~ led_1.DIN
     led_1.DOUT ~ led_2.DIN
     led_2.DOUT ~ led_3.DIN
     led_3.DOUT ~ led_4.DIN
