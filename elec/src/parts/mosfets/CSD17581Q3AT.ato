@@ -1,6 +1,7 @@
 component CSD17581Q3AT:
     """
     CSD17581Q3A is an N-Channel power MOSFET from Texas Instruments.
+    Rated for up to 30V, 60A continuous drain current, and 3.2mOhm Rds(on) (Vgs=10V).
     Datasheet: https://www.ti.com/lit/ds/symlink/csd17581q3a.pdf
     """
     # component CSD17581Q3AT
