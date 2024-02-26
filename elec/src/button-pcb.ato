@@ -1,6 +1,6 @@
 import WS2812B_1010_pack_of_12 from "elec/src/parts/diodes/leds/WS2812B-1010-pack-of-12.ato"
 import TS_1102S_C_A_B from "elec/src/parts/buttons/TS_1102S_C_A_B.ato"
-import PinHeaders2P_2_54mm from "elec/src/parts/pin-headers-2P-2-54mm.ato"
+import PinHeader_2_54mm_2pins from "elec/src/parts/pin_headers/PinHeader_2_54mm.ato"
 import Power from "generics/interfaces.ato"
 
 module ButtonPCB:
@@ -27,8 +27,8 @@ module ButtonPCB:
     button = new TS_1102S_C_A_B
 
     # Define the pin headers, which are used to connect the PCB to the main PCB
-    pin_headers_leds = new PinHeaders2P_2_54mm
-    pin_headers_button = new PinHeaders2P_2_54mm
+    pin_headers_leds = new PinHeader_2_54mm_2pins
+    pin_headers_button = new PinHeader_2_54mm_2pins
 
 
     ############################################
