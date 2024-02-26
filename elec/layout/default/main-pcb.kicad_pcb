@@ -19914,7 +19914,7 @@
 			(at 0 -4 0)
 			(layer "F.SilkS")
 			(hide yes)
-			(uuid "a5eeddb4-279b-4c26-b3a9-30c324655467")
+			(uuid "c0585c4f-505a-4598-b803-46ace50f1f96")
 			(effects
 				(font
 					(size 1 1)
@@ -19925,7 +19925,7 @@
 		(property "Value" ""
 			(at 0 4 0)
 			(layer "F.Fab")
-			(uuid "b5e96f63-f7e4-4cb0-8e88-f89052a80fa4")
+			(uuid "8017d606-c3af-4924-b413-fa0a8f4c083f")
 			(effects
 				(font
 					(size 1 1)
@@ -19938,7 +19938,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "0b35d378-e37c-48e3-b08a-bf8949b53cf2")
+			(uuid "b98d7e70-8149-46e8-bc41-ca6217b21749")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19950,7 +19950,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "54579d51-34a4-41ca-a7f6-b6a26ffef90a")
+			(uuid "6dc1a58d-7f62-44f7-8990-c53c654c0311")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19962,7 +19962,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "0721bdf6-463f-4359-a365-ac3bb35c6fc9")
+			(uuid "8facd465-e661-46fe-b354-7e772c2b75aa")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19979,7 +19979,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "c3f9e0f9-9301-43a5-968a-d7decb8934e6")
+			(uuid "00306574-8646-4e08-aa76-e74d64c211d5")
 		)
 		(fp_line
 			(start -2.65 1.36)
@@ -19989,7 +19989,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "8554b695-7b1c-46a5-8bcb-bfa73420f647")
+			(uuid "8ecd4f6e-75fb-440a-b770-078de3f5352e")
 		)
 		(fp_line
 			(start -1.27 -1.36)
@@ -19999,7 +19999,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "540be4c5-239d-421b-b386-bfcd567101a5")
+			(uuid "70bdf870-9fec-4311-9d59-b00344a1947b")
 		)
 		(fp_line
 			(start 2.65 -1.36)
@@ -20009,7 +20009,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "feeb320f-8b62-40b6-b9ff-3adf92024c80")
+			(uuid "cd160fda-8bb9-470b-bf02-c46b32d95473")
 		)
 		(fp_line
 			(start 2.65 1.36)
@@ -20019,7 +20019,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "93e390ea-f959-40e1-9d9b-a08b5a7b3791")
+			(uuid "ed3fceb7-7abc-47c0-8c73-ef4e7054ef0e")
 		)
 		(fp_circle
 			(center -2.8 1.28)
@@ -20030,12 +20030,12 @@
 			)
 			(fill none)
 			(layer "F.Fab")
-			(uuid "b8b20c75-219f-499e-8d81-2a0002c92b30")
+			(uuid "306f7ff9-e142-4141-a935-b94e3d335843")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 0)
 			(layer "F.Fab")
-			(uuid "4d503fde-cfc4-4a69-9b72-2cc362042510")
+			(uuid "28724b4d-57b4-4784-9e67-ed38973e9dac")
 			(effects
 				(font
 					(size 1 1)
@@ -20049,7 +20049,7 @@
 			(layers "F.Cu" "F.Paste" "F.Mask")
 			(net 73 "vcc-12")
 			(pintype "stereo")
-			(uuid "d205839d-9b21-401b-be14-4456fe0e7cfd")
+			(uuid "1b8162c4-ccca-4aad-9f5d-13713ac67926")
 		)
 		(pad "2" smd rect
 			(at -2.5 0)
@@ -20057,9 +20057,9 @@
 			(layers "F.Cu" "F.Paste" "F.Mask")
 			(net 40 "vcc-3")
 			(pintype "stereo")
-			(uuid "0e50a71d-e3c9-407d-9503-8ad68f8c8507")
+			(uuid "4e4780c3-3740-4edf-b9e9-b3d2ac2ddc69")
 		)
-		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/SMA_L4.4-W2.8-LS5.4-R-RD.wrl"
+		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/SMA_L4.4-W2.8-LS5.4-R-RD.step"
 			(offset
 				(xyz 0 -0 -0)
 			)
