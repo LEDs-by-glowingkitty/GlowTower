@@ -52,7 +52,7 @@
 (uuid "c45b4d22-3695-4d81-9c0e-9b82104a4586")
   )
   (model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD.step"
-    (offset (xyz 0 -0 -0))
+    (offset (xyz 0 -0 0.6))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))
   )
