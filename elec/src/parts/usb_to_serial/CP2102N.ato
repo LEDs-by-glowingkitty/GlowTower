@@ -97,6 +97,7 @@ module CP2102N:
     ic.RSTb ~ pull_up_resistor.p1; pull_up_resistor.p2 ~ power_3_3v.vcc
 
     # Add ESD protection for the D+ and D- lines
+    # TODO: connect ESD protection also to VBUS and use 20v compatible ESD protection
     esd_protection = new SP0503BAHTG
     esd_protection.p1 ~ gnd
     esd_protection.p2 ~ ic.dplus
