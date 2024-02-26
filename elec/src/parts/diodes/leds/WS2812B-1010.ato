@@ -2,7 +2,7 @@ import Capacitor from "generics/capacitors.ato"
 import Power from "generics/interfaces.ato"
 import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
 
-component WS2812B_1010:
+component _WS2812B_1010:
     """
     This is a WS2812B LED in the 1010 package.
     Datasheet: https://datasheet.lcsc.com/szlcsc/1812041635_Worldsemi-XL-1010RGBC-WS2812B_C5349953.pdf
@@ -22,14 +22,22 @@ component WS2812B_1010:
     signal GND ~ pin 3  # ground
     signal DIN ~ pin 4  # data in
 
-    # add the capacitor
-    cap = new Capacitor_0402_100nF
-
     # add the power interface
     power = new Power
     power.vcc ~ VDD
     power.gnd ~ GND
 
-    # connect the capacitor
-    cap.power.vcc ~ power.vcc
-    cap.power.gnd ~ power.gnd
+
+module WS2812B_1010:
+    # add the power interface
+    power = new Power
+
+    # add the LED
+    ic = new _WS2812B_1010
+    ic.power ~ power
+    signal DIN ~ ic.DIN
+    signal DOUT ~ ic.DOUT
+
+    # add the capacitor
+    cap = new Capacitor_0402_100nF
+    cap.power ~ power
