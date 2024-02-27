@@ -5018,7 +5018,7 @@
 	(footprint "lib:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
 		(layer "F.Cu")
 		(uuid "41d6c431-fd3a-4c04-84e0-80bbb8777f8e")
-		(at 100.4 107.22 -90)
+		(at 100.42 109.03 -90)
 		(property "Reference" "U27"
 			(at 0 -4.95 90)
 			(layer "F.SilkS")
@@ -9119,7 +9119,7 @@
 			(at 0 -4.95 90)
 			(layer "F.SilkS")
 			(hide yes)
-			(uuid "9f4cc763-5275-4ce2-978d-b1b2778a720d")
+			(uuid "bd186bdd-4104-488d-a490-45bafd33dd85")
 			(effects
 				(font
 					(size 1 1)
@@ -9130,7 +9130,7 @@
 		(property "Value" ""
 			(at 0 4.95 90)
 			(layer "F.Fab")
-			(uuid "3bd15d0c-eeee-4113-8d63-a24f1e06ec87")
+			(uuid "aa3f79ba-07d3-4ddf-95d8-ce0f4aaccdac")
 			(effects
 				(font
 					(size 1 1)
@@ -9143,7 +9143,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "16153a0c-15d3-42b9-9054-33558a4bb869")
+			(uuid "347225cb-9ad2-49f8-bc72-378901b18860")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9155,7 +9155,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "0d6a00b8-4af0-4977-9d00-5487c9bc8d25")
+			(uuid "9c422ba8-a378-4d75-9989-aa518b9db869")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9167,7 +9167,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "25d9578d-888d-463b-8020-d7e2c007648e")
+			(uuid "05e0011f-3cad-4779-b14e-0d863446e59f")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9184,7 +9184,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "47f9e41c-2904-4f43-92ed-ccf5a4246e23")
+			(uuid "03a451f9-5396-462b-ba90-93d015c051ea")
 		)
 		(fp_line
 			(start -0.7 1.5)
@@ -9194,7 +9194,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "b4732ac2-0556-4ea8-9ff4-f128e5f5f36c")
+			(uuid "76f787b9-64b0-4744-af40-01b8168dc11c")
 		)
 		(fp_line
 			(start 0.7 0.31)
@@ -9204,7 +9204,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "ad5b7f78-e6d3-45ea-a753-04a381feb66a")
+			(uuid "2dabc8d2-8884-4fae-ab16-8d6736682819")
 		)
 		(fp_line
 			(start -0.7 -0.64)
@@ -9214,7 +9214,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "d3776cdd-d739-4882-9dc9-7ccd3dbb3926")
+			(uuid "5f513b11-9ec5-4b51-92c9-839b290b6b73")
 		)
 		(fp_line
 			(start -0.7 -1.5)
@@ -9224,7 +9224,7 @@
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "d2831a3c-86e8-4207-825a-a7e0a2f025cb")
+			(uuid "9fecab25-8670-4493-a7c9-cc155c6ad53b")
 		)
 		(fp_circle
 			(center 1.75 0.94)
@@ -9235,7 +9235,7 @@
 			)
 			(fill none)
 			(layer "Cmts.User")
-			(uuid "8d7feb4b-d2a2-44d3-8c7f-637651745e89")
+			(uuid "984db0d2-3ac5-412b-95a3-c9a9b8f87eb2")
 		)
 		(fp_circle
 			(center 1.2 1.45)
@@ -9246,12 +9246,12 @@
 			)
 			(fill none)
 			(layer "F.Fab")
-			(uuid "035fa8df-6945-463e-bb68-062564aeacf3")
+			(uuid "35147827-6282-4e82-aba5-d2821b8bc8a1")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 90)
 			(layer "F.Fab")
-			(uuid "870dc058-0d65-45b6-8396-d27cb5f97169")
+			(uuid "94687742-f1dc-4af0-a35a-cf882a2824cf")
 			(effects
 				(font
 					(size 1 1)
@@ -9265,7 +9265,7 @@
 			(layers "F.Cu" "F.Paste" "F.Mask")
 			(net 111 "d")
 			(pintype "stereo")
-			(uuid "92e22737-920e-4491-a5a4-218a85585597")
+			(uuid "7de08ce9-a3ef-46e5-9d40-2a008274ebbb")
 		)
 		(pad "2" smd rect
 			(at 1.15 -0.95 90)
@@ -9273,7 +9273,7 @@
 			(layers "F.Cu" "F.Paste" "F.Mask")
 			(net 2 "vcc")
 			(pintype "stereo")
-			(uuid "b817d917-37b5-4dce-afb5-4fa772c54712")
+			(uuid "f385fd3b-69c2-4c3e-b039-194584209fc7")
 		)
 		(pad "3" smd rect
 			(at -1.15 0 90)
@@ -9281,11 +9281,11 @@
 			(layers "F.Cu" "F.Paste" "F.Mask")
 			(net 75 "vcc-1")
 			(pintype "stereo")
-			(uuid "7fe2cf1d-c992-41ad-a8a2-892e69e71947")
+			(uuid "bf9a1c0b-95a5-4506-913b-8b28e50f0e3c")
 		)
-		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/SOT-23-3P_L2.9-W1.3-H1.0-LS2.4-P0.95.wrl"
+		(model "/Users/kitty/Library/CloudStorage/Dropbox/Products/GlowTower/elec/footprints/footprints.3dshapes/SOT-23_L2.9-W1.3-P1.90-LS2.4-BR.step"
 			(offset
-				(xyz 0 -0 -0)
+				(xyz 0 -0 -0.1)
 			)
 			(scale
 				(xyz 1 1 1)
@@ -12664,7 +12664,7 @@
 	(footprint "lib:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
 		(layer "F.Cu")
 		(uuid "84e99fa6-b95d-4edf-9936-84b6b796b213")
-		(at 108.54 118.43)
+		(at 107.16 116.6)
 		(property "Reference" "U7"
 			(at 0 -4.95 0)
 			(layer "F.SilkS")
