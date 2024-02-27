@@ -105,6 +105,7 @@ module MainPCB:
     ############################################
 
     # Pin headers, 2.54mm pitch
+    # TODO: test optimal position for the pin headers on pcb. Consider how much cables bend during assembly of lamp
     pin_header_male_led_strip_1 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_2 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_3 = new PinHeader_2_54mm_3pins
