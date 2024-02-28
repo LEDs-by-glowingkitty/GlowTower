@@ -34,3 +34,5 @@ module ButtonPCB:
     button = new TS_1102S_C_A_B
     button.input ~ pin_headers_button.p1
     button.output ~ pin_headers_button.p2
+
+    # TODO consider adding ESD protection for the button PCB
