@@ -9,12 +9,12 @@ module MOSFETcircuitPowerOnOff_1x_1A:
     The circuit can also handle a higher current, but the MOSFETs will get hotter.
     """
     # add the power interfaces for the input and the 1 outputs
-    vin = new Power
-    vout = new Power
+    power_in = new Power
+    power_out = new Power
 
     # connect the GNDs of the power interfaces
-    signal gnd ~ vin.gnd
-    gnd ~ vout.gnd
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
 
     # the N channel mosfet controls the p channel mosfets
     power_n_mosfet = new AO3400A
@@ -39,10 +39,10 @@ module MOSFETcircuitPowerOnOff_1x_1A:
     power_n_mosfet.DRAIN ~ power_p_mosfet.GATE
 
     # connect the input voltages to the sources of the P channel mosfets
-    vin.vcc ~ power_p_mosfet.SOURCE
+    power_in.vcc ~ power_p_mosfet.SOURCE
 
     # connect the drains of the P channel mosfets to the output voltages
-    vout.vcc ~ power_p_mosfet.DRAIN
+    power_out.vcc ~ power_p_mosfet.DRAIN
 
     # connect the resistor for the P channel mosfet between the gate and the source of the P channel mosfet
     power_p_mosfet.GATE ~ power_p_mosfet_resistor.p1

@@ -17,7 +17,7 @@ module Voltage_Divider_0402_10K_1_37K:
 
     # connect pull up resistor
     power.vcc ~ voltage_request_pull_up_resistor.p1 
-    signal vout ~ voltage_request_pull_up_resistor.p2
+    signal power_out ~ voltage_request_pull_up_resistor.p2
 
     # add pull down resistor
     voltage_request_pull_down_resistor = new Resistor_0402_1_37K

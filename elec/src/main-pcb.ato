@@ -162,8 +162,8 @@ module MainPCB:
     esp32.power ~ power_3_3v
 
     # Connect the power to the USB to serial, if USB is connected
-    usbserial_power_mosfet_circuit.vin ~ power_3_3v
-    usbserial_power_mosfet_circuit.vout ~ usb_to_serial.power_3_3v
+    usbserial_power_mosfet_circuit.power_in ~ power_3_3v
+    usbserial_power_mosfet_circuit.power_out ~ usb_to_serial.power_3_3v
     usbserial_power_mosfet_circuit.control ~ usb_c_connector.power.vcc
     # Connect the data lines from the USB port to USB to serial
     usb_c_connector.usb ~ usb_to_serial.usb
@@ -218,10 +218,10 @@ module MainPCB:
     usb_pd_ic.vout_vbus_readout ~ esp32.ic.IO33 # Read the USB PD voltage via a voltage divider
 
     # Connect the 5V buck converter
-    power_vbus ~ buck_converter_5v.vin; buck_converter_5v.vout ~ power_5v
+    power_vbus ~ buck_converter_5v.power_in; buck_converter_5v.power_out ~ power_5v
 
     # Connect the 3.3V LDO converter
-    power_5v ~ ldo_3v3.vin; ldo_3v3.vout ~ power_3_3v
+    power_5v ~ ldo_3v3.power_in; ldo_3v3.power_out ~ power_3_3v
 
     # Connect the power via the power MOSFETs to the LED strips
     power_5v ~ led_power_mosfet_circuit.vin1; led_power_mosfet_circuit.vout1.vcc ~ pin_header_male_led_strip_1.p1

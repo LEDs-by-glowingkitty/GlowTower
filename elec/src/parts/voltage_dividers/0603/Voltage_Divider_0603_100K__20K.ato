@@ -17,11 +17,11 @@ module Voltage_Divider_0603_100K__20K:
 
     # connect pull up resistor
     power.vcc ~ voltage_request_pull_up_resistor.p1 
-    signal vout ~ voltage_request_pull_up_resistor.p2
+    signal power_out ~ voltage_request_pull_up_resistor.p2
 
     # add pull down resistor
     voltage_request_pull_down_resistor = new Resistor_0603_20K
     
     # connect pull down resistor
     power.gnd ~ voltage_request_pull_down_resistor.p1 
-    vout ~ voltage_request_pull_down_resistor.p2
+    power_out ~ voltage_request_pull_down_resistor.p2

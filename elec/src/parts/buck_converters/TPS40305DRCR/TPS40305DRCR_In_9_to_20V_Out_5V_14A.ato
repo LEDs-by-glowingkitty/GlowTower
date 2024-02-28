@@ -29,16 +29,16 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     - Output current: 14A max
     """
     # add power interfaces
-    vin = new Power
-    vout = new Power
+    power_in = new Power
+    power_out = new Power
     vout_before_reverse_flow_protection = new Power
-    signal gnd ~ vin.gnd
-    gnd ~ vout.gnd
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
     gnd ~ vout_before_reverse_flow_protection.gnd
 
     # add IC
     ic = new TPS40305DRCR
-    ic.power ~ vin
+    ic.power ~ power_in
 
     # (M2) add LDRV MOSFET. This MOSFET is used to drive the low side of the buck converter
     ldrv_n_channel_mosfet = new CSD17581Q3AT
@@ -77,16 +77,16 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (Cin) add input capacitors, capable of up to 50V input voltage
     cin_capacitor1 = new Capacitor_1206_10uF
-    cin_capacitor1.power ~ vin
+    cin_capacitor1.power ~ power_in
     cin_capacitor2 = new Capacitor_1206_10uF
-    cin_capacitor2.power ~ vin
+    cin_capacitor2.power ~ power_in
     cin_capacitor3 = new Capacitor_1206_10uF
-    cin_capacitor3.power ~ vin
+    cin_capacitor3.power ~ power_in
 
     # (Cvcc) add VDD capacitor
     # TODO: does it fullfill the 'low ESR' requirement?
     cvcc_capacitor = new Capacitor_0603_1uF
-    cvcc_capacitor.power ~ vin
+    cvcc_capacitor.power ~ power_in
 
     # (Rcomp2) add compensation resistor
     rcomp2_resistor = new Resistor_0402_432
@@ -98,17 +98,17 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
     hdrv_n_channel_mosfet_1 = new CSD16301Q2
     hdrv_n_channel_mosfet_1.GATE ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
-    hdrv_n_channel_mosfet_1.DRAIN ~ vin.vcc                # connect the VIN to the drains of the MOSFETs
+    hdrv_n_channel_mosfet_1.DRAIN ~ power_in.vcc                # connect the VIN to the drains of the MOSFETs
     hdrv_n_channel_mosfet_1.SOURCE ~ output_inductor.p1    # connect the inductor input to the sources of the MOSFETs
     hdrv_n_channel_mosfet_2 = new CSD16301Q2            
     hdrv_n_channel_mosfet_2.GATE ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
-    hdrv_n_channel_mosfet_2.DRAIN ~ vin.vcc                # connect the VIN to the drains of the MOSFETs
+    hdrv_n_channel_mosfet_2.DRAIN ~ power_in.vcc                # connect the VIN to the drains of the MOSFETs
     hdrv_n_channel_mosfet_2.SOURCE ~ output_inductor.p1    # connect the inductor input to the sources of the MOSFETs
 
     # (Rfbt, Rfbb) set 5V output voltage via voltage divider
     voltage_config_divider = new Voltage_Divider_0402_10K_1_37K
     voltage_config_divider.power ~ vout_before_reverse_flow_protection
-    voltage_config_divider.vout ~ ic.FB
+    voltage_config_divider.power_out ~ ic.FB
 
     # (Ccomp3) add compensation capacitor
     ccomp3_capacitor = new Capacitor_0402_820pF
@@ -123,7 +123,7 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     # add reverse flow protection for 5V output, via ideal diode
     reverse_flow_protection_ideal_diode = new LM74700QDBVRQ1
     reverse_flow_protection_ideal_diode.power_in ~ vout_before_reverse_flow_protection
-    reverse_flow_protection_ideal_diode.power_out ~ vout
+    reverse_flow_protection_ideal_diode.power_out ~ power_out
 
     # TODO if reverse flow protection doesn't work as expected, what can be alternatives to fix pcbs?
     # add pads or pin header holes for alternative schottky diode?
