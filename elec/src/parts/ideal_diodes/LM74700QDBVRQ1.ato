@@ -1,4 +1,6 @@
 import CSD17581Q3AT from "elec/src/parts/mosfets/CSD17581Q3AT.ato"
+import Capacitor_0402_22nF from "elec/src/parts/capacitors/0402/22nF.ato"
+import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
 import Power from "generics/interfaces.ato"
 
 component _LM74700QDBVRQ1:
@@ -34,16 +36,22 @@ module LM74700QDBVRQ1:
     ic.GND ~ gnd
 
     # add the mosfet (n-channel) and connect it to the IC and power input and output
+    # TODO what if the mosfet specs don't match well enough? specifically the RdsOn might be too low
+    # solution: maybe add footprint for another kind of mosfet? or add solder pads which are accessible?
     n_mosfet = new CSD17581Q3AT
     n_mosfet.G ~ ic.GATE
     n_mosfet.S ~ power_in.vcc
     n_mosfet.D ~ power_out.vcc
 
-    # TODO add the Cin capacitor
+    # add the Cin capacitor (22nF)
+    cin_capacitor = new Capacitor_0402_22nF
+    cin_capacitor.power ~ power_in
 
-    # TODO add the Cout capacitor
-
-    # TODO add the VCAP capacitor
-
+    # add the VCAP capacitor (100nF)
+    vcap_capacitor = new Capacitor_0402_100nF
+    vcap_capacitor.p1 ~ power_in.vcc
+    vcap_capacitor.p2 ~ ic.VCAP
 
     # TODO add the TVS(?)
+
+    # TODO add the Cout capacitor

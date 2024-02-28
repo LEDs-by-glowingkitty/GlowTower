@@ -124,3 +124,6 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     reverse_flow_protection_ideal_diode = new LM74700QDBVRQ1
     reverse_flow_protection_ideal_diode.power_in ~ vout_before_reverse_flow_protection
     reverse_flow_protection_ideal_diode.power_out ~ vout
+
+    # TODO if reverse flow protection doesn't work as expected, what can be alternatives to fix pcbs?
+    # add pads or pin header holes for alternative schottky diode?
