@@ -42,7 +42,7 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (M2) add LDRV MOSFET. This MOSFET is used to drive the low side of the buck converter
     ldrv_n_channel_mosfet = new CSD17581Q3AT
-    ldrv_n_channel_mosfet.G ~ ic.LDRVOC
+    ldrv_n_channel_mosfet.GATE ~ ic.LDRVOC
 
     # (Rs) add sense resistor, which is used to measure the output current
     rs_resistor = new Resistor_0402_12_1K
@@ -50,7 +50,7 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (Cbst) add bootstrap capacitor
     cbst_capacitor = new Capacitor_0402_100nF
-    ic.BOOT ~ cbst_capacitor.p1; cbst_capacitor.p2 ~ ic.SW; cbst_capacitor.p2 ~ ldrv_n_channel_mosfet.D
+    ic.BOOT ~ cbst_capacitor.p1; cbst_capacitor.p2 ~ ic.SW; cbst_capacitor.p2 ~ ldrv_n_channel_mosfet.DRAIN
 
     # (Rpgood) add resistor connected to PGOOD and BP and GND (via capacitor).
     rpgood_resistor = new Resistor_0402_100K
@@ -93,17 +93,17 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (L1) add output inductor, which is used to store energy and smooth out the output voltage
     output_inductor = new TMPC1206HP_1R5MG_D
-    ldrv_n_channel_mosfet.D ~ output_inductor.p1; output_inductor.p2 ~ vout_before_reverse_flow_protection.vcc; output_inductor.p2 ~ rcomp2_resistor.p1
+    ldrv_n_channel_mosfet.DRAIN ~ output_inductor.p1; output_inductor.p2 ~ vout_before_reverse_flow_protection.vcc; output_inductor.p2 ~ rcomp2_resistor.p1
 
     # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
     hdrv_n_channel_mosfet_1 = new CSD16301Q2
-    hdrv_n_channel_mosfet_1.G ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
-    hdrv_n_channel_mosfet_1.D ~ vin.vcc                 # connect the VIN to the drains of the MOSFETs
-    hdrv_n_channel_mosfet_1.S ~ output_inductor.p1      # connect the inductor input to the sources of the MOSFETs
+    hdrv_n_channel_mosfet_1.GATE ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
+    hdrv_n_channel_mosfet_1.DRAIN ~ vin.vcc                # connect the VIN to the drains of the MOSFETs
+    hdrv_n_channel_mosfet_1.SOURCE ~ output_inductor.p1    # connect the inductor input to the sources of the MOSFETs
     hdrv_n_channel_mosfet_2 = new CSD16301Q2            
-    hdrv_n_channel_mosfet_2.G ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
-    hdrv_n_channel_mosfet_2.D ~ vin.vcc                 # connect the VIN to the drains of the MOSFETs
-    hdrv_n_channel_mosfet_2.S ~ output_inductor.p1      # connect the inductor input to the sources of the MOSFETs
+    hdrv_n_channel_mosfet_2.GATE ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
+    hdrv_n_channel_mosfet_2.DRAIN ~ vin.vcc                # connect the VIN to the drains of the MOSFETs
+    hdrv_n_channel_mosfet_2.SOURCE ~ output_inductor.p1    # connect the inductor input to the sources of the MOSFETs
 
     # (Rfbt, Rfbb) set 5V output voltage via voltage divider
     voltage_config_divider = new Voltage_Divider_0402_10K_1_37K

@@ -44,39 +44,39 @@ module MOSFETcircuitPowerOnOff_4x_3_5A:
     power_p_mosfet_resistor_4 = new Resistor_0402_100K
 
     # connect the control input to the gate of the N channel mosfet
-    signal control ~ power_n_mosfet.G
+    signal control ~ power_n_mosfet.GATE
 
     # connect the source of the N channel mosfet to the GND
-    gnd ~ power_n_mosfet.S
+    gnd ~ power_n_mosfet.SOURCE
 
     # connect the resistor for the N channel mosfet to the gate of the N channel mosfet
-    power_n_mosfet.G ~ power_n_mosfet_resistor.p1
+    power_n_mosfet.GATE ~ power_n_mosfet_resistor.p1
     gnd ~ power_n_mosfet_resistor.p2
 
     # connect the drain of the N channel mosfet to the gates of the P channel mosfets.
-    power_n_mosfet.D ~ power_p_mosfet_1.G
-    power_n_mosfet.D ~ power_p_mosfet_2.G
-    power_n_mosfet.D ~ power_p_mosfet_3.G
-    power_n_mosfet.D ~ power_p_mosfet_4.G
+    power_n_mosfet.DRAIN ~ power_p_mosfet_1.GATE
+    power_n_mosfet.DRAIN ~ power_p_mosfet_2.GATE
+    power_n_mosfet.DRAIN ~ power_p_mosfet_3.GATE
+    power_n_mosfet.DRAIN ~ power_p_mosfet_4.GATE
 
     # connect the input voltages to the sources of the P channel mosfets
-    vin1.vcc ~ power_p_mosfet_1.S
-    vin2.vcc ~ power_p_mosfet_2.S
-    vin3.vcc ~ power_p_mosfet_3.S
-    vin4.vcc ~ power_p_mosfet_4.S
+    vin1.vcc ~ power_p_mosfet_1.SOURCE
+    vin2.vcc ~ power_p_mosfet_2.SOURCE
+    vin3.vcc ~ power_p_mosfet_3.SOURCE
+    vin4.vcc ~ power_p_mosfet_4.SOURCE
 
     # connect the drains of the P channel mosfets to the output voltages
-    vout1.vcc ~ power_p_mosfet_1.D
-    vout2.vcc ~ power_p_mosfet_2.D
-    vout3.vcc ~ power_p_mosfet_3.D
-    vout4.vcc ~ power_p_mosfet_4.D
+    vout1.vcc ~ power_p_mosfet_1.DRAIN
+    vout2.vcc ~ power_p_mosfet_2.DRAIN
+    vout3.vcc ~ power_p_mosfet_3.DRAIN
+    vout4.vcc ~ power_p_mosfet_4.DRAIN
 
     # connect the resistors for the P channel mosfets between the gates and the sources of the P channel mosfets
-    power_p_mosfet_1.G ~ power_p_mosfet_resistor_1.p1
-    power_p_mosfet_1.S ~ power_p_mosfet_resistor_1.p2
-    power_p_mosfet_2.G ~ power_p_mosfet_resistor_2.p1
-    power_p_mosfet_2.S ~ power_p_mosfet_resistor_2.p2
-    power_p_mosfet_3.G ~ power_p_mosfet_resistor_3.p1
-    power_p_mosfet_3.S ~ power_p_mosfet_resistor_3.p2
-    power_p_mosfet_4.G ~ power_p_mosfet_resistor_4.p1
-    power_p_mosfet_4.S ~ power_p_mosfet_resistor_4.p2
+    power_p_mosfet_1.GATE ~ power_p_mosfet_resistor_1.p1
+    power_p_mosfet_1.SOURCE ~ power_p_mosfet_resistor_1.p2
+    power_p_mosfet_2.GATE ~ power_p_mosfet_resistor_2.p1
+    power_p_mosfet_2.SOURCE ~ power_p_mosfet_resistor_2.p2
+    power_p_mosfet_3.GATE ~ power_p_mosfet_resistor_3.p1
+    power_p_mosfet_3.SOURCE ~ power_p_mosfet_resistor_3.p2
+    power_p_mosfet_4.GATE ~ power_p_mosfet_resistor_4.p1
+    power_p_mosfet_4.SOURCE ~ power_p_mosfet_resistor_4.p2

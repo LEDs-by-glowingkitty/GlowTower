@@ -39,9 +39,9 @@ module LM74700QDBVRQ1:
     # TODO what if the mosfet specs don't match well enough? specifically the RdsOn might be too low
     # solution: maybe add footprint for another kind of mosfet? or add solder pads which are accessible?
     n_mosfet = new CSD17581Q3AT
-    n_mosfet.G ~ ic.GATE
-    n_mosfet.S ~ power_in.vcc
-    n_mosfet.D ~ power_out.vcc
+    n_mosfet.GATE ~ ic.GATE
+    n_mosfet.SOURCE ~ power_in.vcc
+    n_mosfet.DRAIN ~ power_out.vcc
 
     # add the Cin capacitor (22nF)
     cin_capacitor = new Capacitor_0402_22nF
