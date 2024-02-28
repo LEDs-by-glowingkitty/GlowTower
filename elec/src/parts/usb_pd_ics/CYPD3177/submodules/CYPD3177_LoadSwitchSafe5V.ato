@@ -17,7 +17,8 @@ module CYPD3177_LoadSwitchSafe5V:
     # Add the power interfaces
     power_in = new Power
     power_out = new Power
-    power_in.gnd ~ power_out.gnd
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
 
 
     ###############################################
@@ -29,11 +30,13 @@ module CYPD3177_LoadSwitchSafe5V:
     load_switch_mosfet = new HSM4805
     load_switch_mosfet.GATE1 ~ load_switch_mosfet.GATE2
     load_switch_mosfet.SOURCE1 ~ load_switch_mosfet.SOURCE2
+    load_switch_mosfet.DRAIN1 ~ power_in.vcc
+    load_switch_mosfet.DRAIN2 ~ power_out.vcc
 
     # add voltage divider
     load_switch_voltage_divider = new Voltage_Divider_0603_49_9K__1K
-    load_switch_mosfet.GATE1 ~ load_switch_voltage_divider.power_out
-    power_in.vcc ~ load_switch_voltage_divider.power.vcc
+    load_switch_voltage_divider.power ~ power_in
+    load_switch_voltage_divider.power_out ~ load_switch_mosfet.GATE1
 
     # create an EN pin to control the load switch
     signal en ~ load_switch_voltage_divider.power.gnd

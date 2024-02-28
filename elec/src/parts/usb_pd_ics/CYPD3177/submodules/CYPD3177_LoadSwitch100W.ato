@@ -21,10 +21,10 @@ module CYPD3177_LoadSwitch100W:
     # Add the Load Switch for up to 100W output
     # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
     load_switch_mosfet = new HSM4805
-    load_switch_mosfet.DRAIN1 ~ power_in.vcc
-    load_switch_mosfet.DRAIN2 ~ power_out.vcc
     load_switch_mosfet.GATE1 ~ load_switch_mosfet.GATE2
     load_switch_mosfet.SOURCE1 ~ load_switch_mosfet.SOURCE2
+    load_switch_mosfet.DRAIN1 ~ power_in.vcc
+    load_switch_mosfet.DRAIN2 ~ power_out.vcc
 
     # Add a cap for VBUS
     vbus_cap = new Capacitor_0805_3_3uF
