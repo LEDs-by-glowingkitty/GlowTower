@@ -16,6 +16,8 @@ import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
 import Capacitor_0603_2_2uF from "elec/src/parts/capacitors/0603/2_2uF.ato"
 import Capacitor_1206_10uF from "elec/src/parts/capacitors/1206/10uF.ato"
 import Power from "generics/interfaces.ato"
+import LM74700QDBVRQ1 from "elec/src/parts/ideal_diodes/LM74700QDBVRQ1.ato"
+
 
 module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     """
@@ -26,126 +28,99 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     - Output voltage: 5V
     - Output current: 14A max
     """
-    ic = new TPS40305DRCR
-
     # add power interfaces
     vin = new Power
     vout = new Power
+    vout_before_reverse_flow_protection = new Power
     signal gnd ~ vin.gnd
     gnd ~ vout.gnd
+    gnd ~ vout_before_reverse_flow_protection.gnd
 
-    # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
-    hdrv_n_channel_mosfet_1 = new CSD16301Q2
-    hdrv_n_channel_mosfet_2 = new CSD16301Q2
+    # add IC
+    ic = new TPS40305DRCR
+    ic.power ~ vin
 
     # (M2) add LDRV MOSFET. This MOSFET is used to drive the low side of the buck converter
     ldrv_n_channel_mosfet = new CSD17581Q3AT
+    ldrv_n_channel_mosfet.G ~ ic.LDRVOC
 
     # (Rs) add sense resistor, which is used to measure the output current
     rs_resistor = new Resistor_0402_12_1K
+    ic.LDRVOC ~ rs_resistor.p1; rs_resistor.p2 ~ gnd
 
     # (Cbst) add bootstrap capacitor
     cbst_capacitor = new Capacitor_0402_100nF
-
-    # (Cbyp) add bypass capacitor
-    cbyp_capacitor = new Capacitor_0603_2_2uF
+    ic.BOOT ~ cbst_capacitor.p1; cbst_capacitor.p2 ~ ic.SW; cbst_capacitor.p2 ~ ldrv_n_channel_mosfet.D
 
     # (Rpgood) add resistor connected to PGOOD and BP and GND (via capacitor).
     rpgood_resistor = new Resistor_0402_100K
+    ic.PGOOD ~ rpgood_resistor.p1; rpgood_resistor.p2 ~ ic.BP
 
-    # (Rcomp) add compensation resistor
-    rcomp_resistor = new Resistor_0402_1_54K
+    # (Cbyp) add bypass capacitor
+    cbyp_capacitor = new Capacitor_0603_2_2uF
+    rpgood_resistor.p2 ~ cbyp_capacitor.p1; cbyp_capacitor.p2 ~ gnd
 
     # (Ccomp, Ccomp2) add compensation capacitors
     ccomp_capacitor = new Capacitor_0402_5_6nF
+    ccomp_capacitor.p1 ~ ic.COMP
     ccomp2_capacitor = new Capacitor_0402_220pF
+    ccomp2_capacitor.p1 ~ ic.COMP
+    ccomp2_capacitor.p2 ~ ic.FB
+
+    # (Rcomp) add compensation resistor
+    rcomp_resistor = new Resistor_0402_1_54K
+    ccomp_capacitor.p2 ~ rcomp_resistor.p1; rcomp_resistor.p2 ~ ic.FB
 
     # (Css) add soft start capacitor
     css_capacitor = new Capacitor_0603_3_3nF
+    ic.ENSS ~ css_capacitor.p1; css_capacitor.p2 ~ gnd
 
     # (Cin) add input capacitors, capable of up to 50V input voltage
     cin_capacitor1 = new Capacitor_1206_10uF
+    cin_capacitor1.power ~ vin
     cin_capacitor2 = new Capacitor_1206_10uF
+    cin_capacitor2.power ~ vin
     cin_capacitor3 = new Capacitor_1206_10uF
+    cin_capacitor3.power ~ vin
 
     # (Cvcc) add VDD capacitor
+    # TODO: does it fullfill the 'low ESR' requirement?
     cvcc_capacitor = new Capacitor_0603_1uF
-
-    # (L1) add output inductor, which is used to store energy and smooth out the output voltage
-    output_inductor = new TMPC1206HP_1R5MG_D
-
-    # (Rfbt, Rfbb) set 5V output voltage via voltage divider
-    voltage_config_divider = new Voltage_Divider_0402_10K_1_37K
+    cvcc_capacitor.power ~ vin
 
     # (Rcomp2) add compensation resistor
     rcomp2_resistor = new Resistor_0402_432
 
+    # (L1) add output inductor, which is used to store energy and smooth out the output voltage
+    output_inductor = new TMPC1206HP_1R5MG_D
+    ldrv_n_channel_mosfet.D ~ output_inductor.p1; output_inductor.p2 ~ vout_before_reverse_flow_protection.vcc; output_inductor.p2 ~ rcomp2_resistor.p1
+
+    # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
+    hdrv_n_channel_mosfet_1 = new CSD16301Q2
+    hdrv_n_channel_mosfet_1.G ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
+    hdrv_n_channel_mosfet_1.D ~ vin.vcc                 # connect the VIN to the drains of the MOSFETs
+    hdrv_n_channel_mosfet_1.S ~ output_inductor.p1      # connect the inductor input to the sources of the MOSFETs
+    hdrv_n_channel_mosfet_2 = new CSD16301Q2            
+    hdrv_n_channel_mosfet_2.G ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
+    hdrv_n_channel_mosfet_2.D ~ vin.vcc                 # connect the VIN to the drains of the MOSFETs
+    hdrv_n_channel_mosfet_2.S ~ output_inductor.p1      # connect the inductor input to the sources of the MOSFETs
+
+    # (Rfbt, Rfbb) set 5V output voltage via voltage divider
+    voltage_config_divider = new Voltage_Divider_0402_10K_1_37K
+    voltage_config_divider.power ~ vout_before_reverse_flow_protection
+    voltage_config_divider.vout ~ ic.FB
+
     # (Ccomp3) add compensation capacitor
     ccomp3_capacitor = new Capacitor_0402_820pF
+    rcomp2_resistor.p2 ~ ccomp3_capacitor.p1; ccomp3_capacitor.p2 ~ ic.FB
 
     # (Cout) add output capacitors
     cout_capacitor1 = new Capacitor_1206_10uF
+    cout_capacitor1.power ~ vout_before_reverse_flow_protection
     cout_capacitor2 = new Capacitor_1206_10uF
+    cout_capacitor2.power ~ vout_before_reverse_flow_protection
 
-    # TODO: add reverse flow protection via ideal diode
-    # ideal diode IC like LM74700-Q1 needed? together with CSD17581Q3AT n-channel mosfet?
-    # alternatives? p-channel mosfet? or multiple schottky diodes?
-    
-
-
-    ############################################################
-    ### Connect components
-    ############################################################
-
-    # (M1) connect the HDRV MOSFETs
-    hdrv_n_channel_mosfet_1.G ~ ic.HDRV                 # connect the IC's HDRV pin to the gates of the MOSFETs
-    hdrv_n_channel_mosfet_2.G ~ ic.HDRV
-    hdrv_n_channel_mosfet_1.D ~ vin.vcc                 # connect the VIN to the drains of the MOSFETs
-    hdrv_n_channel_mosfet_2.D ~ vin.vcc
-    hdrv_n_channel_mosfet_1.S ~ output_inductor.p1      # connect the inductor input to the sources of the MOSFETs
-    hdrv_n_channel_mosfet_2.S ~ output_inductor.p1
-
-    # (Cin) connect the input capacitors
-    cin_capacitor1.power ~ vin
-    cin_capacitor2.power ~ vin
-    cin_capacitor3.power ~ vin
-
-    # (Cvcc) connect the vdd capacitor
-    cvcc_capacitor.power ~ vin
-    ic.VDD ~ vin.vcc
-
-    # (Cout) connect the output capacitors
-    cout_capacitor1.power ~ vout
-    cout_capacitor2.power ~ vout
-
-    # (Css) connect the soft start capacitor
-    ic.ENSS ~ css_capacitor.p1; css_capacitor.p2 ~ gnd
-
-    # (Ccomp, Ccomp2) connect the compensation capacitors
-    ccomp_capacitor.p1 ~ ic.COMP
-    ccomp2_capacitor.p1 ~ ic.COMP
-
-    # (Rcomp) connect the compensation resistor
-    ccomp_capacitor.p2 ~ rcomp_resistor.p1; rcomp_resistor.p2 ~ ic.FB
-    ccomp2_capacitor.p2 ~ ic.FB
-
-    # (Rpgood, Cbyp) connect the resistor connected to PGOOD and BP and GND (via capacitor)
-    ic.PGOOD ~ rpgood_resistor.p1; rpgood_resistor.p2 ~ ic.BP
-    rpgood_resistor.p2 ~ cbyp_capacitor.p1; cbyp_capacitor.p2 ~ gnd
-
-    # (Cbst) connect the bootstrap capacitor
-    ic.BOOT ~ cbst_capacitor.p1; cbst_capacitor.p2 ~ ic.SW; cbst_capacitor.p2 ~ ldrv_n_channel_mosfet.D
-
-    # (Rs) connect the sense resistor
-    ic.LDRVOC ~ rs_resistor.p1; rs_resistor.p2 ~ gnd
-    ic.LDRVOC ~ ldrv_n_channel_mosfet.G
-    
-    # (L1, Rcomp2) connect the output inductor & rcomp2 resistor
-    ldrv_n_channel_mosfet.D ~ output_inductor.p1; output_inductor.p2 ~ vout.vcc; output_inductor.p2 ~ rcomp2_resistor.p1
-
-    # (Ccomp3) connect the compensation capacitor
-    rcomp2_resistor.p2 ~ ccomp3_capacitor.p1; ccomp3_capacitor.p2 ~ ic.FB
-
-    # (Rfbt, Rfbb) connect the voltage divider (which sets the output voltage)
-    voltage_config_divider.power ~ vout
-    voltage_config_divider.vout ~ ic.FB
+    # add reverse flow protection for 5V output, via ideal diode
+    reverse_flow_protection_ideal_diode = new LM74700QDBVRQ1
+    reverse_flow_protection_ideal_diode.power_in ~ vout_before_reverse_flow_protection
+    reverse_flow_protection_ideal_diode.power_out ~ vout

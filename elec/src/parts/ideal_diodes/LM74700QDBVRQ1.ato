@@ -1,0 +1,49 @@
+import CSD17581Q3AT from "elec/src/parts/mosfets/CSD17581Q3AT.ato"
+import Power from "generics/interfaces.ato"
+
+component _LM74700QDBVRQ1:
+    """
+    This is an ideal diode controller. It is used to control the gate of a MOSFET to act as a diode.
+    The purpose of this is to prevent reverse current flow, for example in a battery powered system.
+    """
+    # component LM74700QDBVRQ1
+    footprint = "SOT-23-6_L2.9-W1.6-P0.95-LS2.8-BL"
+    lcsc_id = "C2941042"
+    mpn = "C2941042"
+    # pins
+    signal VCAP ~ pin 1     # Charge pump output. Connect to external charge pump capacitor
+    signal GND ~ pin 2      # Ground pin
+    signal EN ~ pin 3       # Enable pin. Can be connected to ANODE for always ON operation
+    signal CATHODE ~ pin 4  # Cathode of the diode. Connect to the drain of the external N-channel MOSFET
+    signal GATE ~ pin 5     # Gate drive output. Connect to gate of the external N-channel MOSFET
+    signal ANODE ~ pin 6    # Anode of the diode and input power. Connect to the source of the external N-channel MOSFET
+
+
+module LM74700QDBVRQ1:
+    # add power
+    power_in = new Power
+    power_out = new Power
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
+
+    # add the IC
+    ic = new _LM74700QDBVRQ1
+    ic.ANODE ~ power_in.vcc
+    ic.CATHODE ~ power_out.vcc
+    ic.EN ~ power_in.vcc # turn the IC always on
+    ic.GND ~ gnd
+
+    # add the mosfet (n-channel) and connect it to the IC and power input and output
+    n_mosfet = new CSD17581Q3AT
+    n_mosfet.G ~ ic.GATE
+    n_mosfet.S ~ power_in.vcc
+    n_mosfet.D ~ power_out.vcc
+
+    # TODO add the Cin capacitor
+
+    # TODO add the Cout capacitor
+
+    # TODO add the VCAP capacitor
+
+
+    # TODO add the TVS(?)
