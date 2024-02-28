@@ -21,10 +21,10 @@ module CYPD3177_LoadSwitch100W:
     # Add the Load Switch for up to 100W output
     # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
     load_switch_mosfet = new HSM4805
-    load_switch_mosfet.D1 ~ vin.vcc
-    load_switch_mosfet.D2 ~ vout.vcc
-    load_switch_mosfet.G1 ~ load_switch_mosfet.G2
-    load_switch_mosfet.S1 ~ load_switch_mosfet.S2
+    load_switch_mosfet.DRAIN1 ~ vin.vcc
+    load_switch_mosfet.DRAIN2 ~ vout.vcc
+    load_switch_mosfet.GATE1 ~ load_switch_mosfet.GATE2
+    load_switch_mosfet.SOURCE1 ~ load_switch_mosfet.SOURCE2
 
     # Add a cap for VBUS
     vbus_cap = new Capacitor_0805_3_3uF
@@ -34,27 +34,27 @@ module CYPD3177_LoadSwitch100W:
     # Add the caps for the load switch
     load_switch_input_cap_1uF = new Capacitor_0603_1uF
     load_switch_input_cap_1uF.p1 ~ vin.vcc
-    load_switch_input_cap_1uF.p2 ~ load_switch_mosfet.G1
+    load_switch_input_cap_1uF.p2 ~ load_switch_mosfet.GATE1
     load_switch_output_cap_1uF = new Capacitor_0603_1uF
     load_switch_output_cap_1uF.p1 ~ vout.vcc
-    load_switch_output_cap_1uF.p2 ~ load_switch_mosfet.G1
+    load_switch_output_cap_1uF.p2 ~ load_switch_mosfet.GATE1
 
     # Add a resistor for between the gate of the load_switch_mosfet and VBUS
     fet_gate_vbus_resistor = new Resistor_0603_10K
-    fet_gate_vbus_resistor.p1 ~ load_switch_mosfet.G1
+    fet_gate_vbus_resistor.p1 ~ load_switch_mosfet.GATE1
     signal en ~ fet_gate_vbus_resistor.p2
 
     # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
     vbus_fet_en_resistor = new Resistor_0603_1K
     vbus_fet_en_resistor.p1 ~ vin.vcc
-    vbus_fet_en_resistor.p2 ~ load_switch_mosfet.G1
+    vbus_fet_en_resistor.p2 ~ load_switch_mosfet.GATE1
 
     # Add a resistor for between the source and the gate of the load_switch_mosfet
     fet_src_gate_resistor = new Resistor_0603_49_9K
-    fet_src_gate_resistor.p1 ~ load_switch_mosfet.S1
-    fet_src_gate_resistor.p2 ~ load_switch_mosfet.G1
+    fet_src_gate_resistor.p1 ~ load_switch_mosfet.SOURCE1
+    fet_src_gate_resistor.p2 ~ load_switch_mosfet.GATE1
 
     # Add a zener diode for between the source and the gate of the load_switch_mosfet
     esd_protection_fet_src_gate_zener_diode = new BZT52C10
-    esd_protection_fet_src_gate_zener_diode.anode ~ load_switch_mosfet.S1
-    esd_protection_fet_src_gate_zener_diode.cathode ~ load_switch_mosfet.G1
+    esd_protection_fet_src_gate_zener_diode.anode ~ load_switch_mosfet.SOURCE1
+    esd_protection_fet_src_gate_zener_diode.cathode ~ load_switch_mosfet.GATE1

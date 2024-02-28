@@ -9,11 +9,11 @@ component CSD16301Q2:
     lcsc_id = "C140340"
     mpn = "C140340"
     # pins
-    signal DRAIN ~ pin 1
-    D ~ pin 2
     signal GATE ~ pin 3
     signal SOURCE ~ pin 4
-    D ~ pin 5
-    D ~ pin 6
-    D ~ pin 7
-    S ~ pin 8
+    SOURCE ~ pin 8
+    signal DRAIN ~ pin 1
+    DRAIN ~ pin 2
+    DRAIN ~ pin 5
+    DRAIN ~ pin 6
+    DRAIN ~ pin 7

@@ -9,11 +9,11 @@ component NCE30P12S:
     lcsc_id = "C167515"
     mpn = "C167515"
     # pins
-    signal SOURCE ~ pin 1
-    S ~ pin 2
-    S ~ pin 3
     signal GATE ~ pin 4
+    signal SOURCE ~ pin 1
+    SOURCE ~ pin 2
+    SOURCE ~ pin 3
     signal DRAIN ~ pin 5
-    D ~ pin 6
-    D ~ pin 7
-    D ~ pin 8
+    DRAIN ~ pin 6
+    DRAIN ~ pin 7
+    DRAIN ~ pin 8

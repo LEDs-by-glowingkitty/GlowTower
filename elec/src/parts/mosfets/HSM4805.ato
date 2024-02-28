@@ -9,11 +9,11 @@ component HSM4805:
     lcsc_id = "C700973"
     mpn = "C700973"
     # pins
-    signal S1 ~ pin 1
-    signal G1 ~ pin 2
-    signal S2 ~ pin 3
-    signal G2 ~ pin 4
-    signal D2 ~ pin 5
-    D2 ~ pin 6
-    signal D1 ~ pin 7
-    D1 ~ pin 8
+    signal GATE1 ~ pin 2
+    signal GATE2 ~ pin 4
+    signal SOURCE1 ~ pin 1
+    signal SOURCE2 ~ pin 3
+    signal DRAIN1 ~ pin 7
+    DRAIN1 ~ pin 8
+    signal DRAIN2 ~ pin 5
+    DRAIN2 ~ pin 6
