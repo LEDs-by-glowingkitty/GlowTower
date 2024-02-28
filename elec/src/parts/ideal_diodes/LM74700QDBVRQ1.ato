@@ -52,6 +52,4 @@ module LM74700QDBVRQ1:
     vcap_capacitor.p1 ~ power_in.vcc
     vcap_capacitor.p2 ~ ic.VCAP
 
-    # TODO add the TVS(?)
-
     # TODO add the Cout capacitor

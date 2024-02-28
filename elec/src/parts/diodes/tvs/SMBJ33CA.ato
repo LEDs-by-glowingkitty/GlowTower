@@ -1,0 +1,12 @@
+component SMBJ33CA:
+    """
+    This is a 33V 600W TVS diode. It is used to protect the circuit from voltage spikes.
+    Datasheet: https://datasheet.lcsc.com/lcsc/2303141900_MDD-Microdiode-Electronics--SMBJ33CA_C114000.pdf
+    """
+    # component SMBJ33CA
+    footprint = "SMB_L4.6-W3.6-LS5.3-BI"
+    lcsc_id = "C114000"
+    mpn = "C114000"
+    # pins
+    signal _1 ~ pin 1
+    signal _2 ~ pin 2

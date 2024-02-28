@@ -17,6 +17,8 @@ from "elec/src/parts/pin_headers/PinHeader_2_54mm.ato" import PinHeader_2_54mm_2
 import Power from "generics/interfaces.ato"
 import SK12D07VG4 from "elec/src/parts/switches/SK12D07VG4.ato"
 import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
+import SMBJ33CA from "elec/src/parts/diodes/tvs/SMBJ33CA.ato"
+
 
 module MainPCB:
     """
@@ -81,6 +83,11 @@ module MainPCB:
 
     # Add USB-C connector that can handle up to 5A at 20V (100W)
     usb_c_connector = new USB_C_Connector_5A
+
+    # Add a TVS diode to protect from voltage spikes from the USB-C connector
+    tvs_diode = new SMBJ33CA
+    tvs_diode._1 ~ power_vbus.vcc
+    tvs_diode._2 ~ gnd
 
     # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
     usb_pd_ic = new CYPD3177_min_9V_2A
