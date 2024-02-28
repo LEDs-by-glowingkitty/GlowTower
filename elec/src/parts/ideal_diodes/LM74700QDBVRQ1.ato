@@ -52,4 +52,6 @@ module LM74700QDBVRQ1:
     vcap_capacitor.p1 ~ power_in.vcc
     vcap_capacitor.p2 ~ ic.VCAP
 
-    # TODO add the Cout capacitor
+    # add the Cout capacitor (100nF)
+    cout_capacitor = new Capacitor_0402_100nF
+    cout_capacitor.power ~ power_out
