@@ -11,3 +11,6 @@ component BZT52C10 from ZenerDiode:
     footprint = "D_SOD-123F"
     lcsc_id = "C2891778"
     mpn = "C2891778"
+
+    signal input ~ anode
+    signal output ~ cathode

@@ -56,5 +56,5 @@ module CYPD3177_LoadSwitch100W:
 
     # Add a zener diode for between the source and the gate of the load_switch_mosfet
     esd_protection_fet_src_gate_zener_diode = new BZT52C10
-    esd_protection_fet_src_gate_zener_diode.anode ~ load_switch_mosfet.SOURCE1
-    esd_protection_fet_src_gate_zener_diode.cathode ~ load_switch_mosfet.GATE1
+    esd_protection_fet_src_gate_zener_diode.input ~ load_switch_mosfet.SOURCE1
+    esd_protection_fet_src_gate_zener_diode.output ~ load_switch_mosfet.GATE1

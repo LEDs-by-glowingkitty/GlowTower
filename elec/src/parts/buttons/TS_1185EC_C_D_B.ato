@@ -9,3 +9,6 @@ component TS_1185EC_C_D_B:
     # pins
     signal p1 ~ pin 1
     signal p2 ~ pin 2
+
+    signal input ~ p1
+    signal output ~ p2
