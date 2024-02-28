@@ -8,5 +8,5 @@ component SMBJ33CA:
     lcsc_id = "C114000"
     mpn = "C114000"
     # pins
-    signal _1 ~ pin 1
-    signal _2 ~ pin 2
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2

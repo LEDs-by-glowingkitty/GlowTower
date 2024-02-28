@@ -141,8 +141,8 @@ module ESP32_WROOM_32E_N8R2:
 
     # Add the reset/EN button
     reset_button = new TS_1185EC_C_D_B
-    ic.EN ~ reset_button._1
-    power.gnd ~ reset_button._2
+    ic.EN ~ reset_button.p1
+    power.gnd ~ reset_button.p2
 
     # Add a delay capacitor for the reset/EN pin
     delay_cap = new Capacitor_0603_1uF
@@ -156,8 +156,8 @@ module ESP32_WROOM_32E_N8R2:
 
     # Add the boot button
     boot_button = new TS_1185EC_C_D_B
-    ic.IO0 ~ boot_button._1
-    power.gnd ~ boot_button._2
+    ic.IO0 ~ boot_button.p1
+    power.gnd ~ boot_button.p2
     
     # Add a pull up resistor for the boot button
     boot_pullup_resistor = new Resistor_0402_100K

@@ -8,11 +8,11 @@ component SK12D07VG4:
     lcsc_id = "C393937"
     mpn = "C393937"
     # pins
-    signal _1 ~ pin 1
-    signal _2 ~ pin 2
-    signal _3 ~ pin 3
-    signal _4 ~ pin 4
-    signal _5 ~ pin 5
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+    signal p3 ~ pin 3
+    signal p4 ~ pin 4
+    signal p5 ~ pin 5
 
-    signal gnd ~ _4
-    gnd ~ _5
+    signal gnd ~ p4
+    gnd ~ p5

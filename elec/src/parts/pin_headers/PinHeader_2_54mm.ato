@@ -7,8 +7,8 @@ component PinHeader_2_54mm_2pins:
     lcsc_id = "C492401"
     mpn = "C492401"
     # pins
-    signal _1 ~ pin 1
-    signal _2 ~ pin 2
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
 
 
 component PinHeader_2_54mm_3pins:
@@ -20,6 +20,6 @@ component PinHeader_2_54mm_3pins:
     lcsc_id = "C2937625"
     mpn = "C2937625"
     # pins
-    signal _1 ~ pin 1
-    signal _2 ~ pin 2
-    signal _3 ~ pin 3
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+    signal p3 ~ pin 3

@@ -86,8 +86,8 @@ module MainPCB:
 
     # Add a TVS diode to protect from voltage spikes from the USB-C connector
     tvs_diode = new SMBJ33CA
-    tvs_diode._1 ~ power_vbus.vcc
-    tvs_diode._2 ~ gnd
+    tvs_diode.p1 ~ power_vbus.vcc
+    tvs_diode.p2 ~ gnd
 
     # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
     usb_pd_ic = new CYPD3177_min_9V_2A
@@ -174,11 +174,11 @@ module MainPCB:
     microphone.ic.i2s ~ esp32.ic.i2s
     microphone.power.gnd ~ gnd
     # Connect the microphone to power via a slider switch
-    microphone_power_slider_switch._1 ~ gnd
-    microphone_power_slider_switch._2 ~ microphone.power.vcc
-    microphone_power_slider_switch._3 ~ power_3_3v.vcc
-    microphone_power_slider_switch._4 ~ gnd
-    microphone_power_slider_switch._5 ~ gnd
+    microphone_power_slider_switch.p1 ~ gnd
+    microphone_power_slider_switch.p2 ~ microphone.power.vcc
+    microphone_power_slider_switch.p3 ~ power_3_3v.vcc
+    microphone_power_slider_switch.p4 ~ gnd
+    microphone_power_slider_switch.p5 ~ gnd
 
     # Connect the power to the levelshifters
     power_3_3v ~ levelshifter_1.power_in; levelshifter_1.power_out ~ power_5v
@@ -195,17 +195,17 @@ module MainPCB:
     levelshifter_3.signal_in_2.io ~ pad_extra_led_strip_data_out.p1 # External (optional) LED strip
 
     # Connnect the inverter
-    esp32.boot_button._1 ~ inverter.input_1; inverter.output_1 ~ esp32.ic.IO32 # If the action button is pressed, IO32 will be pulled high
+    esp32.boot_button.p1 ~ inverter.input_1; inverter.output_1 ~ esp32.ic.IO32 # If the action button is pressed, IO32 will be pulled high
     inverter.power ~ power_3_3v
     inverter.input_2 ~ gnd
 
     # Connect the lamp mode slider switch
     # LOW: GlowLight mode, HIGH: GlowTower mode
-    lampmode_slider_switch._1 ~ gnd
-    lampmode_slider_switch._2 ~ esp32.ic.IO35
-    lampmode_slider_switch._3 ~ power_3_3v.vcc
-    lampmode_slider_switch._4 ~ gnd
-    lampmode_slider_switch._5 ~ gnd
+    lampmode_slider_switch.p1 ~ gnd
+    lampmode_slider_switch.p2 ~ esp32.ic.IO35
+    lampmode_slider_switch.p3 ~ power_3_3v.vcc
+    lampmode_slider_switch.p4 ~ gnd
+    lampmode_slider_switch.p5 ~ gnd
 
     # Connec the pullup resistor for the lamp mode slider switch pin
     esp32.ic.IO35 ~ lampmode_slider_pullup_resistor.p1; lampmode_slider_pullup_resistor.p2 ~ power_3_3v.vcc
@@ -224,10 +224,10 @@ module MainPCB:
     power_5v ~ ldo_3v3.vin; ldo_3v3.vout ~ power_3_3v
 
     # Connect the power via the power MOSFETs to the LED strips
-    power_5v ~ led_power_mosfet_circuit.vin1; led_power_mosfet_circuit.vout1.vcc ~ pin_header_male_led_strip_1._1
-    power_5v ~ led_power_mosfet_circuit.vin2; led_power_mosfet_circuit.vout2.vcc ~ pin_header_male_led_strip_2._1
-    power_5v ~ led_power_mosfet_circuit.vin3; led_power_mosfet_circuit.vout3.vcc ~ pin_header_male_led_strip_3._1
-    power_5v ~ led_power_mosfet_circuit.vin4; led_power_mosfet_circuit.vout4.vcc ~ pin_header_male_led_strip_4._1
+    power_5v ~ led_power_mosfet_circuit.vin1; led_power_mosfet_circuit.vout1.vcc ~ pin_header_male_led_strip_1.p1
+    power_5v ~ led_power_mosfet_circuit.vin2; led_power_mosfet_circuit.vout2.vcc ~ pin_header_male_led_strip_2.p1
+    power_5v ~ led_power_mosfet_circuit.vin3; led_power_mosfet_circuit.vout3.vcc ~ pin_header_male_led_strip_3.p1
+    power_5v ~ led_power_mosfet_circuit.vin4; led_power_mosfet_circuit.vout4.vcc ~ pin_header_male_led_strip_4.p1
     led_power_mosfet_circuit.gnd ~ gnd
     
     # Connect the control pins of the power MOSFETs to the ESP32
@@ -240,27 +240,27 @@ module MainPCB:
     led_strip_4_capacitor.power ~ led_power_mosfet_circuit.vout4
 
     # Connect the LED ring capacitor & power
-    pin_header_male_led_ring._1 ~ led_ring_capacitor.p1; led_ring_capacitor.p2 ~ gnd
-    pin_header_male_led_ring._1 ~ power_5v.vcc
+    pin_header_male_led_ring.p1 ~ led_ring_capacitor.p1; led_ring_capacitor.p2 ~ gnd
+    pin_header_male_led_ring.p1 ~ power_5v.vcc
 
     # Connect the LED data output to the pin headers for the LED strips
-    levelshifter_1.signal_out_1.io ~ pin_header_male_led_strip_1._2
-    levelshifter_1.signal_out_2.io ~ pin_header_male_led_strip_2._2
-    levelshifter_2.signal_out_1.io ~ pin_header_male_led_strip_3._2
-    levelshifter_2.signal_out_2.io ~ pin_header_male_led_strip_4._2
+    levelshifter_1.signal_out_1.io ~ pin_header_male_led_strip_1.p2
+    levelshifter_1.signal_out_2.io ~ pin_header_male_led_strip_2.p2
+    levelshifter_2.signal_out_1.io ~ pin_header_male_led_strip_3.p2
+    levelshifter_2.signal_out_2.io ~ pin_header_male_led_strip_4.p2
 
     # Connect the LED data output to the pin headers for the action button LED ring
-    levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring._2
+    levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring.p2
 
     # Connect the GND to the LED strip pin headers
-    gnd ~ pin_header_male_led_strip_1._3
-    gnd ~ pin_header_male_led_strip_2._3
-    gnd ~ pin_header_male_led_strip_3._3
-    gnd ~ pin_header_male_led_strip_4._3
+    gnd ~ pin_header_male_led_strip_1.p3
+    gnd ~ pin_header_male_led_strip_2.p3
+    gnd ~ pin_header_male_led_strip_3.p3
+    gnd ~ pin_header_male_led_strip_4.p3
 
     # Connect GND and the button to the pin headers for the action button
-    gnd ~ pin_header_male_action_button._1
-    esp32.boot_button._1 ~ pin_header_male_action_button._2
+    gnd ~ pin_header_male_action_button.p1
+    esp32.boot_button.p1 ~ pin_header_male_action_button.p2
 
     # Connect power to the solder pads
     power_vbus.vcc ~ pad_power_vbus.p1
@@ -285,7 +285,7 @@ module MainPCB:
     esp32.ic.IO15 ~ pad_io15_spi_cs_jtag_tdo.p1
     esp32.ic.IO12 ~ pad_io12_jtag_tdi.p1
     esp32.ic.IO27 ~ pad_io27.p1
-    esp32.boot_button._1 ~ pad_io0_boot_button.p1
+    esp32.boot_button.p1 ~ pad_io0_boot_button.p1
     esp32.ic.EN ~ pad_esp32_en_jtag_reset.p1
     esp32.uart.tx ~ pad_uart_tx.p1
     esp32.uart.rx ~ pad_uart_rx.p1

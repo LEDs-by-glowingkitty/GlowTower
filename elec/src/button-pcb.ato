@@ -22,15 +22,15 @@ module ButtonPCB:
 
     # Define the 5V power supply
     power = new Power
-    power.vcc ~ pin_headers_leds._1
-    power.gnd ~ pin_headers_button._2
+    power.vcc ~ pin_headers_leds.p1
+    power.gnd ~ pin_headers_button.p2
 
     # Define the LEDs. The capacitors are already included in the pack and the LEDs are connected in series.
     leds = new WS2812B_1010_pack_of_12
-    leds.power.vcc ~ pin_headers_leds._1
-    leds.data ~ pin_headers_leds._2
+    leds.power.vcc ~ pin_headers_leds.p1
+    leds.data ~ pin_headers_leds.p2
 
     # Define the Actionbutton
     button = new TS_1102S_C_A_B
-    button.input ~ pin_headers_button._1
-    button.output ~ pin_headers_button._2
+    button.input ~ pin_headers_button.p1
+    button.output ~ pin_headers_button.p2

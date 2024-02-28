@@ -7,5 +7,5 @@ component TS_1185EC_C_D_B:
     lcsc_id = "C318893"
     mpn = "C318893"
     # pins
-    signal _2 ~ pin 2
-    signal _1 ~ pin 1
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2

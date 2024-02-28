@@ -9,10 +9,10 @@ component TS_1102S_C_A_B:
     lcsc_id = "C381038"
     mpn = "C381038"
     # pins
-    signal _3 ~ pin 3
-    signal _4 ~ pin 4
-    signal _1 ~ pin 1
-    signal _2 ~ pin 2
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+    signal p3 ~ pin 3
+    signal p4 ~ pin 4
 
-    signal input ~ _1
-    signal output ~ _3
+    signal input ~ p1
+    signal output ~ p3
