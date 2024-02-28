@@ -84,7 +84,6 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     cin_capacitor3.power ~ power_in
 
     # (Cvcc) add VDD capacitor
-    # TODO: does it fullfill the 'low ESR' requirement?
     cvcc_capacitor = new Capacitor_0603_1uF
     cvcc_capacitor.power ~ power_in
 
@@ -125,5 +124,5 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     reverse_flow_protection_ideal_diode.power_in ~ vout_before_reverse_flow_protection
     reverse_flow_protection_ideal_diode.power_out ~ power_out
 
-    # TODO if reverse flow protection doesn't work as expected, what can be alternatives to fix pcbs?
+    # TODO: if reverse flow protection doesn't work as expected, what can be alternatives to fix pcbs?
     # add pads or pin header holes for alternative schottky diode?

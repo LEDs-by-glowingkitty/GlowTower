@@ -36,7 +36,7 @@ module LM74700QDBVRQ1:
     ic.GND ~ gnd
 
     # add the mosfet (n-channel) and connect it to the IC and power input and output
-    # TODO what if the mosfet specs don't match well enough? specifically the RdsOn might be too low
+    # TODO: what if the mosfet specs don't match well enough? specifically the RdsOn might be too low
     # solution: maybe add footprint for another kind of mosfet? or add solder pads which are accessible?
     n_mosfet = new CSD17581Q3AT
     n_mosfet.GATE ~ ic.GATE

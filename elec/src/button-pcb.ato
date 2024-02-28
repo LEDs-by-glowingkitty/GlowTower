@@ -35,4 +35,4 @@ module ButtonPCB:
     button.input ~ pin_headers_button.p1
     button.output ~ pin_headers_button.p2
 
-    # TODO consider adding ESD protection for the button PCB
+    # TODO: consider adding ESD protection for the button PCB
