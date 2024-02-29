@@ -163,7 +163,7 @@ module MainPCB:
 
     # Connect the power to the USB to serial, if USB is connected
     usbserial_power_mosfet_circuit.power_in ~ power_3_3v
-    usbserial_power_mosfet_circuit.power_out ~ usb_to_serial.power_3_3v
+    usbserial_power_mosfet_circuit.power_out ~ usb_to_serial.power
     usbserial_power_mosfet_circuit.control ~ usb_c_connector.power.vcc
     # Connect the data lines from the USB port to USB to serial
     usb_c_connector.usb ~ usb_to_serial.usb

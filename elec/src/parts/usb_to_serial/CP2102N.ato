@@ -62,18 +62,25 @@ component CP2102N_A02_GQFN24R:
     uart.rx ~ RXD
     uart.gnd ~ GND
 
+    # Add power (3.3V)
+    power = new Power
+    power.vcc ~ VBUS
+    power.vcc ~ VREGIN
+    power.vcc ~ VDD
+    power.vcc ~ VIO
+    power.gnd ~ GND
+
 
 module CP2102N:
+    # add power (3.3V)
+    power = new Power
+    signal gnd ~ power.gnd
     
+    # add IC
     ic = new CP2102N_A02_GQFN24R
+    ic.power ~ power
 
-    # add power
-    power_3_3v = new Power
-    power_vbus = new Power
-    signal gnd ~ ic.GND
-    power_3_3v.gnd ~ gnd
-    power_vbus.gnd ~ gnd
-
+    # add interfaces
     uart = new UART
     uart ~ ic.uart
 
@@ -82,19 +89,14 @@ module CP2102N:
 
     # Add capacitors for the VREGIN and VDD pins
     small_cap = new Capacitor_0402_100nF
+    small_cap.power ~ power
     large_cap = new Capacitor_0603_10uF
-    power_3_3v ~ small_cap.power
-    power_3_3v ~ large_cap.power
+    large_cap.power ~ power
 
-    # Connect the CP2102N to 3.3V
-    ic.VBUS ~ power_3_3v.vcc
-    ic.VREGIN ~ power_3_3v.vcc
-    ic.VDD ~ power_3_3v.vcc
-    ic.VIO ~ power_3_3v.vcc
-    
     # Add a pull up resistor for the RSTb pin.
     pull_up_resistor = new Resistor_0402_1K
-    ic.RSTb ~ pull_up_resistor.p1; pull_up_resistor.p2 ~ power_3_3v.vcc
+    pull_up_resistor.p1 ~ ic.RSTb
+    pull_up_resistor.p2 ~ power.vcc
 
     # Add ESD protection for the D+ and D- lines
     # (ESD protection for VBUS not included to make it make it easier compatible with USB PD systems where ESD protection is done via the USB PD controller)
