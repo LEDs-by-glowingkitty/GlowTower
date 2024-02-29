@@ -28,20 +28,26 @@ component _MSM261D4030H1CPM:
     i2s.sd ~ DATA
     i2s.gnd ~ GND
 
-
-module MSM261D4030H1CPM:
-
-    ic = new _MSM261D4030H1CPM
-
     # add power
     power = new Power
-    power.vcc ~ ic.VDD
-    power.gnd ~ ic.GND
+    power.vcc ~ VDD
+    power.gnd ~ GND
+
+
+module MSM261D4030H1CPM:
+    # add power
+    power = new Power
+
+    # add IC
+    ic = new _MSM261D4030H1CPM
+    ic.power ~ power
+
+    # add I2S interface
+    i2s = new I2S
+    i2s ~ ic.i2s
 
     # add caps
     cap1 = new Capacitor_0603_10uF
+    cap1.power ~ power
     cap2 = new Capacitor_0402_100nF
-    cap1.p1 ~ power.vcc
-    cap2.p1 ~ power.vcc
-    cap1.p2 ~ power.gnd
-    cap2.p2 ~ power.gnd
+    cap2.power ~ power

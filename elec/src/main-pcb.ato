@@ -171,7 +171,7 @@ module MainPCB:
     esp32.uart.tx ~ usb_to_serial.uart.rx; usb_to_serial.uart.tx ~ esp32.uart.rx
 
     # Connect the microphone
-    microphone.ic.i2s ~ esp32.ic.i2s
+    microphone.i2s ~ esp32.i2s
     microphone.power.gnd ~ gnd
     # Connect the microphone to power via a slider switch
     microphone_power_slider_switch.p1 ~ gnd
