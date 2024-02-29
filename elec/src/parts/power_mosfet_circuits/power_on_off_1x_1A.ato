@@ -16,34 +16,23 @@ module MOSFETcircuitPowerOnOff_1x_1A:
     signal gnd ~ power_in.gnd
     gnd ~ power_out.gnd
 
-    # the N channel mosfet controls the p channel mosfets
-    power_n_mosfet = new AO3400A
-    # the P channel mosfet controls the load
-    power_p_mosfet = new AO3401A
-
     # add the resistors for the N channel mosfet and the P channel mosfets
     power_n_mosfet_resistor = new Resistor_0402_100K
     power_p_mosfet_resistor = new Resistor_0402_100K
 
-    # connect the control input to the gate of the N channel mosfet
-    signal control ~ power_n_mosfet.GATE
-
-    # connect the source of the N channel mosfet to the GND
-    gnd ~ power_n_mosfet.SOURCE
-
-    # connect the resistor for the N channel mosfet to the gate of the N channel mosfet
-    power_n_mosfet.GATE ~ power_n_mosfet_resistor.p1
-    gnd ~ power_n_mosfet_resistor.p2
-
-    # connect the drain of the N channel mosfet to the gates of the P channel mosfets.
-    power_n_mosfet.DRAIN ~ power_p_mosfet.GATE
-
-    # connect the input voltages to the sources of the P channel mosfets
-    power_in.vcc ~ power_p_mosfet.SOURCE
-
-    # connect the drains of the P channel mosfets to the output voltages
-    power_out.vcc ~ power_p_mosfet.DRAIN
-
-    # connect the resistor for the P channel mosfet between the gate and the source of the P channel mosfet
+    # the P channel mosfet controls the load
+    power_p_mosfet = new AO3401A
     power_p_mosfet.GATE ~ power_p_mosfet_resistor.p1
     power_p_mosfet.SOURCE ~ power_p_mosfet_resistor.p2
+    power_p_mosfet.SOURCE ~ power_in.vcc
+    power_p_mosfet.DRAIN ~ power_out.vcc
+
+    # the N channel mosfet controls the p channel mosfets
+    power_n_mosfet = new AO3400A
+    power_n_mosfet.GATE ~ power_n_mosfet_resistor.p1;
+    power_n_mosfet.SOURCE ~ power_n_mosfet_resistor.p2
+    power_n_mosfet.SOURCE ~ gnd
+    power_n_mosfet.DRAIN ~ power_p_mosfet.GATE
+
+    # connect the control input to the gate of the N channel mosfet
+    signal control ~ power_n_mosfet.GATE
