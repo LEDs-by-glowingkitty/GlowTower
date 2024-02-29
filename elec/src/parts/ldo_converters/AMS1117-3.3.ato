@@ -16,24 +16,31 @@ component _AMS1117_3_3:
     signal VIN ~ pin 3
     VOUT ~ pin 4
 
-    power_out = new Power
-    power_out.vcc ~ VOUT
-    power_out.gnd ~ GND
-
     power_in = new Power
     power_in.vcc ~ VIN
     power_in.gnd ~ GND
 
+    power_out = new Power
+    power_out.vcc ~ VOUT
+    power_out.gnd ~ GND
+
 
 module AMS1117_3_3:
-    ic = new _AMS1117_3_3
-
-    input_cap = new Capacitor_0603_10uF
-    output_cap = new Capacitor_0603_10uF
-
+    # add power
     power_in = new Power
     power_out = new Power
-    power_in.gnd ~ power_out.gnd
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
 
-    power_in ~ ic.power_in
-    power_out ~ ic.power_out
+    # add IC
+    ic = new _AMS1117_3_3
+    ic.power_in ~ power_in
+    ic.power_out ~ power_out
+
+    # add input capacitor
+    input_cap = new Capacitor_0603_10uF
+    input_cap.power ~ power_in
+
+    # add output capacitor
+    output_cap = new Capacitor_0603_10uF
+    output_cap.power ~ power_out
