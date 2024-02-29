@@ -1,4 +1,4 @@
-from "generics/interfaces.ato" import I2C, USB_PD
+from "generics/interfaces.ato" import I2C, USB_PD, Power
 
 component CYPD3177:
     """
@@ -84,3 +84,14 @@ component CYPD3177:
     usb_pd.cc2 ~ CC2
     usb_pd.vbus ~ VBUS_IN
     usb_pd.gnd ~ GND
+
+    # Add power
+    power_in = new Power
+    power_in.vcc ~ VBUS_IN
+    power_in.gnd ~ GND
+    power_3_3v = new Power
+    power_3_3v.vcc ~ VDDD
+    power_3_3v.gnd ~ GND
+    power_1_8v = new Power
+    power_1_8v.vcc ~ VCCD
+    power_1_8v.gnd ~ GND
