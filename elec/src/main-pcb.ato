@@ -112,7 +112,7 @@ module MainPCB:
     # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
     pin_header_male_action_button = new PinHeader_2_54mm_2pins
     pin_header_male_action_button.p1 ~ gnd
-    pin_header_male_action_button.p2 ~ esp32.boot_button.p1
+    pin_header_male_action_button.p2 ~ esp32.ic.IO0
 
     pin_header_male_led_ring = new PinHeader_2_54mm_2pins
     pin_header_male_led_ring.p1 ~ power_5v.vcc
@@ -146,7 +146,7 @@ module MainPCB:
     # - set BOOT/IO0 button in wled and see if this causes problems, on the esp32 wroom 32e
     # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
-    inverter.input_1 ~ esp32.boot_button.p1
+    inverter.input_1 ~ esp32.ic.IO0
     inverter.output_1 ~ esp32.ic.IO32 # If the action button is pressed, IO32 will be pulled high
     inverter.power ~ power_3_3v
     inverter.input_2 ~ gnd
