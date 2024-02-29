@@ -54,14 +54,17 @@ module MainPCB:
     esp32.spi ~ spi
     esp32.jtag ~ jtag
     # Connected pins besides default pins:
+    # TODO: test all used pins first and see if they interfere with operation
+    # TODO: test also I2C, SPI, I2S, UART pins (?)
     # IO5: LED Strips power on/off
     # IO16: LED strip 1 (data out)
     # IO17: LED strip 2 (data out)
     # IO18: LED strip 3 (data out)
     # IO19: LED strip 4 (data out)
-    # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)
     # IO2: Actionbutton LED ring (data out)
-    # IO32: Actionbutton (high if button pressed, low if not pressed)
+    # IO32: External optional LED strip (data out)
+    # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)
+    # IO34: Actionbutton (high if button pressed, low if not pressed)
     # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
     # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)
 
@@ -137,17 +140,15 @@ module MainPCB:
     levelshifter_3 = new SN74LVC2T45DCUR                                # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
     levelshifter_3.signal_in_1.io ~ esp32.ic.IO2                        # Actionbutton LED ring
     levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring.p2
-    # TODO: test if IO2 can be safely used for the Actionbutton LED ring
-    # TODO: levelshifter_3.signal_in_2.io ~ esp32.ic.IO?
+    levelshifter_3.signal_in_2.io ~ esp32.ic.IO32
     levelshifter_3.power_in ~ power_3_3v
     levelshifter_3.power_out ~ power_5v
 
     # TODO: test if the inverter is really needed
-    # - set BOOT/IO0 button in wled and see if this causes problems, on the esp32 wroom 32e
     # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
     inverter.input_1 ~ esp32.ic.IO0     # Boot button   (pulled low if pressed)
-    inverter.output_1 ~ esp32.ic.IO32   # Action button (pulled high if pressed)
+    inverter.output_1 ~ esp32.ic.IO34   # Action button (pulled high if pressed)
     inverter.power ~ power_3_3v
     inverter.input_2 ~ gnd
 
