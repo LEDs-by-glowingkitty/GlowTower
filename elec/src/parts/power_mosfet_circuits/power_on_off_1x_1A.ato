@@ -17,8 +17,8 @@ module MOSFETcircuitPowerOnOff_1x_1A:
     gnd ~ power_out.gnd
 
     # add the resistors for the N channel mosfet and the P channel mosfets
-    power_n_mosfet_resistor = new Resistor_0402_100K
     power_p_mosfet_resistor = new Resistor_0402_100K
+    power_n_mosfet_resistor = new Resistor_0402_100K
 
     # the P channel mosfet controls the load
     power_p_mosfet = new AO3401A

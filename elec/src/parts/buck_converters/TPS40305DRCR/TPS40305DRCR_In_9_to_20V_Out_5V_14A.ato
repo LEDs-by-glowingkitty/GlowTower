@@ -31,10 +31,10 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     # add power interfaces
     power_in = new Power
     power_out = new Power
-    vout_before_reverse_flow_protection = new Power
+    power_out_before_reverse_flow_protection = new Power
     signal gnd ~ power_in.gnd
     gnd ~ power_out.gnd
-    gnd ~ vout_before_reverse_flow_protection.gnd
+    gnd ~ power_out_before_reverse_flow_protection.gnd
 
     # add IC
     ic = new TPS40305DRCR
@@ -92,7 +92,7 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (L1) add output inductor, which is used to store energy and smooth out the output voltage
     output_inductor = new TMPC1206HP_1R5MG_D
-    ldrv_n_channel_mosfet.DRAIN ~ output_inductor.p1; output_inductor.p2 ~ vout_before_reverse_flow_protection.vcc; output_inductor.p2 ~ rcomp2_resistor.p1
+    ldrv_n_channel_mosfet.DRAIN ~ output_inductor.p1; output_inductor.p2 ~ power_out_before_reverse_flow_protection.vcc; output_inductor.p2 ~ rcomp2_resistor.p1
 
     # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
     hdrv_n_channel_mosfet_1 = new CSD16301Q2
@@ -106,7 +106,7 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (Rfbt, Rfbb) set 5V output voltage via voltage divider
     voltage_config_divider = new Voltage_Divider_0402_10K_1_37K
-    voltage_config_divider.power ~ vout_before_reverse_flow_protection
+    voltage_config_divider.power ~ power_out_before_reverse_flow_protection
     voltage_config_divider.power_out ~ ic.FB
 
     # (Ccomp3) add compensation capacitor
@@ -115,13 +115,13 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (Cout) add output capacitors
     cout_capacitor1 = new Capacitor_1206_10uF
-    cout_capacitor1.power ~ vout_before_reverse_flow_protection
+    cout_capacitor1.power ~ power_out_before_reverse_flow_protection
     cout_capacitor2 = new Capacitor_1206_10uF
-    cout_capacitor2.power ~ vout_before_reverse_flow_protection
+    cout_capacitor2.power ~ power_out_before_reverse_flow_protection
 
     # add reverse flow protection for 5V output, via ideal diode
     reverse_flow_protection_ideal_diode = new LM74700QDBVRQ1
-    reverse_flow_protection_ideal_diode.power_in ~ vout_before_reverse_flow_protection
+    reverse_flow_protection_ideal_diode.power_in ~ power_out_before_reverse_flow_protection
     reverse_flow_protection_ideal_diode.power_out ~ power_out
 
     # TODO: if reverse flow protection doesn't work as expected, what can be alternatives to fix pcbs?

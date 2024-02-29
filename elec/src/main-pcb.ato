@@ -212,10 +212,10 @@ module MainPCB:
 
     # Connect the USB PD IC (CYPD3177)
     usb_pd_ic.usb_pd ~ usb_c_connector.usb_pd
-    usb_pd_ic.vout_vbus ~ power_vbus
-    usb_pd_ic.vout_5v ~ power_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
+    usb_pd_ic.power_out_vbus ~ power_vbus
+    usb_pd_ic.power_out_5v ~ power_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
     usb_pd_ic.i2c ~ esp32.i2c
-    usb_pd_ic.vout_vbus_readout ~ esp32.ic.IO33 # Read the USB PD voltage via a voltage divider
+    usb_pd_ic.power_out_vbus_readout ~ esp32.ic.IO33 # Read the USB PD voltage via a voltage divider
 
     # Connect the 5V buck converter
     power_vbus ~ buck_converter_5v.power_in; buck_converter_5v.power_out ~ power_5v
@@ -224,20 +224,20 @@ module MainPCB:
     power_5v ~ ldo_3v3.power_in; ldo_3v3.power_out ~ power_3_3v
 
     # Connect the power via the power MOSFETs to the LED strips
-    power_5v ~ led_power_mosfet_circuit.vin1; led_power_mosfet_circuit.vout1.vcc ~ pin_header_male_led_strip_1.p1
-    power_5v ~ led_power_mosfet_circuit.vin2; led_power_mosfet_circuit.vout2.vcc ~ pin_header_male_led_strip_2.p1
-    power_5v ~ led_power_mosfet_circuit.vin3; led_power_mosfet_circuit.vout3.vcc ~ pin_header_male_led_strip_3.p1
-    power_5v ~ led_power_mosfet_circuit.vin4; led_power_mosfet_circuit.vout4.vcc ~ pin_header_male_led_strip_4.p1
+    power_5v ~ led_power_mosfet_circuit.power_in1; led_power_mosfet_circuit.power_out1.vcc ~ pin_header_male_led_strip_1.p1
+    power_5v ~ led_power_mosfet_circuit.power_in2; led_power_mosfet_circuit.power_out2.vcc ~ pin_header_male_led_strip_2.p1
+    power_5v ~ led_power_mosfet_circuit.power_in3; led_power_mosfet_circuit.power_out3.vcc ~ pin_header_male_led_strip_3.p1
+    power_5v ~ led_power_mosfet_circuit.power_in4; led_power_mosfet_circuit.power_out4.vcc ~ pin_header_male_led_strip_4.p1
     led_power_mosfet_circuit.gnd ~ gnd
     
     # Connect the control pins of the power MOSFETs to the ESP32
     led_power_mosfet_circuit.control ~ esp32.ic.IO5
 
     # Connect the LED strip capacitors
-    led_strip_1_capacitor.power ~ led_power_mosfet_circuit.vout1
-    led_strip_2_capacitor.power ~ led_power_mosfet_circuit.vout2
-    led_strip_3_capacitor.power ~ led_power_mosfet_circuit.vout3
-    led_strip_4_capacitor.power ~ led_power_mosfet_circuit.vout4
+    led_strip_1_capacitor.power ~ led_power_mosfet_circuit.power_out1
+    led_strip_2_capacitor.power ~ led_power_mosfet_circuit.power_out2
+    led_strip_3_capacitor.power ~ led_power_mosfet_circuit.power_out3
+    led_strip_4_capacitor.power ~ led_power_mosfet_circuit.power_out4
 
     # Connect the LED ring capacitor & power
     pin_header_male_led_ring.p1 ~ led_ring_capacitor.p1; led_ring_capacitor.p2 ~ gnd

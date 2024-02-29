@@ -9,74 +9,66 @@ module MOSFETcircuitPowerOnOff_4x_3_5A:
     The circuit can also handle a higher current, but the MOSFETs will get hotter.
     """
     # add the power interfaces for the input and the 4 outputs
-    vin1 = new Power
-    vin2 = new Power
-    vin3 = new Power
-    vin4 = new Power
-    vout1 = new Power
-    vout2 = new Power
-    vout3 = new Power
-    vout4 = new Power
+    power_in1 = new Power
+    power_in2 = new Power
+    power_in3 = new Power
+    power_in4 = new Power
+    power_out1 = new Power
+    power_out2 = new Power
+    power_out3 = new Power
+    power_out4 = new Power
 
     # connect the GNDs of the power interfaces
-    signal gnd ~ vin1.gnd
-    gnd ~ vin2.gnd
-    gnd ~ vin3.gnd
-    gnd ~ vin4.gnd
-    gnd ~ vout1.gnd
-    gnd ~ vout2.gnd
-    gnd ~ vout3.gnd
-    gnd ~ vout4.gnd
-
-    # the N channel mosfet controls the p channel mosfets
-    power_n_mosfet = new AO3400A
-    # each P channel mosfet controls one load
-    power_p_mosfet_1 = new NCE30P12S
-    power_p_mosfet_2 = new NCE30P12S
-    power_p_mosfet_3 = new NCE30P12S
-    power_p_mosfet_4 = new NCE30P12S
+    signal gnd ~ power_in1.gnd
+    gnd ~ power_in2.gnd
+    gnd ~ power_in3.gnd
+    gnd ~ power_in4.gnd
+    gnd ~ power_out1.gnd
+    gnd ~ power_out2.gnd
+    gnd ~ power_out3.gnd
+    gnd ~ power_out4.gnd
 
     # add the resistors for the N channel mosfet and the P channel mosfets
-    power_n_mosfet_resistor = new Resistor_0402_100K
     power_p_mosfet_resistor_1 = new Resistor_0402_100K
     power_p_mosfet_resistor_2 = new Resistor_0402_100K
     power_p_mosfet_resistor_3 = new Resistor_0402_100K
     power_p_mosfet_resistor_4 = new Resistor_0402_100K
+    power_n_mosfet_resistor = new Resistor_0402_100K
 
-    # connect the control input to the gate of the N channel mosfet
-    signal control ~ power_n_mosfet.GATE
+    # each P channel mosfet controls one load
+    power_p_mosfet_1 = new NCE30P12S
+    power_p_mosfet_1.GATE ~ power_p_mosfet_resistor_1.p1
+    power_p_mosfet_1.SOURCE ~ power_p_mosfet_resistor_1.p2
+    power_p_mosfet_1.SOURCE ~ power_in1.vcc
+    power_p_mosfet_1.DRAIN ~ power_out1.vcc
 
-    # connect the source of the N channel mosfet to the GND
-    gnd ~ power_n_mosfet.SOURCE
+    power_p_mosfet_2 = new NCE30P12S
+    power_p_mosfet_2.GATE ~ power_p_mosfet_resistor_2.p1
+    power_p_mosfet_2.SOURCE ~ power_p_mosfet_resistor_2.p2
+    power_p_mosfet_2.SOURCE ~ power_in2.vcc
+    power_p_mosfet_2.DRAIN ~ power_out2.vcc
 
-    # connect the resistor for the N channel mosfet to the gate of the N channel mosfet
-    power_n_mosfet.GATE ~ power_n_mosfet_resistor.p1
-    gnd ~ power_n_mosfet_resistor.p2
+    power_p_mosfet_3 = new NCE30P12S
+    power_p_mosfet_3.GATE ~ power_p_mosfet_resistor_3.p1
+    power_p_mosfet_3.SOURCE ~ power_p_mosfet_resistor_3.p2
+    power_p_mosfet_3.SOURCE ~ power_in3.vcc
+    power_p_mosfet_3.DRAIN ~ power_out3.vcc
 
-    # connect the drain of the N channel mosfet to the gates of the P channel mosfets.
+    power_p_mosfet_4 = new NCE30P12S
+    power_p_mosfet_4.GATE ~ power_p_mosfet_resistor_4.p1
+    power_p_mosfet_4.SOURCE ~ power_p_mosfet_resistor_4.p2
+    power_p_mosfet_4.SOURCE ~ power_in4.vcc
+    power_p_mosfet_4.DRAIN ~ power_out4.vcc
+    
+    # the N channel mosfet controls the p channel mosfets
+    power_n_mosfet = new AO3400A
+    power_n_mosfet.GATE ~ power_n_mosfet_resistor.p1;
+    power_n_mosfet.SOURCE ~ power_n_mosfet_resistor.p2
+    power_n_mosfet.SOURCE ~ gnd
     power_n_mosfet.DRAIN ~ power_p_mosfet_1.GATE
     power_n_mosfet.DRAIN ~ power_p_mosfet_2.GATE
     power_n_mosfet.DRAIN ~ power_p_mosfet_3.GATE
     power_n_mosfet.DRAIN ~ power_p_mosfet_4.GATE
 
-    # connect the input voltages to the sources of the P channel mosfets
-    vin1.vcc ~ power_p_mosfet_1.SOURCE
-    vin2.vcc ~ power_p_mosfet_2.SOURCE
-    vin3.vcc ~ power_p_mosfet_3.SOURCE
-    vin4.vcc ~ power_p_mosfet_4.SOURCE
-
-    # connect the drains of the P channel mosfets to the output voltages
-    vout1.vcc ~ power_p_mosfet_1.DRAIN
-    vout2.vcc ~ power_p_mosfet_2.DRAIN
-    vout3.vcc ~ power_p_mosfet_3.DRAIN
-    vout4.vcc ~ power_p_mosfet_4.DRAIN
-
-    # connect the resistors for the P channel mosfets between the gates and the sources of the P channel mosfets
-    power_p_mosfet_1.GATE ~ power_p_mosfet_resistor_1.p1
-    power_p_mosfet_1.SOURCE ~ power_p_mosfet_resistor_1.p2
-    power_p_mosfet_2.GATE ~ power_p_mosfet_resistor_2.p1
-    power_p_mosfet_2.SOURCE ~ power_p_mosfet_resistor_2.p2
-    power_p_mosfet_3.GATE ~ power_p_mosfet_resistor_3.p1
-    power_p_mosfet_3.SOURCE ~ power_p_mosfet_resistor_3.p2
-    power_p_mosfet_4.GATE ~ power_p_mosfet_resistor_4.p1
-    power_p_mosfet_4.SOURCE ~ power_p_mosfet_resistor_4.p2
+    # connect the control input to the gate of the N channel mosfet
+    signal control ~ power_n_mosfet.GATE

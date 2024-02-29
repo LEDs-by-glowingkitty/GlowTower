@@ -14,26 +14,26 @@ module CYPD3177_min_9V_2A:
     # Add the power interfaces
     power_in = new Power
     power_in ~ cypd3177.power_in
-    vout_vbus = new Power
-    vout_vbus ~ cypd3177.vout_vbus
-    vout_5v = new Power
-    vout_5v ~ cypd3177.vout_5v
-    vout_3_3v = new Power
-    vout_3_3v ~ cypd3177.vout_3_3v
+    power_out_vbus = new Power
+    power_out_vbus ~ cypd3177.power_out_vbus
+    power_out_5v = new Power
+    power_out_5v ~ cypd3177.power_out_5v
+    power_out_3_3v = new Power
+    power_out_3_3v ~ cypd3177.power_out_3_3v
     signal gnd ~ cypd3177.gnd
 
     # Request 9V (min)
     voltage_request_divider = new Voltage_Divider_0402_5_1K__1K
     cypd3177.ic.VBUS_MIN ~ voltage_request_divider.power_out
-    vout_3_3v ~ voltage_request_divider.power
+    power_out_3_3v ~ voltage_request_divider.power
 
     # Request 20V (max) (via pull up to 3.3V)
-    cypd3177.ic.VBUS_MAX ~ vout_3_3v.vcc
+    cypd3177.ic.VBUS_MAX ~ power_out_3_3v.vcc
 
     # Request 2A (min)
     current_request_divider = new Voltage_Divider_0402_5_1K__2_4K
     cypd3177.ic.ISNK_COARSE ~ current_request_divider.power_out
-    vout_3_3v ~ current_request_divider.power
+    power_out_3_3v ~ current_request_divider.power
 
     # Request +0mA (via pull down to GND)
     cypd3177.ic.ISNK_FINE ~ gnd
@@ -45,4 +45,4 @@ module CYPD3177_min_9V_2A:
     usb_pd ~ cypd3177.ic.usb_pd
 
     # Make the readout signals easier accessible
-    signal vout_vbus_readout ~ cypd3177.vout_vbus_readout
+    signal power_out_vbus_readout ~ cypd3177.power_out_vbus_readout
