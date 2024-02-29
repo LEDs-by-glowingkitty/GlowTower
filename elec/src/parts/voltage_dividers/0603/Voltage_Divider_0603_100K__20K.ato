@@ -11,17 +11,16 @@ module Voltage_Divider_0603_100K__20K:
     """
     # add a power interface
     power = new Power
+
+    # add power out, where the voltage will be measured
+    signal power_out
     
     # add pull up resistor
-    voltage_request_pull_up_resistor = new Resistor_0603_100K
-
-    # connect pull up resistor
-    power.vcc ~ voltage_request_pull_up_resistor.p1 
-    signal power_out ~ voltage_request_pull_up_resistor.p2
+    pull_up_resistor = new Resistor_0603_100K
+    pull_up_resistor.p1 ~ power.vcc
+    pull_up_resistor.p2 ~ power_out
 
     # add pull down resistor
-    voltage_request_pull_down_resistor = new Resistor_0603_20K
-    
-    # connect pull down resistor
-    power.gnd ~ voltage_request_pull_down_resistor.p1 
-    power_out ~ voltage_request_pull_down_resistor.p2
+    pull_down_resistor = new Resistor_0603_20K
+    pull_down_resistor.p1 ~ power.gnd
+    pull_down_resistor.p2 ~ power_out
