@@ -146,8 +146,8 @@ module MainPCB:
     # - set BOOT/IO0 button in wled and see if this causes problems, on the esp32 wroom 32e
     # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
-    inverter.input_1 ~ esp32.ic.IO0
-    inverter.output_1 ~ esp32.ic.IO32 # If the action button is pressed, IO32 will be pulled high
+    inverter.input_1 ~ esp32.ic.IO0     # Boot button   (pulled low if pressed)
+    inverter.output_1 ~ esp32.ic.IO32   # Action button (pulled high if pressed)
     inverter.power ~ power_3_3v
     inverter.input_2 ~ gnd
 
