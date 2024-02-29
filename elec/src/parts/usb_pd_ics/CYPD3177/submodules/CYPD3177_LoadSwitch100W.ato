@@ -16,7 +16,8 @@ module CYPD3177_LoadSwitch100W:
     # Add the power interfaces
     power_in = new Power
     power_out = new Power
-    power_in.gnd ~ power_out.gnd
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
 
     # Add the Load Switch for up to 100W output
     # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
@@ -28,25 +29,27 @@ module CYPD3177_LoadSwitch100W:
 
     # Add a cap for VBUS
     vbus_cap = new Capacitor_0805_3_3uF
-    vbus_cap.p1 ~ power_in.vcc
-    vbus_cap.p2 ~ power_in.gnd
+    vbus_cap.power ~ power_in
 
-    # Add the caps for the load switch
+    # Add the input cap for the load switch
     load_switch_input_cap_1uF = new Capacitor_0603_1uF
     load_switch_input_cap_1uF.p1 ~ power_in.vcc
     load_switch_input_cap_1uF.p2 ~ load_switch_mosfet.GATE1
+
+    # Add the output cap for the load switch
     load_switch_output_cap_1uF = new Capacitor_0603_1uF
     load_switch_output_cap_1uF.p1 ~ power_out.vcc
     load_switch_output_cap_1uF.p2 ~ load_switch_mosfet.GATE1
 
     # Add a resistor for between the gate of the load_switch_mosfet and VBUS
     fet_gate_vbus_resistor = new Resistor_0603_10K
-    fet_gate_vbus_resistor.p1 ~ load_switch_mosfet.GATE1
-    signal en ~ fet_gate_vbus_resistor.p2
+    fet_gate_vbus_resistor.p1 ~ power_in.vcc
+    fet_gate_vbus_resistor.p2 ~ load_switch_mosfet.GATE1
 
     # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
+    signal en
     vbus_fet_en_resistor = new Resistor_0603_1K
-    vbus_fet_en_resistor.p1 ~ power_in.vcc
+    vbus_fet_en_resistor.p1 ~ en
     vbus_fet_en_resistor.p2 ~ load_switch_mosfet.GATE1
 
     # Add a resistor for between the source and the gate of the load_switch_mosfet
