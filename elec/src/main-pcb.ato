@@ -74,6 +74,7 @@ module MainPCB:
 
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
+    usb_to_serial.uart ~ uart
     usb_to_serial.usb ~ usb
 
     # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
