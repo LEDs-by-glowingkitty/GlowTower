@@ -55,5 +55,3 @@ module LM74700QDBVRQ1:
     # add the Cout capacitor (100nF)
     cout_capacitor = new Capacitor_0402_100nF
     cout_capacitor.power ~ power_out
-
-    # TODO: clean up the code structure for all parts, to find remaining issues & unconnected pins

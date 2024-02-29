@@ -43,7 +43,6 @@ module MainPCB:
     usb = new USB2
     usb_pd = new USB_PD
 
-    # TODO: test all used pins and see if all can be used as intended
     # Add ESP32 (incl. EN button + BOOT button)
     esp32 = new ESP32_WROOM_32E_N8R2
     esp32.power ~ power_3_3v
