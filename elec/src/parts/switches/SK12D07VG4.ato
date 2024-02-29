@@ -16,3 +16,7 @@ component SK12D07VG4:
 
     signal gnd ~ p4
     gnd ~ p5
+
+    signal A ~ p1
+    signal B ~ p2
+    signal C ~ p3
