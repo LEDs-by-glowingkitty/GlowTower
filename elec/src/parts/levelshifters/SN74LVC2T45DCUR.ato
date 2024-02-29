@@ -34,15 +34,14 @@ component _SN74LVC2T45DCUR:
 
 
 module SN74LVC2T45DCUR:
-
-    ic = new _SN74LVC2T45DCUR
-
     # add power interfaces
     power_in = new Power
-    power_in ~ ic.power_in
-
     power_out = new Power
-    power_out ~ ic.power_out
+
+    # add IC
+    ic = new _SN74LVC2T45DCUR
+    ic.power_in ~ power_in
+    ic.power_out ~ power_out
 
     # add bypass caps
     power_in_cap = new Capacitor_0402_100nF
