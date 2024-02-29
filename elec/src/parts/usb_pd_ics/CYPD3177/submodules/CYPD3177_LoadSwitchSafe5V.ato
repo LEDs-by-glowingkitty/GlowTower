@@ -9,21 +9,11 @@ module CYPD3177_LoadSwitchSafe5V:
     """
     This is a submodule for the CYPD3177. It adds a load switch for the 5V Safe Output.
     """
-
-    ###############################################
-    ############### Setup power ###################
-    ###############################################
-
-    # Add the power interfaces
+    # Add power
     power_in = new Power
     power_out = new Power
     signal en ~ power_in.gnd
 
-
-    ###############################################
-    ############### Load switch ###################
-    ###############################################
-    
     # add the MOSFET for the safe 5V load switch
     # TODO: test if I can also use the HSM4805 for this. Might be overkill, but it could save costs and simplify design testing.
     load_switch_mosfet = new HSM4805
