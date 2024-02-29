@@ -14,7 +14,7 @@ import Capacitor_SMD_D10_L10_1000uF from "elec/src/parts/capacitors/SMD_D10_L10m
 import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
 import SolderPad_2mm_3_5mm from "elec/src/parts/pads/SolderPad_2mm_3_5mm.ato"
 from "elec/src/parts/pin_headers/PinHeader_2_54mm.ato" import PinHeader_2_54mm_2pins, PinHeader_2_54mm_3pins
-import Power from "generics/interfaces.ato"
+from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG, USB2, USB_PD
 import SK12D07VG4 from "elec/src/parts/switches/SK12D07VG4.ato"
 import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
 import SMBJ33CA from "elec/src/parts/diodes/tvs/SMBJ33CA.ato"
@@ -26,14 +26,33 @@ module MainPCB:
     WS2812B LED strips are connected to this PCB via pin headers.
     """
 
-    ############################################
-    ######### Processing & Inputs ##############
-    ############################################
+    # Add power
+    power_vbus = new Power
+    power_5v = new Power
+    power_3_3v = new Power
+    signal gnd ~ power_vbus.gnd
+    gnd ~ power_5v.gnd
+    gnd ~ power_3_3v.gnd
+
+    # Add interfaces
+    uart = new UART
+    i2c = new I2C
+    i2s = new I2S
+    spi = new SPI
+    jtag = new JTAG
+    usb = new USB2
+    usb_pd = new USB_PD
 
     # TODO: test all used pins and see if all can be used as intended
-
     # Add ESP32 (incl. EN button + BOOT button)
     esp32 = new ESP32_WROOM_32E_N8R2
+    esp32.power ~ power_3_3v
+    esp32.uart.tx ~ uart.rx
+    esp32.uart.rx ~ uart.tx
+    esp32.i2c ~ i2c
+    esp32.i2s ~ i2s
+    esp32.spi ~ spi
+    esp32.jtag ~ jtag
     # Connected pins besides default pins:
     # IO5: LED Strips power on/off
     # IO16: LED strip 1 (data out)
@@ -46,247 +65,236 @@ module MainPCB:
     # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
     # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)
 
+    # Add USB-C connector that can handle up to 5A at 20V (100W)
+    usb_c_connector = new USB_C_Connector_5A
+    usb_c_connector.usb ~ usb
+    usb_c_connector.usb_pd ~ usb_pd
+
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
+    usb_to_serial.usb ~ usb
+
     # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
     usbserial_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
+    usbserial_power_mosfet_circuit.power_in ~ power_3_3v
+    usbserial_power_mosfet_circuit.power_out ~ usb_to_serial.power
+    usbserial_power_mosfet_circuit.control ~ usb_c_connector.power.vcc
 
     # Microphone
     # TODO: test that microphone works with ESP32 and those pins via I2S
     microphone = new MSM261D4030H1CPM
+    microphone.i2s ~ i2s
+    microphone.power ~ power_3_3v
+
+    # Add a slider switch to turn on/off the microphone
     microphone_power_slider_switch = new SK12D07VG4
+    microphone_power_slider_switch.p1 ~ gnd
+    microphone_power_slider_switch.p2 ~ microphone.power.vcc
+    microphone_power_slider_switch.p3 ~ power_3_3v.vcc
+    microphone_power_slider_switch.gnd ~ gnd
+
+    # Pin headers, 2.54mm pitch
+    # TODO: test optimal position for the pin headers on pcb. Consider how much cables bend during assembly of lamp
+    pin_header_male_led_strip_1 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_1.p3 ~ gnd
+
+    pin_header_male_led_strip_2 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_2.p3 ~ gnd
+
+    pin_header_male_led_strip_3 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_3.p3 ~ gnd
+
+    pin_header_male_led_strip_4 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_4.p3 ~ gnd
+    # TODO: add reverse polarity protection to 3-pin pin headers, to protect the LED strips
+    # TODO: test polarity protection from GlowSign battery extension
+
+    # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
+    pin_header_male_action_button = new PinHeader_2_54mm_2pins
+    pin_header_male_action_button.p1 ~ gnd
+    pin_header_male_action_button.p2 ~ esp32.boot_button.p1
+
+    pin_header_male_led_ring = new PinHeader_2_54mm_2pins
+    pin_header_male_led_ring.p1 ~ power_5v.vcc
 
     # LED levelshifters
-    levelshifter_1 = new SN74LVC2T45DCUR # for LED strip 1 + 2
-    levelshifter_2 = new SN74LVC2T45DCUR # for LED strip 3 + 4
-    levelshifter_3 = new SN74LVC2T45DCUR # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
+    levelshifter_1 = new SN74LVC2T45DCUR                                # for LED strip 1 + 2
+    levelshifter_1.signal_in_1.io ~ esp32.ic.IO16                       # LED strip 1
+    levelshifter_1.signal_out_1.io ~ pin_header_male_led_strip_1.p2
+    levelshifter_1.signal_in_2.io ~ esp32.ic.IO17                       # LED strip 2
+    levelshifter_1.signal_out_2.io ~ pin_header_male_led_strip_2.p2
+    levelshifter_1.power_in ~ power_3_3v
+    levelshifter_1.power_out ~ power_5v
+    
+    levelshifter_2 = new SN74LVC2T45DCUR                                # for LED strip 3 + 4
+    levelshifter_2.signal_in_1.io ~ esp32.ic.IO18                       # LED strip 3
+    levelshifter_2.signal_out_1.io ~ pin_header_male_led_strip_3.p2
+    levelshifter_2.signal_in_2.io ~ esp32.ic.IO19                       # LED strip 4
+    levelshifter_2.signal_out_2.io ~ pin_header_male_led_strip_4.p2
+    levelshifter_2.power_in ~ power_3_3v
+    levelshifter_2.power_out ~ power_5v
+
+    levelshifter_3 = new SN74LVC2T45DCUR                                # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
+    levelshifter_3.signal_in_1.io ~ esp32.ic.IO2                        # Actionbutton LED ring
+    levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring.p2
+    # TODO: test if IO2 can be safely used for the Actionbutton LED ring
+    # TODO: levelshifter_3.signal_in_2.io ~ esp32.ic.IO?
+    levelshifter_3.power_in ~ power_3_3v
+    levelshifter_3.power_out ~ power_5v
 
     # TODO: test if the inverter is really needed
     # - set BOOT/IO0 button in wled and see if this causes problems, on the esp32 wroom 32e
     # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
+    inverter.input_1 ~ esp32.boot_button.p1
+    inverter.output_1 ~ esp32.ic.IO32 # If the action button is pressed, IO32 will be pulled high
+    inverter.power ~ power_3_3v
+    inverter.input_2 ~ gnd
 
     # Slider to switch between GlowLight & GlowTower mode (which sets number of leds, wifi name, etc.)
     lampmode_slider_switch = new SK12D07VG4
+    lampmode_slider_switch.p1 ~ gnd
+    lampmode_slider_switch.p2 ~ esp32.ic.IO35
+    lampmode_slider_switch.p3 ~ power_3_3v.vcc
+    lampmode_slider_switch.gnd ~ gnd
+
+    # Add a pullup resistor to the slider switch, so it's not floating
     lampmode_slider_pullup_resistor = new Resistor_0402_100K
-
-    ############################################
-    ################## Power ###################
-    ############################################
-
-    power_vbus = new Power
-    power_5v = new Power
-    power_3_3v = new Power
-    signal gnd ~ power_vbus.gnd
-    gnd ~ power_5v.gnd
-    gnd ~ power_3_3v.gnd
-
-    # Add USB-C connector that can handle up to 5A at 20V (100W)
-    usb_c_connector = new USB_C_Connector_5A
+    lampmode_slider_pullup_resistor.p1 ~ esp32.ic.IO35
+    lampmode_slider_pullup_resistor.p2 ~ power_3_3v.vcc
 
     # Add a TVS diode to protect from voltage spikes from the USB-C connector
     tvs_diode = new SMBJ33CA
     tvs_diode.p1 ~ power_vbus.vcc
     tvs_diode.p2 ~ gnd
 
-    # Add USB-C PD (min 9V 2A input) to 5V (max 14A output), to power the LEDs
+    # Add USB-C PD to request 9-20V at minimum 2A, to power everything
     usb_pd_ic = new CYPD3177_min_9V_2A
+    usb_pd_ic.usb_pd ~ usb_pd
+    usb_pd_ic.i2c ~ i2c
+    usb_pd_ic.power_out_vbus ~ power_vbus
+    usb_pd_ic.power_out_5v ~ power_5v                   # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
+    usb_pd_ic.power_out_vbus_readout ~ esp32.ic.IO33    # Read the USB PD voltage via a voltage divider
+
+    # Add a buck converter to convert the 9-20V from the USB-C PD to 5V
     buck_converter_5v = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
+    buck_converter_5v.power_in ~ power_vbus
+    buck_converter_5v.power_out ~ power_5v
 
     # 5V to 3.3V LDO, to power the ESP32 and microphone
     ldo_3v3 = new AMS1117_3_3
-    
+    ldo_3v3.power_in ~ power_5v
+    ldo_3v3.power_out ~ power_3_3v
+
     # MOSFETs to turn off the LED strips via IO5 (LED ring on action button will stay connected to power)
     led_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
+    led_power_mosfet_circuit.control ~ esp32.ic.IO5
+    led_power_mosfet_circuit.power_in1 ~ power_5v
+    led_power_mosfet_circuit.power_in2 ~ power_5v
+    led_power_mosfet_circuit.power_in3 ~ power_5v
+    led_power_mosfet_circuit.power_in4 ~ power_5v
+    led_power_mosfet_circuit.power_out1.vcc ~ pin_header_male_led_strip_1.p1
+    led_power_mosfet_circuit.power_out2.vcc ~ pin_header_male_led_strip_2.p1
+    led_power_mosfet_circuit.power_out3.vcc ~ pin_header_male_led_strip_3.p1
+    led_power_mosfet_circuit.power_out4.vcc ~ pin_header_male_led_strip_4.p1
+    led_power_mosfet_circuit.gnd ~ gnd
 
-    # LED capacitors
+    # Add caps for LED strips
     led_strip_1_capacitor = new Capacitor_SMD_D10_L10_1000uF
     led_strip_2_capacitor = new Capacitor_SMD_D10_L10_1000uF
     led_strip_3_capacitor = new Capacitor_SMD_D10_L10_1000uF
     led_strip_4_capacitor = new Capacitor_SMD_D10_L10_1000uF
-    led_ring_capacitor = new Capacitor_1206_100uF
-
-
-    ############################################
-    ################ Connectors ################
-    ############################################
-
-    # Pin headers, 2.54mm pitch
-    # TODO: test optimal position for the pin headers on pcb. Consider how much cables bend during assembly of lamp
-    pin_header_male_led_strip_1 = new PinHeader_2_54mm_3pins
-    pin_header_male_led_strip_2 = new PinHeader_2_54mm_3pins
-    pin_header_male_led_strip_3 = new PinHeader_2_54mm_3pins
-    pin_header_male_led_strip_4 = new PinHeader_2_54mm_3pins
-    # TODO: add reverse polarity protection to 3-pin pin headers, to protect the LED strips
-    # TODO: test polarity protection from GlowSign battery extension
-
-    # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
-    pin_header_male_action_button = new PinHeader_2_54mm_2pins
-    pin_header_male_led_ring = new PinHeader_2_54mm_2pins
-
-    # Pads for powering external components
-    pad_power_vbus = new SolderPad_2mm_3_5mm
-    pad_power_5v_1 = new SolderPad_2mm_3_5mm
-    pad_power_5v_2 = new SolderPad_2mm_3_5mm
-    pad_power_3_3v_1 = new SolderPad_2mm_3_5mm
-    pad_power_3_3v_2 = new SolderPad_2mm_3_5mm
-    pad_gnd_1 = new SolderPad_2mm_3_5mm
-    pad_gnd_2 = new SolderPad_2mm_3_5mm
-    pad_gnd_3 = new SolderPad_2mm_3_5mm
-    pad_gnd_4 = new SolderPad_2mm_3_5mm
-
-    # Pads for connecting external components to the ESP32
-    pad_io21_i2c_sda = new SolderPad_2mm_3_5mm
-    pad_io22_i2c_scl = new SolderPad_2mm_3_5mm
-    pad_io23_i2s_ws = new SolderPad_2mm_3_5mm
-    pad_io25_i2s_sck = new SolderPad_2mm_3_5mm
-    pad_io26_i2s_sd = new SolderPad_2mm_3_5mm
-    pad_io13_spi_mosi_jtag_tck = new SolderPad_2mm_3_5mm
-    pad_io14_spi_miso_jtag_tms = new SolderPad_2mm_3_5mm
-    pad_io4_spi_sck = new SolderPad_2mm_3_5mm
-    pad_io15_spi_cs_jtag_tdo = new SolderPad_2mm_3_5mm
-    pad_io12_jtag_tdi = new SolderPad_2mm_3_5mm
-    pad_io27 = new SolderPad_2mm_3_5mm
-    pad_io0_boot_button = new SolderPad_2mm_3_5mm
-    pad_esp32_en_jtag_reset = new SolderPad_2mm_3_5mm
-    pad_uart_tx = new SolderPad_2mm_3_5mm
-    pad_uart_rx = new SolderPad_2mm_3_5mm
-    pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
-
-
-    ############################################
-    ############### Connections ################
-    ############################################
-
-    # Connect the ESP32
-    esp32.power ~ power_3_3v
-
-    # Connect the power to the USB to serial, if USB is connected
-    usbserial_power_mosfet_circuit.power_in ~ power_3_3v
-    usbserial_power_mosfet_circuit.power_out ~ usb_to_serial.power
-    usbserial_power_mosfet_circuit.control ~ usb_c_connector.power.vcc
-    # Connect the data lines from the USB port to USB to serial
-    usb_c_connector.usb ~ usb_to_serial.usb
-    # Connect the USB to serial to the ESP32
-    esp32.uart.tx ~ usb_to_serial.uart.rx; usb_to_serial.uart.tx ~ esp32.uart.rx
-
-    # Connect the microphone
-    microphone.i2s ~ esp32.i2s
-    microphone.power.gnd ~ gnd
-    # Connect the microphone to power via a slider switch
-    microphone_power_slider_switch.p1 ~ gnd
-    microphone_power_slider_switch.p2 ~ microphone.power.vcc
-    microphone_power_slider_switch.p3 ~ power_3_3v.vcc
-    microphone_power_slider_switch.p4 ~ gnd
-    microphone_power_slider_switch.p5 ~ gnd
-
-    # Connect the power to the levelshifters
-    power_3_3v ~ levelshifter_1.power_in; levelshifter_1.power_out ~ power_5v
-    power_3_3v ~ levelshifter_2.power_in; levelshifter_2.power_out ~ power_5v
-    power_3_3v ~ levelshifter_3.power_in; levelshifter_3.power_out ~ power_5v
-
-    # Connect the levelshifters to the ESP32 pins for the LED strips
-    levelshifter_1.signal_in_1.io ~ esp32.ic.IO16 # LED strip 1
-    levelshifter_1.signal_in_2.io ~ esp32.ic.IO17 # LED strip 2
-    levelshifter_2.signal_in_1.io ~ esp32.ic.IO18 # LED strip 3
-    levelshifter_2.signal_in_2.io ~ esp32.ic.IO19 # LED strip 4
-    levelshifter_3.signal_in_1.io ~ esp32.ic.IO2  # Actionbutton LED ring
-    # TODO: test if IO2 can be safely used for the Actionbutton LED ring
-    levelshifter_3.signal_in_2.io ~ pad_extra_led_strip_data_out.p1 # External (optional) LED strip
-
-    # Connnect the inverter
-    esp32.boot_button.p1 ~ inverter.input_1; inverter.output_1 ~ esp32.ic.IO32 # If the action button is pressed, IO32 will be pulled high
-    inverter.power ~ power_3_3v
-    inverter.input_2 ~ gnd
-
-    # Connect the lamp mode slider switch
-    # LOW: GlowLight mode, HIGH: GlowTower mode
-    lampmode_slider_switch.p1 ~ gnd
-    lampmode_slider_switch.p2 ~ esp32.ic.IO35
-    lampmode_slider_switch.p3 ~ power_3_3v.vcc
-    lampmode_slider_switch.p4 ~ gnd
-    lampmode_slider_switch.p5 ~ gnd
-
-    # Connec the pullup resistor for the lamp mode slider switch pin
-    esp32.ic.IO35 ~ lampmode_slider_pullup_resistor.p1; lampmode_slider_pullup_resistor.p2 ~ power_3_3v.vcc
-
-    # Connect the USB PD IC (CYPD3177)
-    usb_pd_ic.usb_pd ~ usb_c_connector.usb_pd
-    usb_pd_ic.power_out_vbus ~ power_vbus
-    usb_pd_ic.power_out_5v ~ power_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
-    usb_pd_ic.i2c ~ esp32.i2c
-    usb_pd_ic.power_out_vbus_readout ~ esp32.ic.IO33 # Read the USB PD voltage via a voltage divider
-
-    # Connect the 5V buck converter
-    power_vbus ~ buck_converter_5v.power_in; buck_converter_5v.power_out ~ power_5v
-
-    # Connect the 3.3V LDO converter
-    power_5v ~ ldo_3v3.power_in; ldo_3v3.power_out ~ power_3_3v
-
-    # Connect the power via the power MOSFETs to the LED strips
-    power_5v ~ led_power_mosfet_circuit.power_in1; led_power_mosfet_circuit.power_out1.vcc ~ pin_header_male_led_strip_1.p1
-    power_5v ~ led_power_mosfet_circuit.power_in2; led_power_mosfet_circuit.power_out2.vcc ~ pin_header_male_led_strip_2.p1
-    power_5v ~ led_power_mosfet_circuit.power_in3; led_power_mosfet_circuit.power_out3.vcc ~ pin_header_male_led_strip_3.p1
-    power_5v ~ led_power_mosfet_circuit.power_in4; led_power_mosfet_circuit.power_out4.vcc ~ pin_header_male_led_strip_4.p1
-    led_power_mosfet_circuit.gnd ~ gnd
-    
-    # Connect the control pins of the power MOSFETs to the ESP32
-    led_power_mosfet_circuit.control ~ esp32.ic.IO5
-
-    # Connect the LED strip capacitors
     led_strip_1_capacitor.power ~ led_power_mosfet_circuit.power_out1
     led_strip_2_capacitor.power ~ led_power_mosfet_circuit.power_out2
     led_strip_3_capacitor.power ~ led_power_mosfet_circuit.power_out3
     led_strip_4_capacitor.power ~ led_power_mosfet_circuit.power_out4
 
-    # Connect the LED ring capacitor & power
-    pin_header_male_led_ring.p1 ~ led_ring_capacitor.p1; led_ring_capacitor.p2 ~ gnd
-    pin_header_male_led_ring.p1 ~ power_5v.vcc
+    # Add a cap for the LED ring
+    led_ring_capacitor = new Capacitor_1206_100uF
+    led_ring_capacitor.power ~ power_5v
 
-    # Connect the LED data output to the pin headers for the LED strips
-    levelshifter_1.signal_out_1.io ~ pin_header_male_led_strip_1.p2
-    levelshifter_1.signal_out_2.io ~ pin_header_male_led_strip_2.p2
-    levelshifter_2.signal_out_1.io ~ pin_header_male_led_strip_3.p2
-    levelshifter_2.signal_out_2.io ~ pin_header_male_led_strip_4.p2
+    # Add solder pad for VBUS
+    pad_power_vbus = new SolderPad_2mm_3_5mm
+    pad_power_vbus.p1 ~ power_vbus.vcc
 
-    # Connect the LED data output to the pin headers for the action button LED ring
-    levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring.p2
+    # Add solder pads for 5V
+    pad_power_5v_1 = new SolderPad_2mm_3_5mm
+    pad_power_5v_2 = new SolderPad_2mm_3_5mm
+    pad_power_5v_1.p1 ~ power_5v.vcc
+    pad_power_5v_2.p1 ~ power_5v.vcc
 
-    # Connect the GND to the LED strip pin headers
-    gnd ~ pin_header_male_led_strip_1.p3
-    gnd ~ pin_header_male_led_strip_2.p3
-    gnd ~ pin_header_male_led_strip_3.p3
-    gnd ~ pin_header_male_led_strip_4.p3
+    # Add solder pads for 3.3V
+    pad_power_3_3v_1 = new SolderPad_2mm_3_5mm
+    pad_power_3_3v_2 = new SolderPad_2mm_3_5mm
+    pad_power_3_3v_1.p1 ~ power_3_3v.vcc
+    pad_power_3_3v_2.p1 ~ power_3_3v.vcc
 
-    # Connect GND and the button to the pin headers for the action button
-    gnd ~ pin_header_male_action_button.p1
-    esp32.boot_button.p1 ~ pin_header_male_action_button.p2
+    # Add solder pads for GND
+    pad_gnd_1 = new SolderPad_2mm_3_5mm
+    pad_gnd_2 = new SolderPad_2mm_3_5mm
+    pad_gnd_3 = new SolderPad_2mm_3_5mm
+    pad_gnd_4 = new SolderPad_2mm_3_5mm
+    pad_gnd_1.p1 ~ gnd
+    pad_gnd_2.p1 ~ gnd
+    pad_gnd_3.p1 ~ gnd
+    pad_gnd_4.p1 ~ gnd
 
-    # Connect power to the solder pads
-    power_vbus.vcc ~ pad_power_vbus.p1
-    power_5v.vcc ~ pad_power_5v_1.p1
-    power_5v.vcc ~ pad_power_5v_2.p1
-    power_3_3v.vcc ~ pad_power_3_3v_1.p1
-    power_3_3v.vcc ~ pad_power_3_3v_2.p1
-    gnd ~ pad_gnd_1.p1
-    gnd ~ pad_gnd_2.p1
-    gnd ~ pad_gnd_3.p1
-    gnd ~ pad_gnd_4.p1
+    # Add solder pads for I2C
+    pad_i2c_sda = new SolderPad_2mm_3_5mm
+    pad_i2c_sda.p1 ~ i2c.sda
 
-    # Connect other connections to the solder pads
-    esp32.ic.IO21 ~ pad_io21_i2c_sda.p1
-    esp32.ic.IO22 ~ pad_io22_i2c_scl.p1
-    esp32.ic.IO23 ~ pad_io23_i2s_ws.p1
-    esp32.ic.IO25 ~ pad_io25_i2s_sck.p1
-    esp32.ic.IO26 ~ pad_io26_i2s_sd.p1
-    esp32.ic.IO13 ~ pad_io13_spi_mosi_jtag_tck.p1
-    esp32.ic.IO14 ~ pad_io14_spi_miso_jtag_tms.p1
-    esp32.ic.IO4 ~ pad_io4_spi_sck.p1
-    esp32.ic.IO15 ~ pad_io15_spi_cs_jtag_tdo.p1
-    esp32.ic.IO12 ~ pad_io12_jtag_tdi.p1
-    esp32.ic.IO27 ~ pad_io27.p1
-    esp32.boot_button.p1 ~ pad_io0_boot_button.p1
-    esp32.ic.EN ~ pad_esp32_en_jtag_reset.p1
-    esp32.uart.tx ~ pad_uart_tx.p1
-    esp32.uart.rx ~ pad_uart_rx.p1
-    levelshifter_3.signal_out_2.io ~ pad_extra_led_strip_data_out.p1
+    pad_i2c_scl = new SolderPad_2mm_3_5mm
+    pad_i2c_scl.p1 ~ i2c.scl
+
+    # Add solder pads for I2S
+    pad_i2s_ws = new SolderPad_2mm_3_5mm
+    pad_i2s_ws.p1 ~ i2s.ws
+
+    pad_i2s_sck = new SolderPad_2mm_3_5mm
+    pad_i2s_sck.p1 ~ i2s.sck
+
+    pad_i2s_sd = new SolderPad_2mm_3_5mm
+    pad_i2s_sd.p1 ~ i2s.sd
+
+    # Add solder pads for SPI
+    pad_spi_sck = new SolderPad_2mm_3_5mm
+    pad_spi_sck.p1 ~ spi.sck
+
+    pad_spi_miso_jtag_tck = new SolderPad_2mm_3_5mm
+    pad_spi_miso_jtag_tck.p1 ~ spi.miso
+    pad_spi_miso_jtag_tck.p1 ~ jtag.tck
+    
+    pad_spi_mosi_jtag_tms = new SolderPad_2mm_3_5mm
+    pad_spi_mosi_jtag_tms.p1 ~ spi.mosi
+    pad_spi_mosi_jtag_tms.p1 ~ jtag.tms
+
+    pad_spi_cs_jtag_tdo = new SolderPad_2mm_3_5mm
+    pad_spi_cs_jtag_tdo.p1 ~ spi.cs
+    pad_spi_cs_jtag_tdo.p1 ~ jtag.tdo
+
+    # Add solder pads for JTAG
+    pad_jtag_tdi = new SolderPad_2mm_3_5mm
+    pad_jtag_tdi.p1 ~ jtag.tdi
+
+    pad_esp32_en_jtag_reset = new SolderPad_2mm_3_5mm
+    pad_esp32_en_jtag_reset.p1 ~ esp32.ic.EN
+    pad_esp32_en_jtag_reset.p1 ~ jtag.reset
+
+    # Add solder pads for UART
+    pad_uart_tx = new SolderPad_2mm_3_5mm
+    pad_uart_tx.p1 ~ uart.tx
+
+    pad_uart_rx = new SolderPad_2mm_3_5mm
+    pad_uart_rx.p1 ~ uart.rx
+
+    # Add solder pad for IO27
+    pad_io27 = new SolderPad_2mm_3_5mm
+    pad_io27.p1 ~ esp32.ic.IO27
+
+    # Add solder pad for IO0
+    pad_io0_boot_button = new SolderPad_2mm_3_5mm
+    pad_io0_boot_button.p1 ~ esp32.ic.IO0
+    
+    # Add solder pad for optional external LED strip
+    pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
+    pad_extra_led_strip_data_out.p1 ~ levelshifter_3.signal_out_2.io
