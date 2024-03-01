@@ -74,6 +74,7 @@ module CYPD3177_WithCoreParts:
     vbus_cap_3.power ~ power_3_3v
 
     # Add a pull down resistor for the FAULT pin, so that it is not floating
+    # TODO use 0402 instead of 0603
     fault_pull_down_resistor = new Resistor_0603_100K
     fault_pull_down_resistor.p1 ~ ic.FAULT
     fault_pull_down_resistor.p2 ~ gnd
