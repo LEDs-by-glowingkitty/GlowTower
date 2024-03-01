@@ -72,6 +72,11 @@ module MainPCB:
     usb_c_connector.usb ~ usb
     usb_c_connector.usb_pd ~ usb_pd
 
+    # Add a TVS protection diode to protect from voltage spikes from the USB-C connector
+    tvs_diode = new SMBJ33CA
+    tvs_diode.p1 ~ usb_c_connector.power.vcc
+    tvs_diode.p2 ~ gnd
+
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
     usb_to_serial.uart ~ uart
@@ -163,11 +168,6 @@ module MainPCB:
     lampmode_slider_pullup_resistor = new Resistor_0402_100K
     lampmode_slider_pullup_resistor.p1 ~ esp32.ic.IO35
     lampmode_slider_pullup_resistor.p2 ~ power_3_3v.vcc
-
-    # Add a TVS diode to protect from voltage spikes from the USB-C connector
-    tvs_diode = new SMBJ33CA
-    tvs_diode.p1 ~ power_vbus.vcc
-    tvs_diode.p2 ~ gnd
 
     # Add USB-C PD to request 9-20V at minimum 2A, to power everything
     usb_pd_ic = new CYPD3177_min_9V_2A
