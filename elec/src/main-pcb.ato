@@ -61,10 +61,10 @@ module MainPCB:
     # IO18: LED strip 3 (data out)
     # IO19: LED strip 4 (data out)
     # IO2: Actionbutton LED ring (data out)
-    # IO32: External optional LED strip (data out)
+    # IO33: External optional LED strip (data out)
     # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)
     # IO34: Actionbutton (high if button pressed, low if not pressed)
-    # IO33: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
+    # IO36: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
     # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)
 
     # Add USB-C connector that can handle up to 5A at 20V (100W)
@@ -144,7 +144,7 @@ module MainPCB:
     levelshifter_3 = new SN74LVC2T45DCUR                                # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
     levelshifter_3.signal_in_1.io ~ esp32.ic.IO2                        # Actionbutton LED ring
     levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring.p2
-    levelshifter_3.signal_in_2.io ~ esp32.ic.IO32
+    levelshifter_3.signal_in_2.io ~ esp32.ic.IO33
     levelshifter_3.power_in ~ power_3_3v
     levelshifter_3.power_out ~ power_5v
 
@@ -174,7 +174,7 @@ module MainPCB:
     usb_pd_ic.i2c ~ i2c
     usb_pd_ic.power_out_vbus ~ power_vbus
     usb_pd_ic.power_out_5v ~ power_5v                   # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
-    usb_pd_ic.power_out_vbus_readout ~ esp32.ic.IO33    # Read the USB PD voltage via a voltage divider
+    usb_pd_ic.power_out_vbus_readout ~ esp32.ic.IO36    # Read the USB PD voltage via a voltage divider
 
     # Add a buck converter to convert the 9-20V from the USB-C PD to 5V
     buck_converter_5v = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
