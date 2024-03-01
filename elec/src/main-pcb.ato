@@ -148,7 +148,7 @@ module MainPCB:
     levelshifter_3.power_in ~ power_3_3v
     levelshifter_3.power_out ~ power_5v
 
-    # TODO: test if the inverter is really needed
+    # TODO: test if the inverter is really needed, use IO0 as actionbutton instead? (pulled low)
     # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
     inverter = new _74LVC2G04DW_7
     inverter.input_1 ~ esp32.ic.IO0     # Boot button   (pulled low if pressed)

@@ -74,7 +74,7 @@ module CYPD3177_WithCoreParts:
     vbus_cap_3.power ~ power_3_3v
 
     # Add a pull down resistor for the FAULT pin, so that it is not floating
-    # TODO use 0402 instead of 0603
+    # TODO: use 0402 instead of 0603, also check other 0603 resistors
     fault_pull_down_resistor = new Resistor_0603_100K
     fault_pull_down_resistor.p1 ~ ic.FAULT
     fault_pull_down_resistor.p2 ~ gnd
@@ -89,5 +89,6 @@ module CYPD3177_WithCoreParts:
     # Input: 20V -> Output: 3.3V
     # Input: 9V -> Output: 1.5V
     signal power_out_vbus_readout
-    power_out_vbus_readout_divider = new Voltage_Divider_0603_100K__20K
-    power_out_vbus ~ power_out_vbus_readout_divider.power; power_out_vbus_readout_divider.power_out ~ power_out_vbus_readout
+    power_out_vbus_readout_voltage_divider = new Voltage_Divider_0603_100K__20K
+    power_out_vbus_readout_voltage_divider.power ~ power_out_vbus
+    power_out_vbus_readout_voltage_divider.power_out ~ power_out_vbus_readout
