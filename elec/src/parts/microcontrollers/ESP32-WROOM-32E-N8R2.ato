@@ -36,7 +36,9 @@ component _ESP32_WROOM_32E_N8R2:
     signal _3V3 ~ pin 2         # 3.3V power supply
     signal EN ~ pin 3           # (INPUT ONLY) High: On, enables the chip. | Low: Off, the chip powers off | Note: Do not leave the pin floating.
     signal SENSOR_VP ~ pin 4    # (INPUT ONLY) GPIO36, ADC1_CH0, RTC_GPIO0
+    signal IO36 ~ SENSOR_VP
     signal SENSOR_VN ~ pin 5    # (INPUT ONLY) GPIO39, ADC1_CH3, RTC_GPIO3
+    signal IO39 ~ SENSOR_VN
     signal IO34 ~ pin 6         # (INPUT ONLY) GPIO34, ADC1_CH6, RTC_GPIO4
     signal IO35 ~ pin 7         # (INPUT ONLY) GPIO35, ADC1_CH7, RTC_GPIO5
     signal IO32 ~ pin 8         # GPIO32, XTAL_32K_P (32.768 kHz crystal oscillator input), ADC1_CH4, TOUCH9, RTC_GPIO9
@@ -66,7 +68,9 @@ component _ESP32_WROOM_32E_N8R2:
     NC ~ pin 32
     signal IO21 ~ pin 33        # GPIO21, VSPIHD, EMAC_TX_EN
     signal RXD0 ~ pin 34        # GPIO3, U0RXD, CLK_OUT2
+    signal IO3 ~ RXD0
     signal TXD0 ~ pin 35        # GPIO1, U0TXD, CLK_OUT3, EMAC_RXD2
+    signal IO1 ~ TXD0
     signal IO22 ~ pin 36        # GPIO22, VSPIWP, U0RTS, EMAC_TXD1
     signal IO23 ~ pin 37        # GPIO23, VSPID, HS1_STROBE
     GND ~ pin 38                # Ground
