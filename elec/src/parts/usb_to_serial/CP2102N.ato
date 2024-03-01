@@ -1,6 +1,6 @@
 import Capacitor from "generics/capacitors.ato"
 import Resistor from "generics/resistors.ato"
-import SP0503BAHTG from "elec/src/parts/esd_protection/SP0503BAHTG.ato"
+import SP0503BAHTG from "elec/src/parts/diodes/tvs/SP0503BAHTG.ato"
 import UMH3N from "elec/src/parts/transistors/UMH3N.ato"
 import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
 import Capacitor_0603_10uF from "elec/src/parts/capacitors/0603/10uF.ato"
@@ -100,10 +100,10 @@ module CP2102N:
 
     # Add ESD protection for the D+ and D- lines
     # (ESD protection for VBUS not included to make it make it easier compatible with USB PD systems where ESD protection is done via the USB PD controller)
-    esd_protection = new SP0503BAHTG
-    esd_protection.GND ~ gnd
-    esd_protection.p2 ~ ic.dplus
-    esd_protection.p3 ~ ic.dminus
+    esd_protection_diode = new SP0503BAHTG
+    esd_protection_diode.gnd ~ gnd
+    esd_protection_diode.input2 ~ ic.dplus
+    esd_protection_diode.input3 ~ ic.dminus
 
     # Add auto-reset dual transistor
     auto_reset_transistor = new UMH3N

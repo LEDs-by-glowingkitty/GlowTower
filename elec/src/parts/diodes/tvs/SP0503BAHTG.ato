@@ -1,6 +1,6 @@
 component SP0503BAHTG:
     """
-    This is an ESD protection diode. It is used to protect sensitive components from ESD damage.
+    This is an TVS / ESD protection diode. It is used to protect sensitive components from ESD damage.
     ESD stands for Electro-Static Discharge. It is a sudden flow of electricity between two electrically charged objects caused by contact, an electrical short, or dielectric breakdown.
     More specifically: it is an Uni-directional 3-Line TVS Array
     Datasheet: https://datasheet.lcsc.com/lcsc/2206241815_TECH-PUBLIC-SP0503BAHTG_C3040626.pdf
@@ -11,7 +11,7 @@ component SP0503BAHTG:
     lcsc_id = "C3040626"
     mpn = "C3040626"
     # pins
-    signal GND ~ pin 1
-    signal p1 ~ pin 2
-    signal p2 ~ pin 3
-    signal p3 ~ pin 4
+    signal gnd ~ pin 1
+    signal input1 ~ pin 2
+    signal input2 ~ pin 3
+    signal input3 ~ pin 4

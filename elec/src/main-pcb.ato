@@ -75,9 +75,9 @@ module MainPCB:
     usb_c_connector.usb ~ usb
     usb_c_connector.usb_pd ~ usb_pd
 
-    # Add a TVS protection diode to protect from voltage spikes from the USB-C connector
-    tvs_diode = new SMBJ33CA
-    tvs_diode.power ~ usb_c_connector.power
+    # Add a TVS/ESD protection diode to protect from voltage spikes from the USB-C connector
+    esd_protection_diode = new SMBJ33CA
+    esd_protection_diode.power ~ usb_c_connector.power
 
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
