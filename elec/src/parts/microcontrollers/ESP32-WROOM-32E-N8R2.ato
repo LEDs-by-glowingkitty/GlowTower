@@ -26,6 +26,10 @@ component _ESP32_WROOM_32E_N8R2:
     lcsc_id = "C5361945"
     mpn = "C5361945"
 
+    # add specs
+    v_in = 3.0V to 3.6V
+    current = 80mA to 250mA
+
     # pins
     # INFO: Many of the disconnected pins are required to be low or high on boot, or else prevent the ESP32 from booting. Therefore shouldn't be used.
     signal GND ~ pin 1          # Ground
