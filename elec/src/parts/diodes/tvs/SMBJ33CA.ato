@@ -1,3 +1,5 @@
+import Power from "generics/interfaces.ato"
+
 component SMBJ33CA:
     """
     This is a 33V 600W TVS diode. It is used to protect the circuit from voltage spikes.
@@ -10,3 +12,8 @@ component SMBJ33CA:
     # pins
     signal p1 ~ pin 1
     signal p2 ~ pin 2
+
+    # add power
+    power = new Power
+    power.vcc ~ p1
+    power.gnd ~ p2

@@ -934,7 +934,7 @@
 	(footprint "lib:SMA_L4.4-W2.8-LS5.4-R-RD"
 		(layer "F.Cu")
 		(uuid "0d3c08f3-a782-4542-8eec-a63abc66a5be")
-		(at 126.23 53.88)
+		(at 149.376317 58.86)
 		(descr "SMA_L4.4-W2.8-LS5.4-R-RD footprint")
 		(tags "SMA_L4.4-W2.8-LS5.4-R-RD footprint C22452")
 		(property "Reference" "U27"
@@ -3283,7 +3283,7 @@
 	(footprint "lib:D_SOD-123F"
 		(layer "F.Cu")
 		(uuid "21375bcc-a42f-4ce2-82d9-fbc0dbbc663a")
-		(at 126.7525 56.81)
+		(at 141.5825 58.97)
 		(descr "D_SOD-123F")
 		(tags "D_SOD-123F")
 		(property "Reference" "DZ1"
@@ -4101,7 +4101,7 @@
 		)
 		(fp_arc
 			(start -0.25996 1.015462)
-			(mid 0.25999 1.022315)
+			(mid 0.25999 1.022269)
 			(end -0.26 1.02)
 			(stroke
 				(width 0.2)
@@ -6547,7 +6547,7 @@
 		)
 		(fp_arc
 			(start -0.25996 1.015462)
-			(mid 0.25999 1.022315)
+			(mid 0.25999 1.022269)
 			(end -0.26 1.02)
 			(stroke
 				(width 0.2)
@@ -8815,7 +8815,7 @@
 		)
 		(fp_arc
 			(start -0.25996 1.015462)
-			(mid 0.25999 1.022315)
+			(mid 0.25999 1.022269)
 			(end -0.26 1.02)
 			(stroke
 				(width 0.2)
