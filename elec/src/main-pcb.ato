@@ -12,12 +12,12 @@ import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
 import _74LVC2G04DW_7 from "elec/src/parts/inverters/74LVC2G04DW_7.ato"
 import Capacitor_SMD_D10_L10_1000uF from "elec/src/parts/capacitors/SMD_D10_L10mm/1000uF.ato"
 import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
-import SolderPad_2mm_3_5mm from "elec/src/parts/pads/SolderPad_2mm_3_5mm.ato"
 from "elec/src/parts/pin_headers/PinHeader_2_54mm.ato" import PinHeader_2_54mm_2pins, PinHeader_2_54mm_3pins
 from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG, USB2, USB_PD
 import SK12D07VG4 from "elec/src/parts/switches/SK12D07VG4.ato"
 import Resistor_0402_100K from "elec/src/parts/resistors/0402/100K.ato"
 import SMBJ33CA from "elec/src/parts/diodes/tvs/SMBJ33CA.ato"
+import Solderpads_25x from "elec/src/parts/pads/solderpads_25x.ato"
 
 
 module MainPCB:
@@ -213,88 +213,18 @@ module MainPCB:
     led_ring_capacitor = new Capacitor_1206_100uF
     led_ring_capacitor.power ~ power_5v
 
-    # Add solder pad for VBUS
-    pad_power_vbus = new SolderPad_2mm_3_5mm
-    pad_power_vbus.p1 ~ power_vbus.vcc
-
-    # Add solder pads for 5V
-    pad_power_5v_1 = new SolderPad_2mm_3_5mm
-    pad_power_5v_2 = new SolderPad_2mm_3_5mm
-    pad_power_5v_1.p1 ~ power_5v.vcc
-    pad_power_5v_2.p1 ~ power_5v.vcc
-
-    # Add solder pads for 3.3V
-    pad_power_3_3v_1 = new SolderPad_2mm_3_5mm
-    pad_power_3_3v_2 = new SolderPad_2mm_3_5mm
-    pad_power_3_3v_1.p1 ~ power_3_3v.vcc
-    pad_power_3_3v_2.p1 ~ power_3_3v.vcc
-
-    # Add solder pads for GND
-    pad_gnd_1 = new SolderPad_2mm_3_5mm
-    pad_gnd_2 = new SolderPad_2mm_3_5mm
-    pad_gnd_3 = new SolderPad_2mm_3_5mm
-    pad_gnd_4 = new SolderPad_2mm_3_5mm
-    pad_gnd_1.p1 ~ gnd
-    pad_gnd_2.p1 ~ gnd
-    pad_gnd_3.p1 ~ gnd
-    pad_gnd_4.p1 ~ gnd
-
-    # Add solder pads for I2C
-    pad_i2c_sda = new SolderPad_2mm_3_5mm
-    pad_i2c_sda.p1 ~ i2c.sda
-
-    pad_i2c_scl = new SolderPad_2mm_3_5mm
-    pad_i2c_scl.p1 ~ i2c.scl
-
-    # Add solder pads for I2S
-    pad_i2s_ws = new SolderPad_2mm_3_5mm
-    pad_i2s_ws.p1 ~ i2s.ws
-
-    pad_i2s_sck = new SolderPad_2mm_3_5mm
-    pad_i2s_sck.p1 ~ i2s.sck
-
-    pad_i2s_sd = new SolderPad_2mm_3_5mm
-    pad_i2s_sd.p1 ~ i2s.sd
-
-    # Add solder pads for SPI
-    pad_spi_sck = new SolderPad_2mm_3_5mm
-    pad_spi_sck.p1 ~ spi.sck
-
-    pad_spi_miso_jtag_tck = new SolderPad_2mm_3_5mm
-    pad_spi_miso_jtag_tck.p1 ~ spi.miso
-    pad_spi_miso_jtag_tck.p1 ~ jtag.tck
-    
-    pad_spi_mosi_jtag_tms = new SolderPad_2mm_3_5mm
-    pad_spi_mosi_jtag_tms.p1 ~ spi.mosi
-    pad_spi_mosi_jtag_tms.p1 ~ jtag.tms
-
-    pad_spi_cs_jtag_tdo = new SolderPad_2mm_3_5mm
-    pad_spi_cs_jtag_tdo.p1 ~ spi.cs
-    pad_spi_cs_jtag_tdo.p1 ~ jtag.tdo
-
-    # Add solder pads for JTAG
-    pad_jtag_tdi = new SolderPad_2mm_3_5mm
-    pad_jtag_tdi.p1 ~ jtag.tdi
-
-    pad_esp32_en_jtag_reset = new SolderPad_2mm_3_5mm
-    pad_esp32_en_jtag_reset.p1 ~ esp32.ic.EN
-    pad_esp32_en_jtag_reset.p1 ~ jtag.reset
-
-    # Add solder pads for UART
-    pad_uart_tx = new SolderPad_2mm_3_5mm
-    pad_uart_tx.p1 ~ uart.tx
-
-    pad_uart_rx = new SolderPad_2mm_3_5mm
-    pad_uart_rx.p1 ~ uart.rx
-
-    # Add solder pad for IO27
-    pad_io27 = new SolderPad_2mm_3_5mm
-    pad_io27.p1 ~ esp32.ic.IO27
-
-    # Add solder pad for IO0
-    pad_io0_boot_button = new SolderPad_2mm_3_5mm
-    pad_io0_boot_button.p1 ~ esp32.ic.IO0
-    
-    # Add solder pad for optional external LED strip
-    pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
-    pad_extra_led_strip_data_out.p1 ~ levelshifter_3.signal_out_2.io
+    # Add solder pads
+    solder_pads = new Solderpads_25x
+    solder_pads.EN ~ esp32.ic.EN
+    solder_pads.IO0 ~ esp32.ic.IO0
+    solder_pads.IO27 ~ esp32.ic.IO27
+    solder_pads.LED_DATA_OUT ~ levelshifter_3.signal_out_2.io
+    solder_pads.power_vbus ~ power_vbus
+    solder_pads.power_5v ~ power_5v
+    solder_pads.power_3_3v ~ power_3_3v
+    solder_pads.gnd ~ gnd
+    solder_pads.uart ~ uart
+    solder_pads.i2c ~ i2c
+    solder_pads.i2s ~ i2s
+    solder_pads.spi ~ spi
+    solder_pads.jtag ~ jtag
