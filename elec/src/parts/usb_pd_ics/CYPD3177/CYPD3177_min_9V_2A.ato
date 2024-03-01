@@ -24,17 +24,17 @@ module CYPD3177_min_9V_2A:
     cypd3177.power_3_3v ~ power_3_3v
 
     # Request 9V (min)
-    voltage_request_divider = new Voltage_Divider_0402_5_1K__1K
-    voltage_request_divider.power ~ power_3_3v
-    voltage_request_divider.power_out ~ cypd3177.ic.VBUS_MIN
+    voltage_request_voltage_divider = new Voltage_Divider_0402_5_1K__1K
+    voltage_request_voltage_divider.power ~ power_3_3v
+    voltage_request_voltage_divider.power_out ~ cypd3177.ic.VBUS_MIN
 
     # Request 20V (max) (via pull up to 3.3V)
     cypd3177.ic.VBUS_MAX ~ power_3_3v.vcc
 
     # Request 2A (min)
-    current_request_divider = new Voltage_Divider_0402_5_1K__2_4K
-    current_request_divider.power ~ power_3_3v
-    current_request_divider.power_out ~ cypd3177.ic.ISNK_COARSE
+    current_request_voltage_divider = new Voltage_Divider_0402_5_1K__2_4K
+    current_request_voltage_divider.power ~ power_3_3v
+    current_request_voltage_divider.power_out ~ cypd3177.ic.ISNK_COARSE
 
     # Request +0mA (via pull down to GND)
     cypd3177.ic.ISNK_FINE ~ gnd
