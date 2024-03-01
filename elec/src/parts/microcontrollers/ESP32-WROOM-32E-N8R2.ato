@@ -141,14 +141,14 @@ module ESP32_WROOM_32E_N8R2:
     power_cap.power ~ power
 
     # Add the reset/EN button
-    reset_button = new TS_1185EC_C_D_B
-    reset_button.input ~ ic.EN
-    reset_button.output ~ power.gnd
+    en_button = new TS_1185EC_C_D_B
+    en_button.input ~ ic.EN
+    en_button.output ~ power.gnd
 
     # Add a delay capacitor for the reset/EN pin
-    delay_cap = new Capacitor_0603_1uF
-    delay_cap.p1 ~ ic.EN
-    delay_cap.p2 ~ power.gnd
+    en_delay_cap = new Capacitor_0603_1uF
+    en_delay_cap.p1 ~ ic.EN
+    en_delay_cap.p2 ~ power.gnd
 
     # Add a pull up resistor for the reset/EN pin
     en_pullup_resistor = new Resistor_0402_5_1K
