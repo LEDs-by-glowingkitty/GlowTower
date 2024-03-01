@@ -54,18 +54,21 @@ module MainPCB:
     esp32.jtag ~ jtag
     # Connected pins besides default pins:
     # TODO: test all used pins first and see if they interfere with operation
-    # TODO: test also I2C, SPI, I2S, UART pins (?)
-    # IO5: LED Strips power on/off
-    # IO16: LED strip 1 (data out)
-    # IO17: LED strip 2 (data out)
-    # IO18: LED strip 3 (data out)
-    # IO19: LED strip 4 (data out)
-    # IO2: Actionbutton LED ring (data out)
-    # IO33: External optional LED strip (data out)
-    # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)
-    # IO34: Actionbutton (high if button pressed, low if not pressed)
-    # IO36: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)
-    # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)
+    # IO5: LED Strips power on/off                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO16: LED strip 1 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO17: LED strip 2 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO18: LED strip 3 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO19: LED strip 4 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO2: Actionbutton LED ring (data out)                                 WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO33: External optional LED strip (data out)                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)     WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO0: Boot button (pulled low if pressed)                              WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO34: Actionbutton (high if button pressed, low if not pressed)       WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)       WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO36: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)          WLED settings check: SUCCESS            Prototype hardware check: ?         Can read data via code: ?
+    # IO25: I2S SCK                                                         WLED commpile & run check: ?            Prototype hardware check: ?
+    # IO26: I2S SD                                                          WLED commpile & run check: ?            Prototype hardware check: ?
+    # IO23: I2S WS                                                          WLED commpile & run check: ?            Prototype hardware check: ?
 
     # Add USB-C connector that can handle up to 5A at 20V (100W)
     usb_c_connector = new USB_C_Connector_5A
