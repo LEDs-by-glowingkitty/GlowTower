@@ -16,6 +16,9 @@ component _WS2812B_1010:
     lcsc_id = "C5349953"
     mpn = "C5349953"
 
+    # define specs
+    v_in = 3.5V to 5.5V # recommended to keep above 4V
+
     # pins
     signal DOUT ~ pin 1 # data out
     signal VDD ~ pin 2  # power supply (3.5V to 5.5V)

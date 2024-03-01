@@ -10,6 +10,11 @@ component _AMS1117_3_3:
     footprint = "SOT-223-3_L6.5-W3.4-P2.30-LS7.0-BR"
     lcsc_id = "C6186"
     mpn = "C6186"
+
+    # define specs
+    v_in = 4.7V to 5.5V
+    v_out = 3.201V to 3.399V
+    
     # pins
     signal GND ~ pin 1
     signal VOUT ~ pin 2

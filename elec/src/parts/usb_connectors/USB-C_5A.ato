@@ -15,6 +15,10 @@ component USB_C_Connector_5A:
     lcsc_id = "C530612"
     mpn = "C530612"
 
+    # add specs
+    v_in = 4.5V to 20.1V
+    v_out = 4.5V to 20.1V
+
     # pins
     signal GND ~ pin 1
     signal VBUS ~ pin 2
