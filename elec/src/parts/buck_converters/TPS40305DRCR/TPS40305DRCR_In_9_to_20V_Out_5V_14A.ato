@@ -50,15 +50,19 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (Cbst) add bootstrap capacitor
     cbst_capacitor = new Capacitor_0402_100nF
-    ic.BOOT ~ cbst_capacitor.p1; cbst_capacitor.p2 ~ ic.SW; cbst_capacitor.p2 ~ ldrv_n_channel_mosfet.DRAIN
+    cbst_capacitor.p1 ~ ic.BOOT
+    cbst_capacitor.p2 ~ ic.SW
+    cbst_capacitor.p2 ~ ldrv_n_channel_mosfet.DRAIN
 
     # (Rpgood) add resistor connected to PGOOD and BP and GND (via capacitor).
     rpgood_resistor = new Resistor_0402_100K
-    ic.PGOOD ~ rpgood_resistor.p1; rpgood_resistor.p2 ~ ic.BP
+    rpgood_resistor.p1 ~ ic.PGOOD
+    rpgood_resistor.p2 ~ ic.BP
 
     # (Cbyp) add bypass capacitor
     cbyp_capacitor = new Capacitor_0603_2_2uF
-    rpgood_resistor.p2 ~ cbyp_capacitor.p1; cbyp_capacitor.p2 ~ gnd
+    cbyp_capacitor.p1 ~ rpgood_resistor.p2
+    cbyp_capacitor.p2 ~ gnd
 
     # (Ccomp, Ccomp2) add compensation capacitors
     ccomp_capacitor = new Capacitor_0402_5_6nF
@@ -69,11 +73,13 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (Rcomp) add compensation resistor
     rcomp_resistor = new Resistor_0402_1_54K
-    ccomp_capacitor.p2 ~ rcomp_resistor.p1; rcomp_resistor.p2 ~ ic.FB
+    rcomp_resistor.p1 ~ ccomp_capacitor.p2
+    rcomp_resistor.p2 ~ ic.FB
 
     # (Css) add soft start capacitor
     css_capacitor = new Capacitor_0603_3_3nF
-    ic.ENSS ~ css_capacitor.p1; css_capacitor.p2 ~ gnd
+    css_capacitor.p1 ~ ic.ENSS
+    css_capacitor.p2 ~ gnd
 
     # (Cin) add input capacitors, capable of up to 50V input voltage
     cin_capacitor1 = new Capacitor_1206_10uF
@@ -92,7 +98,9 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (L1) add output inductor, which is used to store energy and smooth out the output voltage
     output_inductor = new TMPC1206HP_1R5MG_D
-    ldrv_n_channel_mosfet.DRAIN ~ output_inductor.p1; output_inductor.p2 ~ power_out_before_reverse_flow_protection.vcc; output_inductor.p2 ~ rcomp2_resistor.p1
+    output_inductor.p1 ~ ldrv_n_channel_mosfet.DRAIN
+    output_inductor.p2 ~ power_out_before_reverse_flow_protection.vcc
+    output_inductor.p2 ~ rcomp2_resistor.p1
 
     # (M1) add HDRV MOSFETs. These MOSFETs are used to drive the high side of the buck converter 
     hdrv_n_channel_mosfet_1 = new CSD16301Q2
@@ -111,7 +119,8 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
 
     # (Ccomp3) add compensation capacitor
     ccomp3_capacitor = new Capacitor_0402_820pF
-    rcomp2_resistor.p2 ~ ccomp3_capacitor.p1; ccomp3_capacitor.p2 ~ ic.FB
+    ccomp3_capacitor.p1 ~ rcomp2_resistor.p2
+    ccomp3_capacitor.p2 ~ ic.FB
 
     # (Cout) add output capacitors
     cout_capacitor1 = new Capacitor_1206_10uF
