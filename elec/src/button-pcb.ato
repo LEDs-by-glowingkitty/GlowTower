@@ -39,3 +39,5 @@ module ButtonPCB:
     esd_protection_diode = new ESD9X3_3ST5G
     esd_protection_diode.input ~ button.input
     esd_protection_diode.gnd ~ power.gnd
+
+    # TODO: update button PCB layout

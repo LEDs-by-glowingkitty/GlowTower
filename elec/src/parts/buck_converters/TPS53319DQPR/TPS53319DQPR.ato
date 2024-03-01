@@ -1,0 +1,36 @@
+component TPS53319DQPR:
+    """
+    This is a buck converter from Texas Instruments.
+    Datasheet: https://www.ti.com/lit/ds/symlink/tps53319.pdf
+    """
+    # component TPS53319DQPR
+    footprint = "LSON-CLIP-22_L6.0-W5.0-P0.50-BL-EP"
+    lcsc_id = "C181971"
+    mpn = "C181971"
+    # pins
+    signal VFB ~ pin 1
+    signal EN ~ pin 2
+    signal PGOOD ~ pin 3
+    signal VBST ~ pin 4
+    signal ROVP ~ pin 5
+    signal LL ~ pin 6
+    LL ~ pin 7
+    LL ~ pin 8
+    LL ~ pin 9
+    LL ~ pin 10
+    LL ~ pin 11
+    signal VIN ~ pin 12
+    VIN ~ pin 13
+    VIN ~ pin 14
+    VIN ~ pin 15
+    VIN ~ pin 16
+    VIN ~ pin 17
+    signal VREG ~ pin 18
+    signal VDD ~ pin 19
+    signal MODE ~ pin 20
+    signal TRIP ~ pin 21
+    signal RF ~ pin 22
+    signal EPAD ~ pin 23
+
+# TODO: use in main pcb
+# TODO: check if inductor is ideal (considering noises I heard from LED lamp)
