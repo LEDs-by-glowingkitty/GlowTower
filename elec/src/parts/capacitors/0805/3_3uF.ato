@@ -1,7 +1,0 @@
-import Capacitor from "generics/capacitors.ato"
-
-component Capacitor_0805_3_3uF from Capacitor:
-    
-    capacitance = 3.3uF +/- 10%
-    footprint = "C0805"
-    mpn = "C342775" # up to 50V

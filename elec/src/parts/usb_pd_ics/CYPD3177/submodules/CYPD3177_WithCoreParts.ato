@@ -1,10 +1,8 @@
 import Power from "generics/interfaces.ato"
 import CYPD3177 from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177.ato"
 import Resistor from "generics/resistors.ato"
+import Capacitor from "generics/capacitors.ato"
 import Voltage_Divider_0603_100K__20K from "elec/src/parts/voltage_dividers/0603/Voltage_Divider_0603_100K__20K.ato"
-import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
-import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
-import Capacitor_0805_3_3uF from "elec/src/parts/capacitors/0805/3_3uF.ato"
 import SS54 from "elec/src/parts/diodes/schottky/SS54.ato"
 import CYPD3177_LoadSwitchSafe5V from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitchSafe5V.ato"
 import CYPD3177_LoadSwitch100W from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitch100W.ato"
@@ -55,21 +53,36 @@ module CYPD3177_WithCoreParts:
     power_out_5v_reverse_flow_protection_schottky_diode.output ~ power_out_5v.vcc
 
     # Add 3.3uF cap for the VBUS of the USB-C port
-    vbus_cap_1 = new Capacitor_0805_3_3uF
+    vbus_cap_1 = new Capacitor
+    vbus_cap_1.capacitance = 3.3uF +/- 10%
+    vbus_cap_1.footprint = "C0805"
+    vbus_cap_1.mpn = "C342775"
     vbus_cap_1.power ~ power_in
 
     # Add 1uF cap for the VCCD (1.8V) to the CYPD3177
-    vbus_cap_2 = new Capacitor_0603_1uF
+    vbus_cap_2 = new Capacitor
+    vbus_cap_2.capacitance = 1uF +/- 10%
+    vbus_cap_2.footprint = "C0603"
+    vbus_cap_2.mpn = "C15849"
     vbus_cap_2.power ~ power_1_8v
 
     # Add 1uF & 0.1uF caps for the VDDD (3.3V) to the CYPD3177
-    vbus_cap_1 = new Capacitor_0603_1uF
+    vbus_cap_1 = new Capacitor
+    vbus_cap_1.capacitance = 1uF +/- 10%
+    vbus_cap_1.footprint = "C0603"
+    vbus_cap_1.mpn = "C15849"
     vbus_cap_1.power ~ power_3_3v
 
-    vbus_cap_2 = new Capacitor_0402_100nF
+    vbus_cap_2 = new Capacitor
+    vbus_cap_2.capacitance = 0.1uF +/- 10%
+    vbus_cap_2.footprint = "C0402"
+    vbus_cap_2.mpn = "C307331"
     vbus_cap_2.power ~ power_3_3v
 
-    vbus_cap_3 = new Capacitor_0402_100nF
+    vbus_cap_3 = new Capacitor
+    vbus_cap_3.capacitance = 0.1uF +/- 10%
+    vbus_cap_3.footprint = "C0402"
+    vbus_cap_3.mpn = "C307331"
     vbus_cap_3.power ~ power_3_3v
 
     # Add a pull down resistor for the FAULT pin, so that it is not floating

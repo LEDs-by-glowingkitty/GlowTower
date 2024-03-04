@@ -3,14 +3,7 @@ import CSD17581Q3AT from "elec/src/parts/mosfets/CSD17581Q3AT.ato"
 import TMPC1206HP_1R5MG_D from "elec/src/parts/inductors/TMPC1206HP_1R5MG_D.ato"
 import Voltage_Divider_0402_10K_1_37K from "elec/src/parts/voltage_dividers/0402/Voltage_Divider_0402_10K_1_37K.ato"
 import Resistor from "generics/resistors.ato"
-import Capacitor_0402_220pF from "elec/src/parts/capacitors/0402/220pF.ato"
-import Capacitor_0402_820pF from "elec/src/parts/capacitors/0402/820pF.ato"
-import Capacitor_0402_5_6nF from "elec/src/parts/capacitors/0402/5_6nF.ato"
-import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
-import Capacitor_0603_3_3nF from "elec/src/parts/capacitors/0603/3_3nF.ato"
-import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
-import Capacitor_0603_2_2uF from "elec/src/parts/capacitors/0603/2_2uF.ato"
-import Capacitor_1206_10uF from "elec/src/parts/capacitors/1206/10uF.ato"
+import Capacitor from "generics/capacitors.ato"
 import Power from "generics/interfaces.ato"
 import LM74700QDBVRQ1 from "elec/src/parts/ideal_diodes/LM74700QDBVRQ1.ato"
 
@@ -90,7 +83,10 @@ module TPS40305DRCR_input_9_to_20V_output_5V_14A:
     rs_resistor.p2 ~ gnd
 
     # (Cbst) add bootstrap capacitor
-    cbst_capacitor = new Capacitor_0402_100nF
+    cbst_capacitor = new Capacitor
+    cbst_capacitor.capacitance = 0.1uF +/- 10%
+    cbst_capacitor.footprint = "C0402"
+    cbst_capacitor.mpn = "C307331"
     cbst_capacitor.p1 ~ ic.BOOT
     cbst_capacitor.p2 ~ ic.SW
     cbst_capacitor.p2 ~ ldrv_n_channel_mosfet.DRAIN
@@ -104,14 +100,24 @@ module TPS40305DRCR_input_9_to_20V_output_5V_14A:
     rpgood_resistor.p2 ~ ic.BP
 
     # (Cbyp) add bypass capacitor
-    cbyp_capacitor = new Capacitor_0603_2_2uF
+    cbyp_capacitor = new Capacitor
+    cbyp_capacitor.capacitance = 2.2uF +/- 10%
+    cbyp_capacitor.footprint = "C0603"
+    cbyp_capacitor.mpn = "C23630"
     cbyp_capacitor.p1 ~ rpgood_resistor.p2
     cbyp_capacitor.p2 ~ gnd
 
     # (Ccomp, Ccomp2) add compensation capacitors
-    ccomp_capacitor = new Capacitor_0402_5_6nF
+    ccomp_capacitor = new Capacitor
+    ccomp_capacitor.capacitance = 5.6nF +/- 10%
+    ccomp_capacitor.footprint = "C0402"
+    ccomp_capacitor.mpn = "C162195"
     ccomp_capacitor.p1 ~ ic.COMP
-    ccomp2_capacitor = new Capacitor_0402_220pF
+
+    ccomp2_capacitor = new Capacitor
+    ccomp2_capacitor.capacitance = 220pF +/- 10%
+    ccomp2_capacitor.footprint = "C0402"
+    ccomp2_capacitor.mpn = "C1530"
     ccomp2_capacitor.p1 ~ ic.COMP
     ccomp2_capacitor.p2 ~ ic.FB
 
@@ -124,20 +130,37 @@ module TPS40305DRCR_input_9_to_20V_output_5V_14A:
     rcomp_resistor.p2 ~ ic.FB
 
     # (Css) add soft start capacitor
-    css_capacitor = new Capacitor_0603_3_3nF
+    css_capacitor = new Capacitor
+    css_capacitor.capacitance = 3.3nF +/- 10%
+    css_capacitor.footprint = "C0603"
+    css_capacitor.mpn = "C1613"
     css_capacitor.p1 ~ ic.ENSS
     css_capacitor.p2 ~ gnd
 
     # (Cin) add input capacitors, capable of up to 50V input voltage
-    cin_capacitor1 = new Capacitor_1206_10uF
+    cin_capacitor1 = new Capacitor
+    cin_capacitor1.capacitance = 10uF +/- 10%
+    cin_capacitor1.footprint = "C1206"
+    cin_capacitor1.mpn = "C13585"
     cin_capacitor1.power ~ power_in
-    cin_capacitor2 = new Capacitor_1206_10uF
+
+    cin_capacitor2 = new Capacitor
+    cin_capacitor2.capacitance = 10uF +/- 10%
+    cin_capacitor2.footprint = "C1206"
+    cin_capacitor2.mpn = "C13585"
     cin_capacitor2.power ~ power_in
-    cin_capacitor3 = new Capacitor_1206_10uF
+
+    cin_capacitor3 = new Capacitor
+    cin_capacitor3.capacitance = 10uF +/- 10%
+    cin_capacitor3.footprint = "C1206"
+    cin_capacitor3.mpn = "C13585"
     cin_capacitor3.power ~ power_in
 
     # (Cvcc) add VDD capacitor
-    cvcc_capacitor = new Capacitor_0603_1uF
+    cvcc_capacitor = new Capacitor
+    cvcc_capacitor.capacitance = 1uF +/- 10%
+    cvcc_capacitor.footprint = "C0603"
+    cvcc_capacitor.mpn = "C15849"
     cvcc_capacitor.power ~ power_in
 
     # (Rcomp2) add compensation resistor
@@ -168,14 +191,24 @@ module TPS40305DRCR_input_9_to_20V_output_5V_14A:
     voltage_config_divider.power_out ~ ic.FB
 
     # (Ccomp3) add compensation capacitor
-    ccomp3_capacitor = new Capacitor_0402_820pF
+    ccomp3_capacitor = new Capacitor
+    ccomp3_capacitor.capacitance = 820pF +/- 5%
+    ccomp3_capacitor.footprint = "C0402"
+    ccomp3_capacitor.mpn = "C296004"
     ccomp3_capacitor.p1 ~ rcomp2_resistor.p2
     ccomp3_capacitor.p2 ~ ic.FB
 
     # (Cout) add output capacitors
-    cout_capacitor1 = new Capacitor_1206_10uF
+    cout_capacitor1 = new Capacitor
+    cout_capacitor1.capacitance = 10uF +/- 10%
+    cout_capacitor1.footprint = "C1206"
+    cout_capacitor1.mpn = "C13585"
     cout_capacitor1.power ~ power_out_before_reverse_flow_protection
-    cout_capacitor2 = new Capacitor_1206_10uF
+
+    cout_capacitor2 = new Capacitor
+    cout_capacitor2.capacitance = 10uF +/- 10%
+    cout_capacitor2.footprint = "C1206"
+    cout_capacitor2.mpn = "C13585"
     cout_capacitor2.power ~ power_out_before_reverse_flow_protection
 
     # add reverse flow protection for 5V output, via ideal diode

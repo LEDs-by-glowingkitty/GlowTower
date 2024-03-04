@@ -11,8 +11,7 @@ import MOSFETcircuitPowerOnOff_4x_3_5A from "elec/src/parts/power_mosfet_circuit
 import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
 import _74LVC2G04DW_7 from "elec/src/parts/inverters/74LVC2G04DW_7.ato"
 import Resistor from "generics/resistors.ato"
-import Capacitor_SMD_D10_L10_1000uF from "elec/src/parts/capacitors/SMD_D10_L10mm/1000uF.ato"
-import Capacitor_1206_100uF from "elec/src/parts/capacitors/1206/100uF.ato"
+import Capacitor from "generics/capacitors.ato"
 from "elec/src/parts/pin_headers/PinHeader_2_54mm.ato" import PinHeader_2_54mm_2pins, PinHeader_2_54mm_3pins
 from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG, USB2, USB_PD
 import SK12D07VG4 from "elec/src/parts/switches/SK12D07VG4.ato"
@@ -206,17 +205,39 @@ module MainPCB:
     led_power_mosfet_circuit.gnd ~ gnd
 
     # Add caps for LED strips
-    led_strip_1_capacitor = new Capacitor_SMD_D10_L10_1000uF
-    led_strip_2_capacitor = new Capacitor_SMD_D10_L10_1000uF
-    led_strip_3_capacitor = new Capacitor_SMD_D10_L10_1000uF
-    led_strip_4_capacitor = new Capacitor_SMD_D10_L10_1000uF
+    led_strip_1_capacitor = new Capacitor
+    led_strip_1_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_1_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    led_strip_1_capacitor.lcsc_id = "C445078"
+    led_strip_1_capacitor.mpn = "C445078"
     led_strip_1_capacitor.power ~ led_power_mosfet_circuit.power_out1
+
+    led_strip_2_capacitor = new Capacitor
+    led_strip_2_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_2_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    led_strip_2_capacitor.lcsc_id = "C445078"
+    led_strip_2_capacitor.mpn = "C445078"
     led_strip_2_capacitor.power ~ led_power_mosfet_circuit.power_out2
+
+    led_strip_3_capacitor = new Capacitor
+    led_strip_3_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_3_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    led_strip_3_capacitor.lcsc_id = "C445078"
+    led_strip_3_capacitor.mpn = "C445078"
     led_strip_3_capacitor.power ~ led_power_mosfet_circuit.power_out3
+    
+    led_strip_4_capacitor = new Capacitor
+    led_strip_4_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_4_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    led_strip_4_capacitor.lcsc_id = "C445078"
+    led_strip_4_capacitor.mpn = "C445078"
     led_strip_4_capacitor.power ~ led_power_mosfet_circuit.power_out4
 
     # Add a cap for the LED ring
-    led_ring_capacitor = new Capacitor_1206_100uF
+    led_ring_capacitor = new Capacitor
+    led_ring_capacitor.capacitance = 100uF +/- 20%
+    led_ring_capacitor.footprint = "C1206"
+    led_ring_capacitor.mpn = "C15008"
     led_ring_capacitor.power ~ power_5v
 
     # Add solder pads

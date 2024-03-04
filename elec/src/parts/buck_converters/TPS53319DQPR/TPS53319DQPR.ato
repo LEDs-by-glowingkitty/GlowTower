@@ -1,8 +1,8 @@
 import Power from "generics/interfaces.ato"
-import SMMS1360_2R2M from "elec/src/parts/inductors/SMMS1360_2R2M.ato"
-import Capacitor_1210_X7R_22uF from "elec/src/parts/capacitors/1210/22uF.ato"
-import Capacitor_1206_4_7uF from "elec/src/parts/capacitors/1206/4_7uF.ato"
+import Capacitor from "generics/capacitors.ato"
 import Resistor from "generics/resistors.ato"
+import SMMS1360_2R2M from "elec/src/parts/inductors/SMMS1360_2R2M.ato"
+
 
 component TPS53319DQPR:
     """
@@ -67,15 +67,29 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     ic.power_in ~ power_in
 
     # (Cin) add input capacitor group
-    cin_capacitor_1 = new Capacitor_1210_X7R_22uF
+    cin_capacitor_1 = new Capacitor
+    cin_capacitor_1.capacitance = 22uF +/- 10%
+    cin_capacitor_1.footprint = "C1206"
+    cin_capacitor_1.mpn = "C309062"
     cin_capacitor_1.power ~ power_in
-    cin_capacitor_2 = new Capacitor_1210_X7R_22uF
+
+    cin_capacitor_2 = new Capacitor
+    cin_capacitor_2.capacitance = 22uF +/- 10%
+    cin_capacitor_2.footprint = "C1206"
+    cin_capacitor_2.mpn = "C309062"
     cin_capacitor_2.power ~ power_in
-    cin_capacitor_3 = new Capacitor_1210_X7R_22uF
+
+    cin_capacitor_3 = new Capacitor
+    cin_capacitor_3.capacitance = 22uF +/- 10%
+    cin_capacitor_3.footprint = "C1206"
+    cin_capacitor_3.mpn = "C309062"
     cin_capacitor_3.power ~ power_in
 
     # (Cvin) add input capacitor
-    cvin_capacitor = new Capacitor_1206_4_7uF
+    cvin_capacitor = new Capacitor
+    cvin_capacitor.capacitance = 4.7uF +/- 10%
+    cvin_capacitor.footprint = "C1206"
+    cvin_capacitor.mpn = "C29823"
     cvin_capacitor.power ~ power_in
 
     # (Ren) add resistor for EN pin
@@ -108,7 +122,10 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     l1_inductor.output ~ power_out_before_reverse_flow_protection.vcc
 
     # TODO (Cbst) add capacitor for VBST
-    cbst_capacitor = new Capacitor_0402_100nF
+    cbst_capacitor = new Capacitor
+    cbst_capacitor.capacitance = 0.1uF +/- 10%
+    cbst_capacitor.footprint = "C0402"
+    cbst_capacitor.mpn = "C307331"
     cbst_capacitor.p1 ~ ic.LL
     cbst_capacitor.p2 ~ ic.VBST
 
@@ -117,7 +134,10 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     rlbst_resistor.p1 ~ ic.LL
 
     # TODO (Clfb) add capacitor
-    clfb_capacitor = new Capacitor_0402_100nF
+    clfb_capacitor = new Capacitor
+    clfb_capacitor.capacitance = 0.1uF +/- 10%
+    clfb_capacitor.footprint = "C0402"
+    clfb_capacitor.mpn = "C307331"
     clfb_capacitor.p1 ~ rlbst_resistor.p2
     clfb_capacitor.p2 ~ power_out_before_reverse_flow_protection.vcc
 

@@ -1,7 +1,0 @@
-import Capacitor from "generics/capacitors.ato"
-
-component Capacitor_0402_5_6nF from Capacitor:
-
-    capacitance = 5.6uF +/- 10%
-    footprint = "C0402"
-    mpn = "C162195"

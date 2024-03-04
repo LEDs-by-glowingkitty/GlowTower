@@ -1,8 +1,0 @@
-import Capacitor from "generics/capacitors.ato"
-
-component Capacitor_SMD_D10_L10_1000uF from Capacitor:
-
-    capacitance = 1000uF +/- 20%
-    footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
-    lcsc_id = "C445078"
-    mpn = "C445078"
