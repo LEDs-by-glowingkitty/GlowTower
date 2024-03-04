@@ -148,8 +148,13 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     clfb_capacitor.p1 ~ rlbst_resistor.p2
     clfb_capacitor.p2 ~ power_out_before_reverse_flow_protection.vcc
 
-    # TODO (Clrfb) add capacitor
-    clrfb_capacitor = new Capacitor_0402_1nF
+    # (Clrfb) add capacitor
+    clrfb_capacitor = new Capacitor
+    clrfb_capacitor.capacitance = 1nF +/- 10%
+    clrfb_capacitor.voltage = 50V
+    clrfb_capacitor.series = "X7R"
+    clrfb_capacitor.footprint = "C0402"
+    clrfb_capacitor.mpn = "C1523"
     clrfb_capacitor.p1 ~ ic.VFB
     clrfb_capacitor.p2 ~ rlbst_resistor.p2
 
