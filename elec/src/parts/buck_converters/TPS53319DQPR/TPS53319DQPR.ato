@@ -3,6 +3,8 @@ import SMMS1360_2R2M from "elec/src/parts/inductors/SMMS1360_2R2M.ato"
 import Capacitor_1210_X7R_22uF from "elec/src/parts/capacitors/1210/22uF.ato"
 import Capacitor_1206_4_7uF from "elec/src/parts/capacitors/1206/4_7uF.ato"
 import Resistor_0402_1k from "elec/src/parts/resistors/0402/1k.ato"
+import Resistor_0402_392k from "elec/src/parts/resistors/0402/392k.ato"
+import Resistor_0402_86_6k from "elec/src/parts/resistors/0402/86_6k.ato"
 
 component TPS53319DQPR:
     """
@@ -83,12 +85,12 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     ren_resistor.p2 ~ ic.EN
 
     # Add voltage divider for the EN pin
-    # TODO (Rent) add resistor 1
+    # (Rent) add resistor 1
     rent_resistor = new Resistor_0402_392k
     rent_resistor.p1 ~ power_in.vcc
     rent_resistor.p2 ~ ren_resistor.p1
 
-    # TODO (Renb) add resistor 2
+    # (Renb) add resistor 2
     renb_resistor = new Resistor_0402_86_6k
     renb_resistor.p1 ~ ren_resistor.p1
     renb_resistor.p2 ~ gnd
