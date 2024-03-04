@@ -11,29 +11,37 @@ component TPS53319DQPR:
     lcsc_id = "C181971"
     mpn = "C181971"
     # pins
-    signal VFB ~ pin 1
-    signal EN ~ pin 2
-    signal PGOOD ~ pin 3
-    signal VBST ~ pin 4
-    signal ROVP ~ pin 5
-    signal LL ~ pin 6
+    signal VFB ~ pin 1      # Output feedback input. Connect this pin to VOUT through a resistor divider.
+    signal EN ~ pin 2       # Enable pin. Typical turnon threshold voltage is 1.3 V. Typical turnoff threshold voltage is 1.0 V.
+    signal PGOOD ~ pin 3    # Open drain power-good flag. Provides 1-ms start-up delay after VFB falls in specified limits. When VFB
+                            # goes out of the specified limits, PGOOD goes low after a 2-μs delay.
+    signal VBST ~ pin 4     # Supply input for high-side FET gate driver (boost terminal). Connect capacitor from this pin to LL node.
+                            # Internally connected to VREG via bootstrap MOSFET switch.
+    signal ROVP ~ pin 5     # Redundant overvoltage protection (OVP) input. Use a resistor divider to connect this pin to VOUT. Internally
+                            # pulled down to GND with a 1.5-MΩ resistor. If redundant OVP is not needed, connect this pin to GND. Do
+                            # not leave ROVP pin floating (see Section 8.3.9).
+    signal LL ~ pin 6       # Output of converted power. Connect this pin to the output inductor.
     LL ~ pin 7
     LL ~ pin 8
     LL ~ pin 9
     LL ~ pin 10
     LL ~ pin 11
-    signal VIN ~ pin 12
+    signal VIN ~ pin 12     # Conversion power input. The conversion input voltage range is from 1.5 V to 22 V.
     VIN ~ pin 13
     VIN ~ pin 14
     VIN ~ pin 15
     VIN ~ pin 16
     VIN ~ pin 17
-    signal VREG ~ pin 18
-    signal VDD ~ pin 19
-    signal MODE ~ pin 20
-    signal TRIP ~ pin 21
-    signal RF ~ pin 22
-    signal EPAD ~ pin 23
+    signal VREG ~ pin 18    # 5-V low dropout (LDO) output. Supplies the internal analog circuitry and driver circuitry.
+    signal VDD ~ pin 19     # Controller power supply input. VDD input voltage range is from 4.5 V to 25 V.
+    signal MODE ~ pin 20    # Soft start and mode selection. Connect a resistor to select soft-start time using Table 8-3. The soft-start
+                            # time is detected and stored into internal register during start-up.
+    signal TRIP ~ pin 21    # OCL detection threshold setting pin. ITRIP = 10 μA at room temperature. 3000 ppm/°C current is sourced
+                            # and set the OCL trip voltage as follows.
+                            # VOCL = VTRIP/32 (VTRIP ≤ 2.4 V, VOCL ≤ 75 mV)
+    signal RF ~ pin 22      # Switching frequency selection. Connect a resistor to GND or VREG to select switching frequency using
+                            # Table 8-1. The switching frequency is detected and stored during the start-up.
+    signal EPAD ~ pin 23    # Ground and thermal pad of the device. Use proper number of vias to connect to ground plane.
 
     # add power input
     power_in = new Power
@@ -43,6 +51,8 @@ component TPS53319DQPR:
 
 
 module TPS53319DQPR_input_9_to_20V_output_5V_14A:
+    # TODO add missing components
+
     # add power interfaces
     power_in = new Power
     power_out = new Power
@@ -56,13 +66,14 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     ic.power_in ~ power_in
 
     # (L1) add inductor
-    inductor = new SMMS1360_2R2M
-    inductor.input ~ ic.LL
-    inductor.output ~ power_out_before_reverse_flow_protection.vcc
+    l1_inductor = new SMMS1360_2R2M
+    l1_inductor.input ~ ic.LL
+    l1_inductor.output ~ power_out_before_reverse_flow_protection.vcc
 
-    # TODO add missing components
-
-
+    # (Cbst) add capacitor for VBST
+    cbst_capacitor = new Capacitor_0402_100nF
+    cbst_capacitor.p1 ~ ic.LL
+    cbst_capacitor.p2 ~ ic.VBST
 
 
 
