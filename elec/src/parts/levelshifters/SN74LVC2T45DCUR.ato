@@ -1,5 +1,5 @@
 from "generics/interfaces.ato" import Power, Pair
-import Resistor_0402_62 from "elec/src/parts/resistors/0402/62.ato"
+import Resistor from "generics/resistors.ato"
 import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
 
 component _SN74LVC2T45DCUR:
@@ -50,12 +50,18 @@ module SN74LVC2T45DCUR:
     power_out_cap.power ~ power_out
 
     # Out
-    data_in_1_resistor = new Resistor_0402_62
+    data_in_1_resistor = new Resistor
+    data_in_1_resistor.resistance = 62ohm +/- 1%
+    data_in_1_resistor.footprint = "R0402"
+    data_in_1_resistor.mpn = "C4962"
     signal_out_1 = new Pair
     signal_out_1.io ~ data_in_1_resistor.p1; data_in_1_resistor.p2 ~ ic.A1
     signal_out_1.gnd ~ power_out.gnd
 
-    data_in_2_resistor = new Resistor_0402_62
+    data_in_2_resistor = new Resistor
+    data_in_2_resistor.resistance = 62ohm +/- 1%
+    data_in_2_resistor.footprint = "R0402"
+    data_in_2_resistor.mpn = "C4962"
     signal_out_2 = new Pair
     signal_out_2.io ~ data_in_2_resistor.p1; data_in_2_resistor.p2 ~ ic.A2
     signal_out_2.gnd ~ power_out.gnd

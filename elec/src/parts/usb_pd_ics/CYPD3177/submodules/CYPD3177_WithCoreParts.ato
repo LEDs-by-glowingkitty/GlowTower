@@ -1,7 +1,6 @@
 import Power from "generics/interfaces.ato"
 import CYPD3177 from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177.ato"
-import Resistor_0402_2K from "elec/src/parts/resistors/0402/2K.ato"
-import Resistor_0603_100K from "elec/src/parts/resistors/0603/100K.ato"
+import Resistor from "generics/resistors.ato"
 import Voltage_Divider_0603_100K__20K from "elec/src/parts/voltage_dividers/0603/Voltage_Divider_0603_100K__20K.ato"
 import Capacitor_0402_100nF from "elec/src/parts/capacitors/0402/100nF.ato"
 import Capacitor_0603_1uF from "elec/src/parts/capacitors/0603/1uF.ato"
@@ -75,12 +74,18 @@ module CYPD3177_WithCoreParts:
 
     # Add a pull down resistor for the FAULT pin, so that it is not floating
     # TODO: use 0402 instead of 0603, also check other 0603 resistors
-    fault_pull_down_resistor = new Resistor_0603_100K
+    fault_pull_down_resistor = new Resistor
+    fault_pull_down_resistor.resistance = 100kohm +/- 1%
+    fault_pull_down_resistor.footprint = "R0603"
+    fault_pull_down_resistor.mpn = "C25803"
     fault_pull_down_resistor.p1 ~ ic.FAULT
     fault_pull_down_resistor.p2 ~ gnd
 
     # Add a pull up resistor for the FLIP pin, so that it is not floating
-    flip_pull_up_resistor = new Resistor_0402_2K
+    flip_pull_up_resistor = new Resistor
+    flip_pull_up_resistor.resistance = 2kohm +/- 1%
+    flip_pull_up_resistor.footprint = "R0402"
+    flip_pull_up_resistor.mpn = "C4109"
     flip_pull_up_resistor.p1 ~ ic.FLIP
     flip_pull_up_resistor.p2 ~ power_3_3v.vcc
 

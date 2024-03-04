@@ -1,7 +1,0 @@
-import Resistor from "generics/resistors.ato"
-
-component Resistor_0402_432 from Resistor:
-
-    resistance = 432ohm +/- 1%
-    footprint = "R0402"
-    mpn = "C100430"

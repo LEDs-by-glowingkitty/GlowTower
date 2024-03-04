@@ -1,7 +1,0 @@
-import Resistor from "generics/resistors.ato"
-
-component Resistor_0603_10K from Resistor:
-
-    resistance = 10kohm +/- 1%
-    footprint = "R0603"
-    mpn = "C25804"
