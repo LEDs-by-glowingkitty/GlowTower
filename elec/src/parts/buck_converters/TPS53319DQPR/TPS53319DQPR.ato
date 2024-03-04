@@ -175,13 +175,30 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     rfbb_resistor.p1 ~ ic.VFB
     rfbb_resistor.p2 ~ gnd
 
-    # TODO (Cout) add output capacitor 1
-    cout_capacitor = new Capacitor_120uF
-    cout_capacitor.power ~ power_out_before_reverse_flow_protection
+    # (Cout) add output capacitors
+    cout_capacitor_1 = new Capacitor
+    cout_capacitor_1.capacitance = 47uF +/- 10%
+    cout_capacitor_1.voltage = 16V
+    cout_capacitor_1.series = "X5R"
+    cout_capacitor_1.footprint = "C1210"
+    cout_capacitor_1.mpn = "C77101"
+    cout_capacitor_1.power ~ power_out_before_reverse_flow_protection
 
-    # TODO (Coutx) add output capacitor 2
-    coutx_capacitor = new Capacitor_22uF
-    coutx_capacitor.power ~ power_out_before_reverse_flow_protection
+    cout_capacitor_2 = new Capacitor
+    cout_capacitor_2.capacitance = 47uF +/- 10%
+    cout_capacitor_2.voltage = 16V
+    cout_capacitor_2.series = "X5R"
+    cout_capacitor_2.footprint = "C1210"
+    cout_capacitor_2.mpn = "C77101"
+    cout_capacitor_2.power ~ power_out_before_reverse_flow_protection
+
+    cout_capacitor_3 = new Capacitor
+    cout_capacitor_3.capacitance = 47uF +/- 10%
+    cout_capacitor_3.voltage = 16V
+    cout_capacitor_3.series = "X5R"
+    cout_capacitor_3.footprint = "C1210"
+    cout_capacitor_3.mpn = "C77101"
+    cout_capacitor_3.power ~ power_out_before_reverse_flow_protection
 
     # TODO (Rpg) add resistor for PGOOD
     rpg_resistor = new Resistor_0402_105k
