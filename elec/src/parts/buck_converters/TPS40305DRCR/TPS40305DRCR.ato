@@ -186,6 +186,7 @@ module TPS40305DRCR_input_9_to_20V_output_5V_14A:
     hdrv_n_channel_mosfet_2.SOURCE ~ output_inductor.p1    # connect the inductor input to the sources of the MOSFETs
 
     # (Rfbt, Rfbb) set 5V output voltage via voltage divider
+    # TODO replace with 'VDiv' module from generics library
     voltage_config_divider = new Voltage_Divider_0402_10K_1_37K
     voltage_config_divider.power ~ power_out_before_reverse_flow_protection
     voltage_config_divider.power_out ~ ic.FB

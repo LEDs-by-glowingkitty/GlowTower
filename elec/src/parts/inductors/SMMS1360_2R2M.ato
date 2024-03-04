@@ -1,4 +1,6 @@
-component SMMS1360_2R2M:
+import Inductor from "generics/inductor.ato"
+
+component SMMS1360_2R2M from Inductor:
     """
     This is an inductor.
     Size:                   13.8mm x 12.6mm
@@ -7,6 +9,8 @@ component SMMS1360_2R2M:
     Saturation Current:     25A
     """
     # component SMMS1360-2R2M
+    value = 2.2uH
+    tolerance = 20%
     footprint = "IND-SMD_L13.8-W12.6_SMMS1360"
     lcsc_id = "C149525"
     mpn = "C149525"

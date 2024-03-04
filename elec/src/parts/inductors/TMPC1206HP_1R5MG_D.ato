@@ -1,4 +1,6 @@
-component TMPC1206HP_1R5MG_D:
+import Inductor from "generics/inductor.ato"
+
+component TMPC1206HP_1R5MG_D from Inductor:
     """
     This is an inductor with the following specs:
     - Inductance: 1.5uH (±20%)
@@ -9,6 +11,8 @@ component TMPC1206HP_1R5MG_D:
     Datasheet: https://datasheet.lcsc.com/lcsc/2009171439_TAI-TECH-TMPC1206HP-1R5MG-D_C357260.pdf
     """
     # component TMPC1206HP-1R5MG-D
+    value = 1.5uH
+    tolerance = 20%
     footprint = "IND-SMD_L13.5-W12.6_TMPC1206HP-1R5MG-D"
     lcsc_id = "C357260"
     mpn = "C357260"

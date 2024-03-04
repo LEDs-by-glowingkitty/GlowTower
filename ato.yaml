@@ -5,4 +5,4 @@ builds:
   button_pcb:
     entry: elec/src/button-pcb.ato:ButtonPCB
 dependencies:
-- generics ^v2.2.8
+- generics ^v3.0.0
