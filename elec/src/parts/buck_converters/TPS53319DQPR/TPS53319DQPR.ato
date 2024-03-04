@@ -2,6 +2,7 @@ import Power from "generics/interfaces.ato"
 import SMMS1360_2R2M from "elec/src/parts/inductors/SMMS1360_2R2M.ato"
 import Capacitor_1210_X7R_22uF from "elec/src/parts/capacitors/1210/22uF.ato"
 import Capacitor_1206_4_7uF from "elec/src/parts/capacitors/1206/4_7uF.ato"
+import Resistor_0402_1k from "elec/src/parts/resistors/0402/1k.ato"
 
 component TPS53319DQPR:
     """
@@ -77,7 +78,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     cvin_capacitor = new Capacitor_1206_4_7uF
     cvin_capacitor.power ~ power_in
 
-    # TODO (Ren) add resistor for EN pin
+    # (Ren) add resistor for EN pin
     ren_resistor = new Resistor_0402_1k
     ren_resistor.p2 ~ ic.EN
 
