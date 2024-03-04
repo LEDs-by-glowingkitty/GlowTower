@@ -51,7 +51,7 @@ component TPS53319DQPR:
 
 
 module TPS53319DQPR_input_9_to_20V_output_5V_14A:
-    # TODO add missing components
+    # TODO import missing components
 
     # add power interfaces
     power_in = new Power
@@ -65,6 +65,33 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     ic = new TPS53319DQPR
     ic.power_in ~ power_in
 
+    # (Cin) add input capacitor group
+    cin_capacitor_1 = new Capacitor_0402_22uF
+    cin_capacitor_1.power ~ power_in
+    cin_capacitor_2 = new Capacitor_0402_22uF
+    cin_capacitor_2.power ~ power_in
+    cin_capacitor_3 = new Capacitor_0402_22uF
+    cin_capacitor_3.power ~ power_in
+
+    # (Cvin) add input capacitor
+    cvin_capacitor = new Capacitor_0402_4_7uF
+    cvin_capacitor.power ~ power_in
+
+    # (Ren) add resistor for EN pin
+    ren_resistor = new Resistor_0402_1k
+    ren_resistor.p2 ~ ic.EN
+
+    # Add voltage divider for the EN pin
+    # (Rent) add resistor 1
+    rent_resistor = new Resistor_0402_392k
+    rent_resistor.p1 ~ power_in.vcc
+    rent_resistor.p2 ~ ren_resistor.p1
+
+    # (Renb) add resistor 2
+    renb_resistor = new Resistor_0402_86_6k
+    renb_resistor.p1 ~ ren_resistor.p1
+    renb_resistor.p2 ~ gnd
+
     # (L1) add inductor
     l1_inductor = new SMMS1360_2R2M
     l1_inductor.input ~ ic.LL
@@ -75,7 +102,58 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     cbst_capacitor.p1 ~ ic.LL
     cbst_capacitor.p2 ~ ic.VBST
 
+    # (Rlbst) add resistor
+    rlbst_resistor = new Resistor_0402_1_82k
+    rlbst_resistor.p1 ~ ic.LL
 
+    # (Clfb) add capacitor
+    clfb_capacitor = new Capacitor_0402_100nF
+    clfb_capacitor.p1 ~ rlbst_resistor.p2
+    clfb_capacitor.p2 ~ power_out_before_reverse_flow_protection.vcc
+
+    # (Clrfb) add capacitor
+    clrfb_capacitor = new Capacitor_0402_1nF
+    clrfb_capacitor.p1 ~ ic.VFB
+    clrfb_capacitor.p2 ~ rlbst_resistor.p2
+
+    # Add voltage divider for programming the output voltage
+    # (Rfbt) add resistor 1
+    rfbt_resistor = new Resistor_0402_71_5k
+    rfbt_resistor.p1 ~ power_out_before_reverse_flow_protection.vcc
+    rfbt_resistor.p2 ~ ic.VFB
+
+    # (Rfbb) add resistor 2
+    rfbb_resistor = new Resistor_0402_10k
+    rfbb_resistor.p1 ~ ic.VFB
+    rfbb_resistor.p2 ~ gnd
+
+    # (Cout) add output capacitor 1
+    cout_capacitor = new Capacitor_120uF
+    cout_capacitor.power ~ power_out_before_reverse_flow_protection
+
+    # (Coutx) add output capacitor 2
+    coutx_capacitor = new Capacitor_22uF
+    coutx_capacitor.power ~ power_out_before_reverse_flow_protection
+
+    # (Rpg) add resistor for PGOOD
+    rpg_resistor = new Resistor_0402_105k
+    rpg_resistor.p1 ~ ic.PGOOD
+    rpg_resistor.p2 ~ ic.VREG
+
+    # (Rmodeg) add resistor for MODE
+    rmodeg_resistor = new Resistor_0402_105k
+    rmodeg_resistor.p1 ~ ic.MODE
+    rmodeg_resistor.p2 ~ gnd
+
+    # (Rtrip) add resistor for TRIP
+    rtrip_resistor = new Resistor_0402_205k
+    rtrip_resistor.p1 ~ ic.TRIP
+    rtrip_resistor.p2 ~ gnd
+
+    # (Cvreg) add capacitor for VREG
+    cvreg_capacitor = new Capacitor_0402_1uF
+    cvreg_capacitor.p1 ~ ic.VREG
+    cvreg_capacitor.p2 ~ gnd
 
     # add reverse flow protection for 5V output, via ideal diode
     reverse_flow_protection_ideal_diode = new LM74700QDBVRQ1
