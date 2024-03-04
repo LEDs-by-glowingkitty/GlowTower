@@ -1,5 +1,6 @@
 import Power from "generics/interfaces.ato"
 import SMMS1360_2R2M from "elec/src/parts/inductors/SMMS1360_2R2M.ato"
+import Capacitor_1210_X7R_22uF from "elec/src/parts/capacitors/1210/22uF.ato"
 
 component TPS53319DQPR:
     """
@@ -66,11 +67,11 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     ic.power_in ~ power_in
 
     # (Cin) add input capacitor group
-    cin_capacitor_1 = new Capacitor_0402_22uF
+    cin_capacitor_1 = new Capacitor_1210_X7R_22uF
     cin_capacitor_1.power ~ power_in
-    cin_capacitor_2 = new Capacitor_0402_22uF
+    cin_capacitor_2 = new Capacitor_1210_X7R_22uF
     cin_capacitor_2.power ~ power_in
-    cin_capacitor_3 = new Capacitor_0402_22uF
+    cin_capacitor_3 = new Capacitor_1210_X7R_22uF
     cin_capacitor_3.power ~ power_in
 
     # (Cvin) add input capacitor
@@ -92,7 +93,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     renb_resistor.p1 ~ ren_resistor.p1
     renb_resistor.p2 ~ gnd
 
-    # (L1) add inductor
+    # (L1) add power output inductor
     l1_inductor = new SMMS1360_2R2M
     l1_inductor.input ~ ic.LL
     l1_inductor.output ~ power_out_before_reverse_flow_protection.vcc
