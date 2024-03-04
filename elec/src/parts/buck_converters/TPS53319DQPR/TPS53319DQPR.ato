@@ -200,13 +200,19 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     cout_capacitor_3.mpn = "C77101"
     cout_capacitor_3.power ~ power_out_before_reverse_flow_protection
 
-    # TODO (Rpg) add resistor for PGOOD
-    rpg_resistor = new Resistor_0402_105k
+    # (Rpg) add resistor for PGOOD
+    rpg_resistor = new Resistor
+    rpg_resistor.resistance = 105kohm +/- 1%
+    rpg_resistor.footprint = "R0402"
+    rpg_resistor.mpn = "C171671"
     rpg_resistor.p1 ~ ic.PGOOD
     rpg_resistor.p2 ~ ic.VREG
 
-    # TODO (Rmodeg) add resistor for MODE
-    rmodeg_resistor = new Resistor_0402_105k
+    # (Rmodeg) add resistor for MODE
+    rmodeg_resistor = new Resistor
+    rmodeg_resistor.resistance = 105kohm +/- 1%
+    rmodeg_resistor.footprint = "R0402"
+    rmodeg_resistor.mpn = "C171671"
     rmodeg_resistor.p1 ~ ic.MODE
     rmodeg_resistor.p2 ~ gnd
 
