@@ -54,6 +54,8 @@ module MSM261D4030H1CPM:
 
     cap2 = new Capacitor
     cap2.capacitance = 0.1uF +/- 10%
+    cap2.voltage = 50V
+    cap2.series = "X7R"
     cap2.footprint = "C0402"
     cap2.mpn = "C307331"
     cap2.power ~ power

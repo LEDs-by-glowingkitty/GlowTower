@@ -46,12 +46,16 @@ module SN74LVC2T45DCUR:
     # add bypass caps
     power_in_capacitor = new Capacitor
     power_in_capacitor.capacitance = 0.1uF +/- 10%
+    power_in_capacitor.voltage = 50V
+    power_in_capacitor.series = "X7R"
     power_in_capacitor.footprint = "C0402"
     power_in_capacitor.mpn = "C307331"
     power_in_capacitor.power ~ power_in
 
     power_out_capacitor = new Capacitor
     power_out_capacitor.capacitance = 0.1uF +/- 10%
+    power_out_capacitor.voltage = 50V
+    power_out_capacitor.series = "X7R"
     power_out_capacitor.footprint = "C0402"
     power_out_capacitor.mpn = "C307331"
     power_out_capacitor.power ~ power_out

@@ -43,6 +43,8 @@ module WS2812B_1010:
     # add the capacitor
     capacitor = new Capacitor
     capacitor.capacitance = 0.1uF +/- 10%
+    capacitor.voltage = 50V
+    capacitor.series = "X7R"
     capacitor.footprint = "C0402"
     capacitor.mpn = "C307331"
     capacitor.power ~ power

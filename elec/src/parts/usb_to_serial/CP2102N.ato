@@ -85,6 +85,8 @@ module CP2102N:
     # Add capacitors for the VREGIN and VDD pins
     small_cap = new Capacitor
     small_cap.capacitance = 0.1uF +/- 10%
+    small_cap.voltage = 50V
+    small_cap.series = "X7R"
     small_cap.footprint = "C0402"
     small_cap.mpn = "C307331"
     small_cap.power ~ power

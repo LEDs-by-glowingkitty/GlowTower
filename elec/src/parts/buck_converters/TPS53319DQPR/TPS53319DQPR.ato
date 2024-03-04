@@ -121,9 +121,11 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     l1_inductor.input ~ ic.LL
     l1_inductor.output ~ power_out_before_reverse_flow_protection.vcc
 
-    # TODO (Cbst) add capacitor for VBST
+    # (Cbst) add capacitor for VBST
     cbst_capacitor = new Capacitor
     cbst_capacitor.capacitance = 0.1uF +/- 10%
+    cbst_capacitor.voltage = 50V
+    cbst_capacitor.series = "X7R"
     cbst_capacitor.footprint = "C0402"
     cbst_capacitor.mpn = "C307331"
     cbst_capacitor.p1 ~ ic.LL
@@ -136,6 +138,8 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     # TODO (Clfb) add capacitor
     clfb_capacitor = new Capacitor
     clfb_capacitor.capacitance = 0.1uF +/- 10%
+    clfb_capacitor.voltage = 50V
+    clfb_capacitor.series = "X7R"
     clfb_capacitor.footprint = "C0402"
     clfb_capacitor.mpn = "C307331"
     clfb_capacitor.p1 ~ rlbst_resistor.p2

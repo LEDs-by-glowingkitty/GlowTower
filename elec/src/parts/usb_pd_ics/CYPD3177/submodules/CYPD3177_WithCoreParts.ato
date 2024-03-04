@@ -75,12 +75,16 @@ module CYPD3177_WithCoreParts:
 
     vbus_cap_2 = new Capacitor
     vbus_cap_2.capacitance = 0.1uF +/- 10%
+    vbus_cap_2.voltage = 50V
+    vbus_cap_2.series = "X7R"
     vbus_cap_2.footprint = "C0402"
     vbus_cap_2.mpn = "C307331"
     vbus_cap_2.power ~ power_3_3v
 
     vbus_cap_3 = new Capacitor
     vbus_cap_3.capacitance = 0.1uF +/- 10%
+    vbus_cap_3.voltage = 50V
+    vbus_cap_3.series = "X7R"
     vbus_cap_3.footprint = "C0402"
     vbus_cap_3.mpn = "C307331"
     vbus_cap_3.power ~ power_3_3v

@@ -85,6 +85,8 @@ module TPS40305DRCR_input_9_to_20V_output_5V_14A:
     # (Cbst) add bootstrap capacitor
     cbst_capacitor = new Capacitor
     cbst_capacitor.capacitance = 0.1uF +/- 10%
+    cbst_capacitor.voltage = 50V
+    cbst_capacitor.series = "X7R"
     cbst_capacitor.footprint = "C0402"
     cbst_capacitor.mpn = "C307331"
     cbst_capacitor.p1 ~ ic.BOOT
