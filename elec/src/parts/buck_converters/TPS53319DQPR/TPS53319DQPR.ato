@@ -1,3 +1,6 @@
+import Power from "generics/interfaces.ato"
+import SMMS1360_2R2M from "elec/src/parts/inductors/SMMS1360_2R2M.ato"
+
 component TPS53319DQPR:
     """
     This is a buck converter from Texas Instruments.
@@ -32,5 +35,38 @@ component TPS53319DQPR:
     signal RF ~ pin 22
     signal EPAD ~ pin 23
 
-# TODO: use in main pcb
-# TODO: check if inductor is ideal (considering noises I heard from LED lamp)
+    # add power input
+    power_in = new Power
+    power_in.vcc ~ VIN
+    power_in.vcc ~ VDD
+    power_in.gnd ~ EPAD
+
+
+module TPS53319DQPR_input_9_to_20V_output_5V_14A:
+    # add power interfaces
+    power_in = new Power
+    power_out = new Power
+    power_out_before_reverse_flow_protection = new Power
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
+    gnd ~ power_out_before_reverse_flow_protection.gnd
+
+    # (U1) add IC
+    ic = new TPS53319DQPR
+    ic.power_in ~ power_in
+
+    # (L1) add inductor
+    inductor = new SMMS1360_2R2M
+    inductor.input ~ ic.LL
+    inductor.output ~ power_out_before_reverse_flow_protection.vcc
+
+    # TODO add missing components
+
+
+
+
+
+    # add reverse flow protection for 5V output, via ideal diode
+    reverse_flow_protection_ideal_diode = new LM74700QDBVRQ1
+    reverse_flow_protection_ideal_diode.power_in ~ power_out_before_reverse_flow_protection
+    reverse_flow_protection_ideal_diode.power_out ~ power_out

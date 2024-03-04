@@ -1,4 +1,3 @@
-import TPS40305DRCR from "elec/src/parts/buck_converters/TPS40305DRCR/submodules/TPS40305DRCR.ato"
 import CSD16301Q2 from "elec/src/parts/mosfets/CSD16301Q2.ato"
 import CSD17581Q3AT from "elec/src/parts/mosfets/CSD17581Q3AT.ato"
 import TMPC1206HP_1R5MG_D from "elec/src/parts/inductors/TMPC1206HP_1R5MG_D.ato"
@@ -18,8 +17,49 @@ import Capacitor_1206_10uF from "elec/src/parts/capacitors/1206/10uF.ato"
 import Power from "generics/interfaces.ato"
 import LM74700QDBVRQ1 from "elec/src/parts/ideal_diodes/LM74700QDBVRQ1.ato"
 
+component TPS40305DRCR:
+    """
+    This is a buck converter IC from Texas Instruments.
+    Datasheet: https://www.ti.com/lit/ds/symlink/tps40305.pdf
+    """
+    # component TPS40305DRCR
+    footprint = "VSON-10_L3.0-W3.0-P0.50-BL-EP_TPS62410DRCR"
+    lcsc_id = "C140285"
+    mpn = "C140285"
+    # pins
+    signal VDD ~ pin 1      # Power input to the controller. Bypass VDD to GND with a low ESR ceramic capacitor of at least 1-μF close to the device.
+    signal ENSS ~ pin 2     # Logic level input which starts or stops the controller via an external user command. Letting this pin float turns
+                            # the controller on. Pulling this pin low disables the controller. This is also the soft-start programming pin. A
+                            # capacitor connected from this pin to GND programs the soft-start time. The capacitor is charged with an
+                            # internal current source of 10 μA. The resulting voltage ramp of this pin is also used as a second non-inverting
+                            # input to the error amplifier after a 0.8 V (typical) level shift downwards. Output regulation is controlled by the
+                            # internal level shifted voltage ramp until that voltage reaches the internal reference voltage of 600 mV – the
+                            # voltage ramp of this pin reaches 1.4 V (typical). Optionally, a 267-kΩ resistor from this pin to BP enables the
+                            # FSS feature.
+    signal PGOOD ~ pin 3    # Open-drain power good output
+    signal COMP ~ pin 4     # Output of the error amplifier and connection node for loop feedback components.
+    signal FB ~ pin 5       # Inverting input to the error amplifier. In normal operation, the voltage on this pin is equal to the internal reference voltage.
+    signal BOOT ~ pin 6     # Gate drive voltage for the high-side N-channel MOSFET. A 0.1-μF capacitor (typical) must be connected
+                            # between this pin and SW. For low input voltage operation, an external schottky diode from BP to BOOT is
+                            # recommended to maximize the gate drive voltage for the high-side
+    signal HDRV ~ pin 7     # Bootstrapped gate drive output for the high-side N-channel MOSFET
+    signal SW ~ pin 8       # Sense line for the adaptive anti-cross conduction circuitry. Serves as common connection for the flying high-side FET driver.
+    signal LDRVOC ~ pin 9   # Gate drive output for the low-side synchronous rectifier N-channel MOSFET. A resistor from this pin to GND
+                            # is also used to determine the voltage level for OCP. An internal current source of 10 μA flows through the
+                            # resistor during initial calibration and that sets up the voltage trip point used for OCP.
+    signal BP ~ pin 10      # Output bypass for the internal regulator. Connect a low ESR bypass ceramic capacitor of 1 μF or greater from this pin to GND
+    signal EP ~ pin 11      # Ground connection to the controller. This is also the thermal pad used to conduct heat from the device. This
+                            # connection serves a twofold purpose. The first is to provide an electrical ground connection for the device.
+                            # The second is to provide a low thermal impedance path from the device die to the PCB. This pad should be
+                            # tied externally to a ground plane.
 
-module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
+    # add power interface
+    power = new Power
+    power.vcc ~ VDD
+    power.gnd ~ EP
+
+
+module TPS40305DRCR_input_9_to_20V_output_5V_14A:
     """
     This is a buck converter, which is setup for the following requirements:
     - IC: TPS40305DRCR
@@ -132,6 +172,3 @@ module TPS40305DRCR_In_9_to_20V_Out_5V_14A:
     reverse_flow_protection_ideal_diode = new LM74700QDBVRQ1
     reverse_flow_protection_ideal_diode.power_in ~ power_out_before_reverse_flow_protection
     reverse_flow_protection_ideal_diode.power_out ~ power_out
-
-    # TODO: if reverse flow protection doesn't work as expected, what can be alternatives to fix pcbs?
-    # add pads or pin header holes for alternative schottky diode?

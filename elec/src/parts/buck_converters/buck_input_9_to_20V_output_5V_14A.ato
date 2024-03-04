@@ -1,0 +1,10 @@
+import Power from "generics/interfaces.ato"
+import TPS53319DQPR_input_9_to_20V_output_5V_14A from "elec/src/parts/buck_converters/TPS53319DQPR/TPS53319DQPR.ato"
+
+module buck_input_9_to_20V_output_5V_14A:
+    power_in = new Power
+    power_out = new Power
+    
+    circuit = new TPS53319DQPR_input_9_to_20V_output_5V_14A
+    circuit.power_in ~ circuit.power_in
+    circuit.power_out ~ circuit.power_out

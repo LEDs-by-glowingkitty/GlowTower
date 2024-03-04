@@ -1,4 +1,4 @@
-import TPS40305DRCR_In_9_to_20V_Out_5V_14A from "elec/src/parts/buck_converters/TPS40305DRCR/TPS40305DRCR_In_9_to_20V_Out_5V_14A.ato"
+import buck_input_9_to_20V_output_5V_14A from "elec/src/parts/buck_converters/buck_input_9_to_20V_output_5V_14A.ato"
 import ESP32_WROOM_32E_N8R2 from "elec/src/parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
 import CP2102N from "elec/src/parts/usb_to_serial/CP2102N.ato"
 import USB_C_Connector_5A from "elec/src/parts/usb_connectors/USB-C_5A.ato"
@@ -180,7 +180,7 @@ module MainPCB:
     usb_pd_ic.power_out_vbus_readout ~ esp32.ic.IO36    # Read the USB PD voltage via a voltage divider
 
     # Add a buck converter to convert the 9-20V from the USB-C PD to 5V
-    buck_converter_5v = new TPS40305DRCR_In_9_to_20V_Out_5V_14A
+    buck_converter_5v = new buck_input_9_to_20V_output_5V_14A
     buck_converter_5v.power_in ~ power_vbus
     buck_converter_5v.power_out ~ power_5v
 

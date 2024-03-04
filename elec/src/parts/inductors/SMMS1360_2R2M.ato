@@ -1,0 +1,18 @@
+component SMMS1360_2R2M:
+    """
+    This is an inductor.
+    Size:                   13.8mm x 12.6mm
+    Inductance:             2.2uH (±20%)
+    DCR:                    2.6mOhm to 3.0mOhm
+    Saturation Current:     25A
+    """
+    # component SMMS1360-2R2M
+    footprint = "IND-SMD_L13.8-W12.6_SMMS1360"
+    lcsc_id = "C149525"
+    mpn = "C149525"
+    # pins
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+
+    signal input ~ p1
+    signal output ~ p2
