@@ -159,12 +159,15 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     clrfb_capacitor.p2 ~ rlbst_resistor.p2
 
     # Add voltage divider for programming the output voltage
-    # TODO (Rfbt) add resistor 1
-    rfbt_resistor = new Resistor_0402_71_5k
+    # (Rfbt) add resistor 1
+    rfbt_resistor = new Resistor
+    rfbt_resistor.resistance = 71.5kohm +/- 1%
+    rfbt_resistor.footprint = "R0402"
+    rfbt_resistor.mpn = "C43534"
     rfbt_resistor.p1 ~ power_out_before_reverse_flow_protection.vcc
     rfbt_resistor.p2 ~ ic.VFB
 
-    # TODO (Rfbb) add resistor 2
+    # (Rfbb) add resistor 2
     rfbb_resistor = new Resistor
     rfbb_resistor.resistance = 10kohm +/- 1%
     rfbb_resistor.footprint = "R0402"
