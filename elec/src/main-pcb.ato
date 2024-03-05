@@ -118,8 +118,6 @@ module MainPCB:
     # TODO: add reverse polarity protection to 3-pin pin headers, to protect the LED strips
     # TODO: test polarity protection from GlowSign battery extension
 
-    # TODO: do I want to add additional 5v+gnd pin headers for extra power /injection?
-
     # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
     pin_header_male_action_button = new PinHeader_2_54mm_2pins
     pin_header_male_action_button.p1 ~ gnd
