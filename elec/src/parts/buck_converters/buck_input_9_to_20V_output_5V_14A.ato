@@ -6,5 +6,5 @@ module buck_input_9_to_20V_output_5V_14A:
     power_out = new Power
     
     circuit = new TPS53319DQPR_input_9_to_20V_output_5V_14A
-    circuit.power_in ~ circuit.power_in
-    circuit.power_out ~ circuit.power_out
+    circuit.power_in ~ power_in
+    circuit.power_out ~ power_out
