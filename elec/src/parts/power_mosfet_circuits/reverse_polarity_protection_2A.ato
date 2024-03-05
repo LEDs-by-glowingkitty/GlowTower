@@ -2,6 +2,7 @@ import Power from "generics/interfaces.ato"
 import AO3401A from "elec/src/parts/mosfets/AO3401A.ato"
 import Resistor from "generics/resistors.ato"
 
+
 module ReversePolarityProtection_2A:
     """
     This circuit is a reverse polarity protection circuit that can handle up to 2A of current.
