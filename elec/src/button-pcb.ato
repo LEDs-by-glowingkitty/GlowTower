@@ -3,6 +3,7 @@ import TS_1102S_C_A_B from "elec/src/parts/buttons/TS_1102S_C_A_B.ato"
 import PinHeader_2_54mm_2pins from "elec/src/parts/pin_headers/PinHeader_2_54mm.ato"
 import Power from "generics/interfaces.ato"
 import ESD9X3_3ST5G from "elec/src/parts/diodes/tvs/ESD9X3-3ST5G.ato"
+import ReversePolarityProtection_2A from "elec/src/parts/power_mosfet_circuits/reverse_polarity_protection_2A.ato"
 
 module ButtonPCB:
     """
@@ -17,19 +18,25 @@ module ButtonPCB:
     The PCB is connected via cables to the main PCB of the lamp.
     """
     # Add power
-    power = new Power
+    power_in = new Power
+    power_out = new Power
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
 
-    # TODO add reverse polarity protection via mosfet, for onboard leds
+    # add reverse polarity protection via P mosfet, for onboard leds
+    reverse_polarity_protection = new ReversePolarityProtection_2A
+    reverse_polarity_protection.power_in ~ power_in
+    reverse_polarity_protection.power_out ~ power_out
 
     # Define the pin headers, which are used to connect the PCB to the main PCB
     pin_headers_leds = new PinHeader_2_54mm_2pins
-    pin_headers_leds.p1 ~ power.vcc
+    pin_headers_leds.p1 ~ power_in.vcc
     pin_headers_button = new PinHeader_2_54mm_2pins
-    pin_headers_button.p2 ~ power.gnd
+    pin_headers_button.p2 ~ gnd
 
     # Define the LEDs. The capacitors are already included in the pack and the LEDs are connected in series.
     leds = new WS2812B_1010_pack_of_12
-    leds.power.vcc ~ pin_headers_leds.p1
+    leds.power.vcc ~ power_out.vcc
     leds.data ~ pin_headers_leds.p2
 
     # Add big caps for the LED ring
@@ -37,22 +44,22 @@ module ButtonPCB:
     leds_big_cap_1.capacitance = 47uF +/- 20%
     leds_big_cap_1.footprint = "C805"
     leds_big_cap_1.mpn = "C16780"
-    leds_big_cap_1.power ~ power
+    leds_big_cap_1.power ~ power_out
 
     leds_big_cap_2 = new Capacitor
     leds_big_cap_2.capacitance = 47uF +/- 20%
     leds_big_cap_2.footprint = "C805"
     leds_big_cap_2.mpn = "C16780"
-    leds_big_cap_2.power ~ power
+    leds_big_cap_2.power ~ power_out
 
     # Define the Actionbutton
     button = new TS_1102S_C_A_B
     button.input ~ pin_headers_button.p1
-    button.output ~ power.gnd
+    button.output ~ gnd
 
     # Add ESD protection diode, to protect the button pcb and connected main pcb from electrostatic discharge
     esd_protection_diode = new ESD9X3_3ST5G
     esd_protection_diode.input ~ button.input
-    esd_protection_diode.gnd ~ power.gnd
+    esd_protection_diode.gnd ~ gnd
 
     # TODO: update button PCB layout
