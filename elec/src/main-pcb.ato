@@ -103,7 +103,6 @@ module MainPCB:
     microphone_power_slider_switch.gnd ~ gnd
 
     # Pin headers, 2.54mm pitch
-    # TODO: test optimal position for the pin headers on pcb. Consider how much cables bend during assembly of lamp
     pin_header_male_led_strip_1 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_1.p3 ~ gnd
 
@@ -232,13 +231,6 @@ module MainPCB:
     led_strip_4_capacitor.lcsc_id = "C445078"
     led_strip_4_capacitor.mpn = "C445078"
     led_strip_4_capacitor.power ~ led_power_mosfet_circuit.power_out4
-
-    # Add a cap for the LED ring
-    led_ring_capacitor = new Capacitor
-    led_ring_capacitor.capacitance = 100uF +/- 20%
-    led_ring_capacitor.footprint = "C1206"
-    led_ring_capacitor.mpn = "C15008"
-    led_ring_capacitor.power ~ power_5v
 
     # Add solder pads
     solder_pads = new Solderpads_25x

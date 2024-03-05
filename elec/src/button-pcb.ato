@@ -19,6 +19,8 @@ module ButtonPCB:
     # Add power
     power = new Power
 
+    # TODO add reverse polarity protection via mosfet, for onboard leds
+
     # Define the pin headers, which are used to connect the PCB to the main PCB
     pin_headers_leds = new PinHeader_2_54mm_2pins
     pin_headers_leds.p1 ~ power.vcc
@@ -29,6 +31,19 @@ module ButtonPCB:
     leds = new WS2812B_1010_pack_of_12
     leds.power.vcc ~ pin_headers_leds.p1
     leds.data ~ pin_headers_leds.p2
+
+    # Add big caps for the LED ring
+    leds_big_cap_1 = new Capacitor
+    leds_big_cap_1.capacitance = 47uF +/- 20%
+    leds_big_cap_1.footprint = "C805"
+    leds_big_cap_1.mpn = "C16780"
+    leds_big_cap_1.power ~ power
+
+    leds_big_cap_2 = new Capacitor
+    leds_big_cap_2.capacitance = 47uF +/- 20%
+    leds_big_cap_2.footprint = "C805"
+    leds_big_cap_2.mpn = "C16780"
+    leds_big_cap_2.power ~ power
 
     # Define the Actionbutton
     button = new TS_1102S_C_A_B
