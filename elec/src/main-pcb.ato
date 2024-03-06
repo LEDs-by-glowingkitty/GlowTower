@@ -242,6 +242,7 @@ module MainPCB:
     solder_pads.power_5v ~ power_5v
     solder_pads.power_3_3v ~ power_3_3v
     solder_pads.gnd ~ gnd
+    # TODO: seems RX is not connected via solderpad. Why?
     solder_pads.uart ~ uart
     solder_pads.i2c ~ i2c
     solder_pads.i2s ~ i2s
