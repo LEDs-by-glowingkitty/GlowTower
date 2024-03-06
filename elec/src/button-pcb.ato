@@ -20,26 +20,17 @@ module ButtonPCB:
     The PCB is connected via cables to the main PCB of the lamp.
     """
     # Add power
-    power_in = new Power
-    power_out = new Power
-    signal gnd ~ power_in.gnd
-    gnd ~ power_out.gnd
-
-    # add reverse polarity protection via P mosfet, for onboard leds
-    reverse_polarity_protection = new ReversePolarityProtection_2A
-    reverse_polarity_protection.power_in ~ power_in
-    reverse_polarity_protection.power_out ~ power_out
+    power = new Power
 
     # Define the pin headers, which are used to connect the PCB to the main PCB
     pin_headers_leds = new PinHeader_2_54mm_2pins
-    pin_headers_leds.p1 ~ power_in.vcc
+    pin_headers_leds.p1 ~ power.vcc
     pin_headers_button = new PinHeader_2_54mm_2pins
-    pin_headers_button.p2 ~ gnd
+    pin_headers_button.p2 ~ power.gnd
 
     # Define the LEDs. The capacitors are already included in the pack and the LEDs are connected in series.
     leds = new WS2812B_1010_pack_of_12
-    leds.power.vcc ~ power_out.vcc
-    leds.power.gnd ~ gnd
+    leds.power ~ power
     leds.data ~ pin_headers_leds.p2
 
     # Add big caps for the LED ring
@@ -47,22 +38,20 @@ module ButtonPCB:
     leds_big_cap_1.capacitance = 47uF +/- 20%
     leds_big_cap_1.footprint = "C0805"
     leds_big_cap_1.mpn = "C16780"
-    leds_big_cap_1.power ~ power_out
+    leds_big_cap_1.power ~ power
 
     leds_big_cap_2 = new Capacitor
     leds_big_cap_2.capacitance = 47uF +/- 20%
     leds_big_cap_2.footprint = "C0805"
     leds_big_cap_2.mpn = "C16780"
-    leds_big_cap_2.power ~ power_out
+    leds_big_cap_2.power ~ power
 
     # Define the Actionbutton
     button = new TS_1102S_C_A_B
     button.input ~ pin_headers_button.p1
-    button.output ~ gnd
+    button.output ~ power.gnd
 
     # Add ESD protection diode, to protect the button pcb and connected main pcb from electrostatic discharge
     esd_protection_diode = new ESD9X3_3ST5G
     esd_protection_diode.input ~ button.input
-    esd_protection_diode.gnd ~ gnd
-
-    # TODO: update button PCB layout
+    esd_protection_diode.gnd ~ power.gnd
