@@ -33,19 +33,6 @@ module ButtonPCB:
     leds.power ~ power
     leds.data ~ pin_headers_leds.p2
 
-    # Add big caps for the LED ring
-    leds_big_cap_1 = new Capacitor
-    leds_big_cap_1.capacitance = 47uF +/- 20%
-    leds_big_cap_1.footprint = "C0805"
-    leds_big_cap_1.mpn = "C16780"
-    leds_big_cap_1.power ~ power
-
-    leds_big_cap_2 = new Capacitor
-    leds_big_cap_2.capacitance = 47uF +/- 20%
-    leds_big_cap_2.footprint = "C0805"
-    leds_big_cap_2.mpn = "C16780"
-    leds_big_cap_2.power ~ power
-
     # Define the Actionbutton
     button = new TS_1102S_C_A_B
     button.input ~ pin_headers_button.p1

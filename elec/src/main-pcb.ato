@@ -17,7 +17,7 @@ from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG, USB2, US
 import SK12D07VG4 from "elec/src/parts/switches/SK12D07VG4.ato"
 import SMBJ33CA from "elec/src/parts/diodes/tvs/SMBJ33CA.ato"
 import Solderpads_25x from "elec/src/parts/pads/solderpads_25x.ato"
-
+from "elec/src/parts/mounting_holes.ato" import MountingHole_M5, MountingHole_M3
 
 module MainPCB:
     """
@@ -83,6 +83,7 @@ module MainPCB:
     usb_to_serial.uart ~ uart
     usb_to_serial.usb ~ usb
 
+    # TODO: test power mosfet to turn on/off CP2102N
     # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
     usbserial_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
     usbserial_power_mosfet_circuit.power_in ~ power_3_3v
@@ -190,6 +191,20 @@ module MainPCB:
     ldo_3v3.power_in ~ power_5v
     ldo_3v3.power_out ~ power_3_3v
 
+    # TODO Add power mosfet circuit for LED ring
+    # TODO (and test it)
+    led_ring_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
+    led_ring_power_mosfet_circuit.power_in ~ power_5v
+    # maybe use IO34 to control the LED ring power mosfet circuit
+    # and use IO39/SENSOR_VP to read the inverted button signal? (if I even need the inverted signal) 
+
+    # Add led ring cap again back to main pcb, before the mosfet
+    led_ring_capacitor = new Capacitor
+    led_ring_capacitor.capacitance = 100uF +/- 20%
+    led_ring_capacitor.footprint = "C1206"
+    led_ring_capacitor.mpn = "C15008"
+    led_ring_capacitor.power ~ led_ring_power_mosfet_circuit.power_in
+
     # MOSFETs to turn off the LED strips via IO5 (LED ring on action button will stay connected to power)
     led_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
     led_power_mosfet_circuit.control ~ esp32.ic.IO5
@@ -204,33 +219,34 @@ module MainPCB:
     led_power_mosfet_circuit.gnd ~ gnd
 
     # Add caps for LED strips
+    # TODO: is it smarter to connect big caps before or after mosfet?
     led_strip_1_capacitor = new Capacitor
     led_strip_1_capacitor.capacitance = 1000uF +/- 20%
     led_strip_1_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
     led_strip_1_capacitor.lcsc_id = "C445078"
     led_strip_1_capacitor.mpn = "C445078"
-    led_strip_1_capacitor.power ~ led_power_mosfet_circuit.power_out1
+    led_strip_1_capacitor.power ~ led_power_mosfet_circuit.power_in1
 
     led_strip_2_capacitor = new Capacitor
     led_strip_2_capacitor.capacitance = 1000uF +/- 20%
     led_strip_2_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
     led_strip_2_capacitor.lcsc_id = "C445078"
     led_strip_2_capacitor.mpn = "C445078"
-    led_strip_2_capacitor.power ~ led_power_mosfet_circuit.power_out2
+    led_strip_2_capacitor.power ~ led_power_mosfet_circuit.power_in2
 
     led_strip_3_capacitor = new Capacitor
     led_strip_3_capacitor.capacitance = 1000uF +/- 20%
     led_strip_3_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
     led_strip_3_capacitor.lcsc_id = "C445078"
     led_strip_3_capacitor.mpn = "C445078"
-    led_strip_3_capacitor.power ~ led_power_mosfet_circuit.power_out3
+    led_strip_3_capacitor.power ~ led_power_mosfet_circuit.power_in3
     
     led_strip_4_capacitor = new Capacitor
     led_strip_4_capacitor.capacitance = 1000uF +/- 20%
     led_strip_4_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
     led_strip_4_capacitor.lcsc_id = "C445078"
     led_strip_4_capacitor.mpn = "C445078"
-    led_strip_4_capacitor.power ~ led_power_mosfet_circuit.power_out4
+    led_strip_4_capacitor.power ~ led_power_mosfet_circuit.power_in4
 
     # Add solder pads
     solder_pads = new Solderpads_25x
@@ -248,3 +264,8 @@ module MainPCB:
     solder_pads.i2s ~ i2s
     solder_pads.spi ~ spi
     solder_pads.jtag ~ jtag
+
+    # Add mounting holes to fixate the PCB in the case
+    mounting_hole_m5 = new MountingHole_M5
+    mounting_hole_m3_1 = new MountingHole_M3
+    mounting_hole_m3_2 = new MountingHole_M3
