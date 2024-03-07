@@ -11,7 +11,7 @@ module Solderpads_25x:
     signal EN
     signal IO0
     signal IO27
-    signal LED_DATA_OUT
+    signal IO39
     
     # Add power
     power_vbus = new Power
@@ -106,10 +106,10 @@ module Solderpads_25x:
     pad_io27 = new SolderPad_2mm_3_5mm
     pad_io27.p1 ~ IO27
 
+    # Add solder pad for IO39 (input only)
+    pad_io39_input = new SolderPad_2mm_3_5mm
+    pad_io39_input.p1 ~ IO39
+
     # Add solder pad for IO0
     pad_io0_boot_button = new SolderPad_2mm_3_5mm
     pad_io0_boot_button.p1 ~ IO0
-    
-    # Add solder pad for optional external LED strip
-    pad_extra_led_strip_data_out = new SolderPad_2mm_3_5mm
-    pad_extra_led_strip_data_out.p1 ~ LED_DATA_OUT

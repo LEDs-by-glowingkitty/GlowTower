@@ -247,6 +247,7 @@ module MainPCB:
     solder_pads.EN ~ esp32.ic.EN
     solder_pads.IO0 ~ esp32.ic.IO0
     solder_pads.IO27 ~ esp32.ic.IO27
+    solder_pads.IO39 ~ esp32.ic.IO39
     solder_pads.power_vbus ~ power_vbus
     solder_pads.power_5v ~ power_5v
     solder_pads.power_3_3v ~ power_3_3v
