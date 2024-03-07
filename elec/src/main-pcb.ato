@@ -54,12 +54,12 @@ module MainPCB:
     # Connected pins besides default pins:
     # TODO: test all used pins first and see if they interfere with operation
     # IO5: LED Strips power on/off                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO33: LED Ring power on/off                                           WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO16: LED strip 1 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO17: LED strip 2 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO18: LED strip 3 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO19: LED strip 4 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO2: Actionbutton LED ring (data out)                                 WLED settings check: SUCCESS            Prototype hardware check: ?
-    # IO33: External optional LED strip (data out)                          WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)     WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO0: Boot button (pulled low if pressed)                              WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO34: Actionbutton (high if button pressed, low if not pressed)       WLED settings check: SUCCESS            Prototype hardware check: ?
@@ -124,7 +124,6 @@ module MainPCB:
     pin_header_male_action_button.p2 ~ esp32.ic.IO0
 
     pin_header_male_led_ring = new PinHeader_2_54mm_2pins
-    pin_header_male_led_ring.p1 ~ power_5v.vcc
 
     # LED levelshifters
     levelshifter_1 = new SN74LVC2T45DCUR                                # for LED strip 1 + 2
@@ -146,7 +145,6 @@ module MainPCB:
     levelshifter_3 = new SN74LVC2T45DCUR                                # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
     levelshifter_3.signal_in_1.io ~ esp32.ic.IO2                        # Actionbutton LED ring
     levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring.p2
-    levelshifter_3.signal_in_2.io ~ esp32.ic.IO33
     levelshifter_3.power_in ~ power_3_3v
     levelshifter_3.power_out ~ power_5v
 
@@ -191,19 +189,12 @@ module MainPCB:
     ldo_3v3.power_in ~ power_5v
     ldo_3v3.power_out ~ power_3_3v
 
-    # TODO Add power mosfet circuit for LED ring
-    # TODO (and test it)
+    # Add power mosfet circuit for LED ring
+    # TODO test power mosfet
     led_ring_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
+    led_ring_power_mosfet_circuit.control ~ esp32.ic.IO33
     led_ring_power_mosfet_circuit.power_in ~ power_5v
-    # maybe use IO34 to control the LED ring power mosfet circuit
-    # and use IO39/SENSOR_VP to read the inverted button signal? (if I even need the inverted signal) 
-
-    # Add led ring cap again back to main pcb, before the mosfet
-    led_ring_capacitor = new Capacitor
-    led_ring_capacitor.capacitance = 100uF +/- 20%
-    led_ring_capacitor.footprint = "C1206"
-    led_ring_capacitor.mpn = "C15008"
-    led_ring_capacitor.power ~ led_ring_power_mosfet_circuit.power_in
+    led_ring_power_mosfet_circuit.power_out.vcc ~ pin_header_male_led_ring.p1
 
     # MOSFETs to turn off the LED strips via IO5 (LED ring on action button will stay connected to power)
     led_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
@@ -218,8 +209,13 @@ module MainPCB:
     led_power_mosfet_circuit.power_out4.vcc ~ pin_header_male_led_strip_4.p1
     led_power_mosfet_circuit.gnd ~ gnd
 
-    # Add caps for LED strips
-    # TODO: is it smarter to connect big caps before or after mosfet?
+    # Add caps for LEDs
+    led_ring_capacitor = new Capacitor
+    led_ring_capacitor.capacitance = 100uF +/- 20%
+    led_ring_capacitor.footprint = "C1206"
+    led_ring_capacitor.mpn = "C15008"
+    led_ring_capacitor.power ~ led_ring_power_mosfet_circuit.power_in
+
     led_strip_1_capacitor = new Capacitor
     led_strip_1_capacitor.capacitance = 1000uF +/- 20%
     led_strip_1_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
@@ -253,7 +249,6 @@ module MainPCB:
     solder_pads.EN ~ esp32.ic.EN
     solder_pads.IO0 ~ esp32.ic.IO0
     solder_pads.IO27 ~ esp32.ic.IO27
-    solder_pads.LED_DATA_OUT ~ levelshifter_3.signal_out_2.io
     solder_pads.power_vbus ~ power_vbus
     solder_pads.power_5v ~ power_5v
     solder_pads.power_3_3v ~ power_3_3v
