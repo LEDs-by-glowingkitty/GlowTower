@@ -115,8 +115,6 @@ module MainPCB:
 
     pin_header_male_led_strip_4 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_4.p3 ~ gnd
-    # TODO: add reverse polarity protection to 3-pin pin headers, to protect the LED strips
-    # TODO: test polarity protection from GlowSign battery extension
 
     # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
     pin_header_male_action_button = new PinHeader_2_54mm_2pins
