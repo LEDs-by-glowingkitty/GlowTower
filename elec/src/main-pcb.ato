@@ -190,7 +190,7 @@ module MainPCB:
     ldo_3v3.power_out ~ power_3_3v
 
     # Add power mosfet circuit for LED ring
-    # TODO test power mosfet
+    # TODO: test power mosfet
     led_ring_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
     led_ring_power_mosfet_circuit.control ~ esp32.ic.IO33
     led_ring_power_mosfet_circuit.power_in ~ power_5v

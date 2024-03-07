@@ -90,7 +90,6 @@ module CYPD3177_WithCoreParts:
     vbus_cap_3.power ~ power_3_3v
 
     # Add a pull down resistor for the FAULT pin, so that it is not floating
-    # TODO: use 0402 instead of 0603, also check other 0603 resistors
     fault_pull_down_resistor = new Resistor
     fault_pull_down_resistor.resistance = 100kohm +/- 1%
     fault_pull_down_resistor.footprint = "R0603"

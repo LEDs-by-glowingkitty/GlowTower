@@ -57,7 +57,6 @@ module CYPD3177_LoadSwitch100W:
 
     # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
     signal en
-    # TODO: replace with 0402
     vbus_fet_en_resistor = new Resistor
     vbus_fet_en_resistor.resistance = 1kohm +/- 1%
     vbus_fet_en_resistor.footprint = "R0603"
