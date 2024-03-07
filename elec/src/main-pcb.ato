@@ -45,8 +45,7 @@ module MainPCB:
     # Add ESP32 (incl. EN button + BOOT button)
     esp32 = new ESP32_WROOM_32E_N8R2
     esp32.power ~ power_3_3v
-    esp32.uart.tx ~ uart.rx
-    esp32.uart.rx ~ uart.tx
+    esp32.uart ~ uart
     esp32.i2c ~ i2c
     esp32.i2s ~ i2s
     esp32.spi ~ spi
@@ -80,7 +79,8 @@ module MainPCB:
 
     # Add USB to serial via CP2102N
     usb_to_serial = new CP2102N
-    usb_to_serial.uart ~ uart
+    usb_to_serial.uart.rx ~ uart.tx
+    usb_to_serial.uart.tx ~ uart.rx
     usb_to_serial.usb ~ usb
 
     # TODO: test power mosfet to turn on/off CP2102N
@@ -251,7 +251,6 @@ module MainPCB:
     solder_pads.power_5v ~ power_5v
     solder_pads.power_3_3v ~ power_3_3v
     solder_pads.gnd ~ gnd
-    # TODO: seems RX is not connected via solderpad. Why?
     solder_pads.uart ~ uart
     solder_pads.i2c ~ i2c
     solder_pads.i2s ~ i2s
