@@ -13,8 +13,7 @@ module CYPD3177_LoadSwitch100W:
     # Add the power interfaces
     power_in = new Power
     power_out = new Power
-    signal gnd ~ power_in.gnd
-    gnd ~ power_out.gnd
+    signal en
 
     # Add the Load Switch for up to 100W output
     # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
@@ -56,7 +55,6 @@ module CYPD3177_LoadSwitch100W:
     fet_gate_vbus_resistor.p2 ~ load_switch_mosfet.GATE1
 
     # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
-    signal en
     vbus_fet_en_resistor = new Resistor
     vbus_fet_en_resistor.resistance = 1kohm +/- 1%
     vbus_fet_en_resistor.footprint = "R0603"
