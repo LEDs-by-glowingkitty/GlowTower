@@ -103,6 +103,21 @@ module MainPCB:
     microphone_power_slider_switch.p3 ~ power_3_3v.vcc
     microphone_power_slider_switch.gnd ~ gnd
 
+    # Add a slider to switch between GlowLight & GlowTower mode (which sets number of leds, wifi name, etc.)
+    lampmode_slider_switch = new SK12D07VG4
+    lampmode_slider_switch.p1 ~ gnd
+    lampmode_slider_switch.p2 ~ esp32.ic.IO35
+    lampmode_slider_switch.p3 ~ power_3_3v.vcc
+    lampmode_slider_switch.gnd ~ gnd
+
+    # Add a pullup resistor to the slider switch, so it's not floating
+    lampmode_slider_pullup_resistor = new Resistor
+    lampmode_slider_pullup_resistor.resistance = 100kohm +/- 1%
+    lampmode_slider_pullup_resistor.footprint = "R0402"
+    lampmode_slider_pullup_resistor.mpn = "C25741"
+    lampmode_slider_pullup_resistor.p1 ~ esp32.ic.IO35
+    lampmode_slider_pullup_resistor.p2 ~ power_3_3v.vcc
+
     # Pin headers, 2.54mm pitch
     pin_header_male_led_strip_1 = new PinHeader_2_54mm_3pins
     pin_header_male_led_strip_1.p3 ~ gnd
@@ -153,21 +168,6 @@ module MainPCB:
     inverter.output_1 ~ esp32.ic.IO34   # Action button (pulled high if pressed)
     inverter.power ~ power_3_3v
     inverter.input_2 ~ gnd
-
-    # Slider to switch between GlowLight & GlowTower mode (which sets number of leds, wifi name, etc.)
-    lampmode_slider_switch = new SK12D07VG4
-    lampmode_slider_switch.p1 ~ gnd
-    lampmode_slider_switch.p2 ~ esp32.ic.IO35
-    lampmode_slider_switch.p3 ~ power_3_3v.vcc
-    lampmode_slider_switch.gnd ~ gnd
-
-    # Add a pullup resistor to the slider switch, so it's not floating
-    lampmode_slider_pullup_resistor = new Resistor
-    lampmode_slider_pullup_resistor.resistance = 100kohm +/- 1%
-    lampmode_slider_pullup_resistor.footprint = "R0402"
-    lampmode_slider_pullup_resistor.mpn = "C25741"
-    lampmode_slider_pullup_resistor.p1 ~ esp32.ic.IO35
-    lampmode_slider_pullup_resistor.p2 ~ power_3_3v.vcc
 
     # Add USB-C PD to request 9-20V at minimum 2A, to power everything
     usb_pd_ic = new CYPD3177_min_9V_2A
