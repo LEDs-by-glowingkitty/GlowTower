@@ -94,11 +94,10 @@ module MainPCB:
     # TODO: test that microphone works with ESP32 and those pins via I2S
     microphone = new MSM261D4030H1CPM
     microphone.i2s ~ i2s
-    microphone.power ~ power_3_3v
+    microphone.power.gnd ~ gnd
 
     # Add a slider switch to turn on/off the microphone
     microphone_power_slider_switch = new SK12D07VG4
-    microphone_power_slider_switch.p1 ~ gnd
     microphone_power_slider_switch.p2 ~ microphone.power.vcc
     microphone_power_slider_switch.p3 ~ power_3_3v.vcc
     microphone_power_slider_switch.gnd ~ gnd
