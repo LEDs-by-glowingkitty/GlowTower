@@ -18,6 +18,8 @@ import SK12D07VG4 from "elec/src/parts/switches/SK12D07VG4.ato"
 import SMBJ33CA from "elec/src/parts/diodes/tvs/SMBJ33CA.ato"
 import Solderpads_25x from "elec/src/parts/pads/solderpads_25x.ato"
 from "elec/src/parts/mounting_holes.ato" import MountingHole_M5, MountingHole_M3
+import TS_1185EC_C_D_B from "elec/src/parts/buttons/TS_1185EC_C_D_B.ato"
+
 
 module MainPCB:
     """
@@ -67,6 +69,16 @@ module MainPCB:
     # IO25: I2S SCK                                                         WLED commpile & run check: ?            Prototype hardware check: ?
     # IO26: I2S SD                                                          WLED commpile & run check: ?            Prototype hardware check: ?
     # IO23: I2S WS                                                          WLED commpile & run check: ?            Prototype hardware check: ?
+
+    # Add a second boot button
+    second_boot_button = new TS_1185EC_C_D_B
+    second_boot_button.input ~ esp32.ic.IO0
+    second_boot_button.output ~ gnd
+
+    # Add a second reset/EN button
+    second_en_button = new TS_1185EC_C_D_B
+    second_en_button.input ~ esp32.ic.EN
+    second_en_button.output ~ gnd
 
     # Add USB-C connector that can handle up to 5A at 20V (100W)
     usb_c_connector = new USB_C_Connector_5A
