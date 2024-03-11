@@ -89,6 +89,9 @@ component CYPD3177:
     power_in = new Power
     power_in.vcc ~ VBUS_IN
     power_in.gnd ~ GND
+    power_out_vbus = new Power
+    power_out_vbus.vcc ~ VDC_OUT
+    power_out_vbus.gnd ~ GND
     power_3_3v = new Power
     power_3_3v.vcc ~ VDDD
     power_3_3v.gnd ~ GND

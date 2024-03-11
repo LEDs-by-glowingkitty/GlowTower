@@ -31,6 +31,7 @@ module CYPD3177_WithCoreParts:
     # Add the ic
     ic = new CYPD3177
     ic.power_in ~ power_in
+    ic.power_out_vbus ~ power_out_vbus
     ic.power_3_3v ~ power_3_3v
     ic.power_1_8v ~ power_1_8v
 
