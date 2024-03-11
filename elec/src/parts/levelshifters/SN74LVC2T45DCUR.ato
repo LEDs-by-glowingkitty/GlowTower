@@ -37,6 +37,8 @@ module SN74LVC2T45DCUR:
     # add power interfaces
     power_in = new Power
     power_out = new Power
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
 
     # add IC
     ic = new _SN74LVC2T45DCUR
@@ -85,3 +87,50 @@ module SN74LVC2T45DCUR:
     signal_in_2 = new Pair
     signal_in_2.io ~ ic.B2
     signal_in_2.gnd ~ power_in.gnd
+
+
+module SN74LVC2T45DCUR_one_used:
+    # add power interfaces
+    power_in = new Power
+    power_out = new Power
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
+
+    # add IC
+    ic = new _SN74LVC2T45DCUR
+    ic.power_in ~ power_in
+    ic.power_out ~ power_out
+
+    # add bypass caps
+    power_in_capacitor = new Capacitor
+    power_in_capacitor.capacitance = 0.1uF +/- 10%
+    power_in_capacitor.voltage = 50V
+    power_in_capacitor.series = "X7R"
+    power_in_capacitor.footprint = "C0402"
+    power_in_capacitor.mpn = "C307331"
+    power_in_capacitor.power ~ power_in
+
+    power_out_capacitor = new Capacitor
+    power_out_capacitor.capacitance = 0.1uF +/- 10%
+    power_out_capacitor.voltage = 50V
+    power_out_capacitor.series = "X7R"
+    power_out_capacitor.footprint = "C0402"
+    power_out_capacitor.mpn = "C307331"
+    power_out_capacitor.power ~ power_out
+
+    # Out
+    data_in_1_resistor = new Resistor
+    data_in_1_resistor.resistance = 62ohm +/- 1%
+    data_in_1_resistor.footprint = "R0402"
+    data_in_1_resistor.mpn = "C4962"
+    signal_out_1 = new Pair
+    signal_out_1.io ~ data_in_1_resistor.p1; data_in_1_resistor.p2 ~ ic.A1
+    signal_out_1.gnd ~ gnd
+
+    # In
+    signal_in_1 = new Pair
+    signal_in_1.io ~ ic.B1
+    signal_in_1.gnd ~ gnd
+
+    # Connect unused pin to low, to not float
+    ic.B2 ~ gnd
