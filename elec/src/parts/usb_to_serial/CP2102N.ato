@@ -28,13 +28,11 @@ component CP2102N_A02_GQFN24R:
     signal VREGIN ~ pin 7           # Voltage Regulator Input
     signal VBUS ~ pin 8             # USB Bus Voltage
     signal RSTb ~ pin 9             # Reset. The RSTb pin will be driven low during power-on and power failure reset events
-    signal NC ~ pin 10
     signal GPIO_3_WAKEUP ~ pin 11   # General Purpose Input/Output 3 / Wakeup
     signal GPIO_2_RS485 ~ pin 12    # General Purpose Input/Output 2 / RS485
     signal GPIO_1_RXT ~ pin 13      # General Purpose Input/Output 1 / Receive Transmit
     signal GPIO_0_TXT ~ pin 14      # General Purpose Input/Output 0 / Transmit
     signal SUSPENDb ~ pin 15        # Suspend
-    NC ~ pin 16
     signal SUSPEND ~ pin 17         # Suspend
     signal CTS ~ pin 18             # Clear To Send
     signal RTS ~ pin 19             # Request To Send
