@@ -1,6 +1,6 @@
 import Power from "generics/interfaces.ato"
-import AO3401A from "elec/src/parts/mosfets/AO3401A.ato"
-import Voltage_Divider_0603_49_9K__1K from "elec/src/parts/voltage_dividers/0603/Voltage_Divider_0603_49_9K__1K.ato"
+import AO3401A from "parts/mosfets/AO3401A.ato"
+import Voltage_Divider_0603_49_9K__1K from "parts/voltage_dividers/0603/Voltage_Divider_0603_49_9K__1K.ato"
 
 
 module CYPD3177_LoadSwitchSafe5V:

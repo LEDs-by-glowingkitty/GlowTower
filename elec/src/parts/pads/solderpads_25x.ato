@@ -1,5 +1,5 @@
 from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG, USB2, USB_PD
-import SolderPad_2mm_3_5mm from "elec/src/parts/pads/SolderPad_2mm_3_5mm.ato"
+import SolderPad_2mm_3_5mm from "parts/pads/SolderPad_2mm_3_5mm.ato"
 
 module Solderpads_25x:
     """

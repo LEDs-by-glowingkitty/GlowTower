@@ -1,6 +1,6 @@
-import CYPD3177_WithCoreParts from "elec/src/parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_WithCoreParts.ato"
-import Voltage_Divider_0402_5_1K__1K from "elec/src/parts/voltage_dividers/0402/Voltage_Divider_0402_5_1K__1K.ato"
-import Voltage_Divider_0402_5_1K__2_4K from "elec/src/parts/voltage_dividers/0402/Voltage_Divider_0402_5_1K__2_4K.ato"
+import CYPD3177_WithCoreParts from "parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_WithCoreParts.ato"
+import Voltage_Divider_0402_5_1K__1K from "parts/voltage_dividers/0402/Voltage_Divider_0402_5_1K__1K.ato"
+import Voltage_Divider_0402_5_1K__2_4K from "parts/voltage_dividers/0402/Voltage_Divider_0402_5_1K__2_4K.ato"
 import Power from "generics/interfaces.ato"
 from "generics/interfaces.ato" import I2C, USB_PD
 

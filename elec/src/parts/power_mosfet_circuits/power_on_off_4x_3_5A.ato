@@ -1,6 +1,6 @@
 import Power from "generics/interfaces.ato"
-import AO3400A from "elec/src/parts/mosfets/AO3400A.ato"
-import NCE30P12S from "elec/src/parts/mosfets/NCE30P12S.ato"
+import AO3400A from "parts/mosfets/AO3400A.ato"
+import NCE30P12S from "parts/mosfets/NCE30P12S.ato"
 import Resistor from "generics/resistors.ato"
 
 module MOSFETcircuitPowerOnOff_4x_3_5A:

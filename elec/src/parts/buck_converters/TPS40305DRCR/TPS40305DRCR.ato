@@ -1,11 +1,11 @@
-import CSD16301Q2 from "elec/src/parts/mosfets/CSD16301Q2.ato"
-import CSD17581Q3AT from "elec/src/parts/mosfets/CSD17581Q3AT.ato"
-import TMPC1206HP_1R5MG_D from "elec/src/parts/inductors/TMPC1206HP_1R5MG_D.ato"
-import Voltage_Divider_0402_10K_1_37K from "elec/src/parts/voltage_dividers/0402/Voltage_Divider_0402_10K_1_37K.ato"
+import CSD16301Q2 from "parts/mosfets/CSD16301Q2.ato"
+import CSD17581Q3AT from "parts/mosfets/CSD17581Q3AT.ato"
+import TMPC1206HP_1R5MG_D from "parts/inductors/TMPC1206HP_1R5MG_D.ato"
+import Voltage_Divider_0402_10K_1_37K from "parts/voltage_dividers/0402/Voltage_Divider_0402_10K_1_37K.ato"
 import Resistor from "generics/resistors.ato"
 import Capacitor from "generics/capacitors.ato"
 import Power from "generics/interfaces.ato"
-import LM74700QDBVRQ1 from "elec/src/parts/ideal_diodes/LM74700QDBVRQ1.ato"
+import LM74700QDBVRQ1 from "parts/ideal_diodes/LM74700QDBVRQ1.ato"
 
 component TPS40305DRCR:
     """
