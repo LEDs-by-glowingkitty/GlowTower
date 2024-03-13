@@ -42,7 +42,6 @@ module CYPD3177_WithCoreParts:
     power_out_vbus_load_switch.power_out ~ power_out_vbus
 
     # Add the 5V Safe Output load switch
-    # TODO: test 5V safe output via old PCB Dev 2 Edition
     power_out_5v_load_switch = new CYPD3177_LoadSwitchSafe5V
     power_out_5v_load_switch.en ~ ic.SAFE_PWR_EN
     power_out_5v_load_switch.power_in ~ power_in
