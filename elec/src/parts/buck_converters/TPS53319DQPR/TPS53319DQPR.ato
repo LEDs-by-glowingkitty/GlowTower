@@ -71,19 +71,19 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     cin_capacitor_1 = new Capacitor
     cin_capacitor_1.capacitance = 22uF +/- 10%
     cin_capacitor_1.footprint = "C1206"
-    cin_capacitor_1.mpn = "C309062"
+    cin_capacitor_1.mpn = "C12891"
     cin_capacitor_1.power ~ power_in
 
     cin_capacitor_2 = new Capacitor
     cin_capacitor_2.capacitance = 22uF +/- 10%
     cin_capacitor_2.footprint = "C1206"
-    cin_capacitor_2.mpn = "C309062"
+    cin_capacitor_2.mpn = "C12891"
     cin_capacitor_2.power ~ power_in
 
     cin_capacitor_3 = new Capacitor
     cin_capacitor_3.capacitance = 22uF +/- 10%
     cin_capacitor_3.footprint = "C1206"
-    cin_capacitor_3.mpn = "C309062"
+    cin_capacitor_3.mpn = "C12891"
     cin_capacitor_3.power ~ power_in
 
     # (Cvin) add input capacitor
