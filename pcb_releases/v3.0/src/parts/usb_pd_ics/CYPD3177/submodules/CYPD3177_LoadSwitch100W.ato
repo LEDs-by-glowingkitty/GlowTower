@@ -1,0 +1,76 @@
+import Power from "generics/interfaces.ato"
+import HSM4805 from "parts/mosfets/HSM4805.ato"
+import Resistor from "generics/resistors.ato"
+import Capacitor from "generics/capacitors.ato"
+import BZT52C10 from "parts/diodes/zener/BZT52C10.ato"
+
+
+module CYPD3177_LoadSwitch100W:
+    """
+    This is a submodule for the CYPD3177. It adds a load switch for up to 100W output.
+    """
+
+    # Add the power interfaces
+    power_in = new Power
+    power_out = new Power
+    signal en
+
+    # Add the Load Switch for up to 100W output
+    # This dual MOSFET connects VBUS to VDC_OUT, if USB PD can be negotiated successfully
+    load_switch_mosfet = new HSM4805
+    load_switch_mosfet.GATE1 ~ load_switch_mosfet.GATE2
+    load_switch_mosfet.SOURCE1 ~ load_switch_mosfet.SOURCE2
+    load_switch_mosfet.DRAIN1 ~ power_in.vcc
+    load_switch_mosfet.DRAIN2 ~ power_out.vcc
+
+    # Add a cap for VBUS
+    vbus_cap = new Capacitor
+    vbus_cap.capacitance = 3.3uF +/- 10%
+    vbus_cap.footprint = "C0805"
+    vbus_cap.mpn = "C342775"
+    vbus_cap.power ~ power_in
+
+    # Add the input cap for the load switch
+    load_switch_input_cap = new Capacitor
+    load_switch_input_cap.capacitance = 1uF +/- 10%
+    load_switch_input_cap.footprint = "C0603"
+    load_switch_input_cap.mpn = "C15849"
+    load_switch_input_cap.p1 ~ power_in.vcc
+    load_switch_input_cap.p2 ~ load_switch_mosfet.GATE1
+
+    # Add the output cap for the load switch
+    load_switch_output_cap = new Capacitor
+    load_switch_output_cap.capacitance = 1uF +/- 10%
+    load_switch_output_cap.footprint = "C0603"
+    load_switch_output_cap.mpn = "C15849"
+    load_switch_output_cap.p1 ~ power_out.vcc
+    load_switch_output_cap.p2 ~ load_switch_mosfet.GATE1
+
+    # Add a resistor for between the gate of the load_switch_mosfet and VBUS
+    fet_gate_vbus_resistor = new Resistor
+    fet_gate_vbus_resistor.resistance = 10kohm +/- 1%
+    fet_gate_vbus_resistor.footprint = "R0603"
+    fet_gate_vbus_resistor.mpn = "C25804"
+    fet_gate_vbus_resistor.p1 ~ power_in.vcc
+    fet_gate_vbus_resistor.p2 ~ load_switch_mosfet.GATE1
+
+    # Add the pull-down(?) resistor connected to the VBUS_FET_EN pin
+    vbus_fet_en_resistor = new Resistor
+    vbus_fet_en_resistor.resistance = 1kohm +/- 1%
+    vbus_fet_en_resistor.footprint = "R0603"
+    vbus_fet_en_resistor.mpn = "C21190"
+    vbus_fet_en_resistor.p1 ~ en
+    vbus_fet_en_resistor.p2 ~ load_switch_mosfet.GATE1
+
+    # Add a resistor for between the source and the gate of the load_switch_mosfet
+    fet_src_gate_resistor = new Resistor
+    fet_src_gate_resistor.resistance = 49.9kohm +/- 1%
+    fet_src_gate_resistor.footprint = "R0603"
+    fet_src_gate_resistor.mpn = "C23184"
+    fet_src_gate_resistor.p1 ~ load_switch_mosfet.SOURCE1
+    fet_src_gate_resistor.p2 ~ load_switch_mosfet.GATE1
+
+    # Add a zener diode for between the source and the gate of the load_switch_mosfet
+    esd_protection_fet_src_gate_zener_diode = new BZT52C10
+    esd_protection_fet_src_gate_zener_diode.input ~ load_switch_mosfet.SOURCE1
+    esd_protection_fet_src_gate_zener_diode.output ~ load_switch_mosfet.GATE1

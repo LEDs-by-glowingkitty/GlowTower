@@ -1,0 +1,274 @@
+import buck_input_9_to_20V_output_5V_14A from "parts/buck_converters/buck_input_9_to_20V_output_5V_14A.ato"
+import ESP32_WROOM_32E_N8R2 from "parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
+import CP2102N from "parts/usb_to_serial/CP2102N.ato"
+import USB_C_Connector_5A from "parts/usb_connectors/USB-C_5A.ato"
+import CYPD3177_min_9V_2A from "parts/usb_pd_ics/CYPD3177/CYPD3177_min_9V_2A.ato"
+import AMS1117_3_3 from "parts/ldo_converters/AMS1117-3.3.ato"
+import MSM261D4030H1CPM from "parts/microphones/MSM261D4030H1CPM.ato"
+from "parts/levelshifters/SN74LVC2T45DCUR.ato" import SN74LVC2T45DCUR, SN74LVC2T45DCUR_one_used
+import MOSFETcircuitPowerOnOff_1x_1A from "parts/power_mosfet_circuits/power_on_off_1x_1A.ato"
+import MOSFETcircuitPowerOnOff_4x_3_5A from "parts/power_mosfet_circuits/power_on_off_4x_3_5A.ato"
+import TS_1185EC_C_D_B from "parts/buttons/TS_1185EC_C_D_B.ato"
+import _74LVC2G04DW_7 from "parts/inverters/74LVC2G04DW_7.ato"
+import Resistor from "generics/resistors.ato"
+import Capacitor from "generics/capacitors.ato"
+from "parts/pin_headers/PinHeader_2_54mm.ato" import PinHeader_2_54mm_2pins, PinHeader_2_54mm_3pins
+from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG, USB2, USB_PD
+import SK12D07VG4 from "parts/switches/SK12D07VG4.ato"
+import SMBJ33CA from "parts/diodes/tvs/SMBJ33CA.ato"
+import Solderpads_25x from "parts/pads/solderpads_25x.ato"
+from "parts/mounting_holes.ato" import MountingHole_M5, MountingHole_M3
+import TS_1185EC_C_D_B from "parts/buttons/TS_1185EC_C_D_B.ato"
+
+
+module MainPCB:
+    """
+    This is the main PCB of GlowLight & GlowTower. It contains all the power management, the microcontroller and more.
+    WS2812B LED strips are connected to this PCB via pin headers.
+    """
+
+    # Add power
+    power_vbus = new Power
+    power_5v = new Power
+    power_3_3v = new Power
+    signal gnd ~ power_vbus.gnd
+    gnd ~ power_5v.gnd
+    gnd ~ power_3_3v.gnd
+
+    # Add interfaces
+    uart = new UART
+    i2c = new I2C
+    i2s = new I2S
+    spi = new SPI
+    jtag = new JTAG
+    usb = new USB2
+    usb_pd = new USB_PD
+
+    # Add ESP32 (incl. EN button + BOOT button)
+    esp32 = new ESP32_WROOM_32E_N8R2
+    esp32.power ~ power_3_3v
+    esp32.uart ~ uart
+    esp32.i2c ~ i2c
+    esp32.i2s ~ i2s
+    esp32.spi ~ spi
+    esp32.jtag ~ jtag
+    # Connected pins besides default pins:
+    # TODO: test all used pins first and see if they interfere with operation
+    # IO5: LED Strips power on/off                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO33: LED Ring power on/off                                           WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO16: LED strip 1 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO17: LED strip 2 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO18: LED strip 3 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO19: LED strip 4 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO2: Actionbutton LED ring (data out)                                 WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO27: GPIO27 (and pin used for SparkFun DMX shield, just in case)     WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO0: Boot button (pulled low if pressed)                              WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO34: Actionbutton (high if button pressed, low if not pressed)       WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO35: Slider switch (LOW: GlowLight mode, HIGH: GlowTower mode)       WLED settings check: SUCCESS            Prototype hardware check: ?
+    # IO36: USB PD volts detection (3.3V -> 20V, 1.5V -> 9V, etc.)          WLED settings check: SUCCESS            Prototype hardware check: ?         Can read data via code: ?
+    # IO25: I2S SCK                                                         WLED commpile & run check: ?            Prototype hardware check: ?
+    # IO26: I2S SD                                                          WLED commpile & run check: ?            Prototype hardware check: ?
+    # IO23: I2S WS                                                          WLED commpile & run check: ?            Prototype hardware check: ?
+
+    # Add a second boot button
+    second_boot_button = new TS_1185EC_C_D_B
+    second_boot_button.input ~ esp32.ic.IO0
+    second_boot_button.output ~ gnd
+
+    # Add a second reset/EN button
+    second_en_button = new TS_1185EC_C_D_B
+    second_en_button.input ~ esp32.ic.EN
+    second_en_button.output ~ gnd
+
+    # Add USB-C connector that can handle up to 5A at 20V (100W)
+    usb_c_connector = new USB_C_Connector_5A
+    usb_c_connector.usb ~ usb
+    usb_c_connector.usb_pd ~ usb_pd
+
+    # Add a TVS/ESD protection diode to protect from voltage spikes from the USB-C connector
+    esd_protection_diode = new SMBJ33CA
+    esd_protection_diode.power ~ usb_c_connector.power
+
+    # Add USB to serial via CP2102N
+    usb_to_serial = new CP2102N
+    usb_to_serial.uart.rx ~ uart.tx
+    usb_to_serial.uart.tx ~ uart.rx
+    usb_to_serial.usb ~ usb
+
+    # TODO: test power mosfet to turn on/off CP2102N
+    # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
+    usbserial_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
+    usbserial_power_mosfet_circuit.power_in ~ power_3_3v
+    usbserial_power_mosfet_circuit.power_out ~ usb_to_serial.power
+    usbserial_power_mosfet_circuit.control ~ usb_c_connector.power.vcc
+
+    # Microphone
+    # TODO: test that microphone works with ESP32 and those pins via I2S
+    microphone = new MSM261D4030H1CPM
+    microphone.i2s ~ i2s
+    microphone.power.gnd ~ gnd
+
+    # Add a slider switch to turn on/off the microphone
+    microphone_power_slider_switch = new SK12D07VG4
+    microphone_power_slider_switch.p2 ~ microphone.power.vcc
+    microphone_power_slider_switch.p3 ~ power_3_3v.vcc
+    microphone_power_slider_switch.gnd ~ gnd
+
+    # Add a slider to switch between GlowLight & GlowTower mode (which sets number of leds, wifi name, etc.)
+    lampmode_slider_switch = new SK12D07VG4
+    lampmode_slider_switch.p1 ~ gnd
+    lampmode_slider_switch.p2 ~ esp32.ic.IO35
+    lampmode_slider_switch.p3 ~ power_3_3v.vcc
+    lampmode_slider_switch.gnd ~ gnd
+
+    # Add a pullup resistor to the slider switch, so it's not floating
+    lampmode_slider_pullup_resistor = new Resistor
+    lampmode_slider_pullup_resistor.resistance = 100kohm +/- 1%
+    lampmode_slider_pullup_resistor.footprint = "R0402"
+    lampmode_slider_pullup_resistor.mpn = "C25741"
+    lampmode_slider_pullup_resistor.p1 ~ esp32.ic.IO35
+    lampmode_slider_pullup_resistor.p2 ~ power_3_3v.vcc
+
+    # Pin headers, 2.54mm pitch
+    pin_header_male_led_strip_1 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_1.p3 ~ gnd
+
+    pin_header_male_led_strip_2 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_2.p3 ~ gnd
+
+    pin_header_male_led_strip_3 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_3.p3 ~ gnd
+
+    pin_header_male_led_strip_4 = new PinHeader_2_54mm_3pins
+    pin_header_male_led_strip_4.p3 ~ gnd
+
+    # add the pin headers for the action button PCB that also includes an LED ring (as a status indicator for the user)
+    pin_header_male_action_button = new PinHeader_2_54mm_2pins
+    pin_header_male_action_button.p1 ~ gnd
+    pin_header_male_action_button.p2 ~ esp32.ic.IO0
+
+    pin_header_male_led_ring = new PinHeader_2_54mm_2pins
+
+    # LED levelshifters
+    levelshifter_1 = new SN74LVC2T45DCUR                                # for LED strip 1 + 2
+    levelshifter_1.signal_in_1.io ~ esp32.ic.IO16                       # LED strip 1
+    levelshifter_1.signal_out_1.io ~ pin_header_male_led_strip_1.p2
+    levelshifter_1.signal_in_2.io ~ esp32.ic.IO17                       # LED strip 2
+    levelshifter_1.signal_out_2.io ~ pin_header_male_led_strip_2.p2
+    levelshifter_1.power_in ~ power_3_3v
+    levelshifter_1.power_out ~ power_5v
+    
+    levelshifter_2 = new SN74LVC2T45DCUR                                # for LED strip 3 + 4
+    levelshifter_2.signal_in_1.io ~ esp32.ic.IO18                       # LED strip 3
+    levelshifter_2.signal_out_1.io ~ pin_header_male_led_strip_3.p2
+    levelshifter_2.signal_in_2.io ~ esp32.ic.IO19                       # LED strip 4
+    levelshifter_2.signal_out_2.io ~ pin_header_male_led_strip_4.p2
+    levelshifter_2.power_in ~ power_3_3v
+    levelshifter_2.power_out ~ power_5v
+
+    levelshifter_3 = new SN74LVC2T45DCUR_one_used                       # for Actionbutton LED ring + (optional) external LED strip via user accessible pads
+    levelshifter_3.signal_in_1.io ~ esp32.ic.IO2                        # Actionbutton LED ring
+    levelshifter_3.signal_out_1.io ~ pin_header_male_led_ring.p2
+    levelshifter_3.power_in ~ power_3_3v
+    levelshifter_3.power_out ~ power_5v
+
+    # Inverter for Actionbutton, so if button is pressed low, the ESP32 will read high
+    inverter = new _74LVC2G04DW_7
+    inverter.input_1 ~ esp32.ic.IO0     # Boot button   (pulled low if pressed)
+    inverter.output_1 ~ esp32.ic.IO34   # Action button (pulled high if pressed)
+    inverter.power ~ power_3_3v
+    inverter.input_2 ~ gnd
+
+    # Add USB-C PD to request 9-20V at minimum 2A, to power everything
+    usb_pd_ic = new CYPD3177_min_9V_2A
+    usb_pd_ic.usb_pd ~ usb_pd
+    usb_pd_ic.i2c ~ i2c
+    usb_pd_ic.power_out_vbus ~ power_vbus
+    usb_pd_ic.power_out_5v ~ power_5v                   # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
+    usb_pd_ic.power_out_vbus_readout ~ esp32.ic.IO36    # Read the USB PD voltage via a voltage divider
+
+    # Add a buck converter to convert the 9-20V from the USB-C PD to 5V
+    buck_converter_5v = new buck_input_9_to_20V_output_5V_14A
+    buck_converter_5v.power_in ~ power_vbus
+    buck_converter_5v.power_out ~ power_5v
+
+    # 5V to 3.3V LDO, to power the ESP32 and microphone
+    ldo_3v3 = new AMS1117_3_3
+    ldo_3v3.power_in ~ power_5v
+    ldo_3v3.power_out ~ power_3_3v
+
+    # Add power mosfet circuit for LED ring
+    # TODO: test power mosfet
+    led_ring_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
+    led_ring_power_mosfet_circuit.control ~ esp32.ic.IO33
+    led_ring_power_mosfet_circuit.power_in ~ power_5v
+    led_ring_power_mosfet_circuit.power_out.vcc ~ pin_header_male_led_ring.p1
+
+    # MOSFETs to turn off the LED strips via IO5 (LED ring on action button will stay connected to power)
+    led_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_4x_3_5A
+    led_power_mosfet_circuit.control ~ esp32.ic.IO5
+    led_power_mosfet_circuit.power_in1 ~ power_5v
+    led_power_mosfet_circuit.power_in2 ~ power_5v
+    led_power_mosfet_circuit.power_in3 ~ power_5v
+    led_power_mosfet_circuit.power_in4 ~ power_5v
+    led_power_mosfet_circuit.power_out1.vcc ~ pin_header_male_led_strip_1.p1
+    led_power_mosfet_circuit.power_out2.vcc ~ pin_header_male_led_strip_2.p1
+    led_power_mosfet_circuit.power_out3.vcc ~ pin_header_male_led_strip_3.p1
+    led_power_mosfet_circuit.power_out4.vcc ~ pin_header_male_led_strip_4.p1
+    led_power_mosfet_circuit.gnd ~ gnd
+
+    # Add caps for LEDs
+    led_ring_capacitor = new Capacitor
+    led_ring_capacitor.capacitance = 100uF +/- 20%
+    led_ring_capacitor.footprint = "C1206"
+    led_ring_capacitor.mpn = "C15008"
+    led_ring_capacitor.power ~ led_ring_power_mosfet_circuit.power_in
+
+    led_strip_1_capacitor = new Capacitor
+    led_strip_1_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_1_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    led_strip_1_capacitor.lcsc_id = "C445078"
+    led_strip_1_capacitor.mpn = "C445078"
+    led_strip_1_capacitor.power ~ led_power_mosfet_circuit.power_in1
+
+    led_strip_2_capacitor = new Capacitor
+    led_strip_2_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_2_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    led_strip_2_capacitor.lcsc_id = "C445078"
+    led_strip_2_capacitor.mpn = "C445078"
+    led_strip_2_capacitor.power ~ led_power_mosfet_circuit.power_in2
+
+    led_strip_3_capacitor = new Capacitor
+    led_strip_3_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_3_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    led_strip_3_capacitor.lcsc_id = "C445078"
+    led_strip_3_capacitor.mpn = "C445078"
+    led_strip_3_capacitor.power ~ led_power_mosfet_circuit.power_in3
+    
+    led_strip_4_capacitor = new Capacitor
+    led_strip_4_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_4_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
+    led_strip_4_capacitor.lcsc_id = "C445078"
+    led_strip_4_capacitor.mpn = "C445078"
+    led_strip_4_capacitor.power ~ led_power_mosfet_circuit.power_in4
+
+    # Add solder pads
+    solder_pads = new Solderpads_25x
+    solder_pads.EN ~ esp32.ic.EN
+    solder_pads.IO0 ~ esp32.ic.IO0
+    solder_pads.IO27 ~ esp32.ic.IO27
+    solder_pads.IO39 ~ esp32.ic.IO39
+    solder_pads.power_vbus ~ power_vbus
+    solder_pads.power_5v ~ power_5v
+    solder_pads.power_3_3v ~ power_3_3v
+    solder_pads.gnd ~ gnd
+    solder_pads.uart ~ uart
+    solder_pads.i2c ~ i2c
+    solder_pads.i2s ~ i2s
+    solder_pads.spi ~ spi
+    solder_pads.jtag ~ jtag
+
+    # Add mounting holes to fixate the PCB in the case
+    mounting_hole_m5 = new MountingHole_M5
+    mounting_hole_m3_1 = new MountingHole_M3
+    mounting_hole_m3_2 = new MountingHole_M3

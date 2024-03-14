@@ -1,0 +1,61 @@
+import Capacitor from "generics/capacitors.ato"
+from "generics/interfaces.ato" import Power, I2S
+
+component _MSM261D4030H1CPM:
+    """
+    This is a digital MEMS microphone with I2S interface. It can be directly connected to a microcontroller via I2S.
+    Datasheet: https://datasheet.lcsc.com/lcsc/2012111637_MEMS-MSM261D4030H1CPM_C966942.pdf
+    """
+    # component MSM261D4030H1CPM
+    footprint = "MIC-SMD_8P-L4.0-W3.0_ZTS6231"
+    lcsc_id = "C966942"
+    mpn = "C966942"
+    # pins
+    signal VDD ~ pin 1
+    signal L_R ~ pin 2
+    signal CLK ~ pin 3
+    signal DATA ~ pin 4
+    signal GND ~ pin 5
+    GND ~ pin 6
+    GND ~ pin 7
+    GND ~ pin 8
+
+    # add I2S interface
+    i2s = new I2S
+    i2s.ws ~ L_R
+    i2s.sck ~ CLK
+    i2s.sd ~ DATA
+    i2s.gnd ~ GND
+
+    # add power
+    power = new Power
+    power.vcc ~ VDD
+    power.gnd ~ GND
+
+
+module MSM261D4030H1CPM:
+    # add power
+    power = new Power
+
+    # add IC
+    ic = new _MSM261D4030H1CPM
+    ic.power ~ power
+
+    # add I2S interface
+    i2s = new I2S
+    i2s ~ ic.i2s
+
+    # add caps
+    cap1 = new Capacitor
+    cap1.capacitance = 10uF +/- 20%
+    cap1.footprint = "C0603"
+    cap1.mpn = "C96446"
+    cap1.power ~ power
+
+    cap2 = new Capacitor
+    cap2.capacitance = 0.1uF +/- 10%
+    cap2.voltage = 50V
+    cap2.series = "X7R"
+    cap2.footprint = "C0402"
+    cap2.mpn = "C307331"
+    cap2.power ~ power

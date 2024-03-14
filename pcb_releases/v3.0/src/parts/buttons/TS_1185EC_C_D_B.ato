@@ -1,0 +1,14 @@
+component TS_1185EC_C_D_B:
+    """
+    This is a small push button. While pressed, signal 1 and signal 2 are connected.
+    """
+    # component TS-1185EC-C-D-B
+    footprint = "SW-SMD_4P-L3.7-W3.0-P1.50-LS4.7"
+    lcsc_id = "C318893"
+    mpn = "C318893"
+    # pins
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+
+    signal input ~ p1
+    signal output ~ p2
