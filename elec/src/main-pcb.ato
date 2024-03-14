@@ -53,7 +53,6 @@ module MainPCB:
     esp32.spi ~ spi
     esp32.jtag ~ jtag
     # Connected pins besides default pins:
-    # TODO: test all used pins first and see if they interfere with operation
     # IO5: LED Strips power on/off                                          WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO33: LED Ring power on/off                                           WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO16: LED strip 1 (data out)                                          WLED settings check: SUCCESS            Prototype hardware check: ?
@@ -95,7 +94,6 @@ module MainPCB:
     usb_to_serial.uart.tx ~ uart.rx
     usb_to_serial.usb ~ usb
 
-    # TODO: test power mosfet to turn on/off CP2102N
     # Add power mosfet circuit, so the CP2102N is turned on only if USB is connected
     usbserial_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
     usbserial_power_mosfet_circuit.power_in ~ power_3_3v
@@ -103,7 +101,6 @@ module MainPCB:
     usbserial_power_mosfet_circuit.control ~ usb_c_connector.power.vcc
 
     # Microphone
-    # TODO: test that microphone works with ESP32 and those pins via I2S
     microphone = new MSM261D4030H1CPM
     microphone.i2s ~ i2s
     microphone.power.gnd ~ gnd
@@ -198,7 +195,6 @@ module MainPCB:
     ldo_3v3.power_out ~ power_3_3v
 
     # Add power mosfet circuit for LED ring
-    # TODO: test power mosfet
     led_ring_power_mosfet_circuit = new MOSFETcircuitPowerOnOff_1x_1A
     led_ring_power_mosfet_circuit.control ~ esp32.ic.IO33
     led_ring_power_mosfet_circuit.power_in ~ power_5v
