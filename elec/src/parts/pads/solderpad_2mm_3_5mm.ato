@@ -4,6 +4,6 @@ component SolderPad_2mm_3_5mm:
     It can be used to solder external components via wires to the PCB.
     """
     footprint = "SolderPad_2mm_3_5mm"
-    mpn = ""
+    mpn = "0"
     # pins
     signal p1 ~ pin 1

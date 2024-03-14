@@ -3,11 +3,11 @@ component MountingHole_M3:
     This is a hole to fit an M3 screw. It is 3.2mm in diameter.
     """
     footprint = "MountingHole_3.2mm_M3"
-    mpn = ""
+    mpn = "0"
 
 component MountingHole_M5:
     """
     This is a hole to fit an M5 screw. It is 5.3mm in diameter.
     """
     footprint = "MountingHole_5.3mm_M5"
-    mpn = ""
+    mpn = "0"

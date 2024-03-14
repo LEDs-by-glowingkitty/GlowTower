@@ -3,7 +3,6 @@ import CYPD3177 from "parts/usb_pd_ics/CYPD3177/submodules/CYPD3177.ato"
 import Resistor from "generics/resistors.ato"
 import Capacitor from "generics/capacitors.ato"
 import Voltage_Divider_0603_100K__20K from "parts/voltage_dividers/0603/Voltage_Divider_0603_100K__20K.ato"
-import SS54 from "parts/diodes/schottky/SS54.ato"
 import CYPD3177_LoadSwitchSafe5V from "parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitchSafe5V.ato"
 import CYPD3177_LoadSwitch100W from "parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitch100W.ato"
 
@@ -45,12 +44,7 @@ module CYPD3177_WithCoreParts:
     power_out_5v_load_switch = new CYPD3177_LoadSwitchSafe5V
     power_out_5v_load_switch.en ~ ic.SAFE_PWR_EN
     power_out_5v_load_switch.power_in ~ power_in
-    power_out_5v_load_switch.power_out ~ power_out_5v_before_reverse_flow_protection
-
-    # Add reverse flow protection via schottky diode
-    power_out_5v_reverse_flow_protection_schottky_diode = new SS54
-    power_out_5v_reverse_flow_protection_schottky_diode.input ~ power_out_5v_before_reverse_flow_protection.vcc
-    power_out_5v_reverse_flow_protection_schottky_diode.output ~ power_out_5v.vcc
+    power_out_5v_load_switch.power_out ~ power_out_5v
 
     # Add 3.3uF cap for the VBUS of the USB-C port
     vbus_cap_1 = new Capacitor
