@@ -25,6 +25,15 @@ module MainPCB:
     """
     This is the main PCB of GlowLight & GlowTower. It contains all the power management, the microcontroller and more.
     WS2812B LED strips are connected to this PCB via pin headers.
+
+    Production settings:
+    - Layers:           6
+    - PCB Thickness:    1.6mm
+    - PCB Color:        Black
+    - Surface Finish:   ENIG
+
+    PCBA Assembly:
+    - leave with default options
     """
 
     # Add power

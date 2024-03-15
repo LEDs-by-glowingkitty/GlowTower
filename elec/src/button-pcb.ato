@@ -17,6 +17,16 @@ module ButtonPCB:
     The LEDs give visual feedback, for example for the current brightness level.
 
     The PCB is connected via cables to the main PCB of the lamp.
+
+    Production settings:
+    - Layers:           2
+    - PCB Thickness:    1.6mm
+    - PCB Color:        White
+    - Surface Finish:   ENIG
+
+    PCBA Assembly:
+    - Bake Components:  YES
+    - leave other options on defaults
     """
     # Add power
     power = new Power
