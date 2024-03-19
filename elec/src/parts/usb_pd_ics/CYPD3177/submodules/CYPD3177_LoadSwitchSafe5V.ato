@@ -1,0 +1,26 @@
+import Power from "generics/interfaces.ato"
+import AO3401A from "parts/mosfets/AO3401A.ato"
+import Voltage_Divider_0603_49_9K__1K from "parts/voltage_dividers/0603/Voltage_Divider_0603_49_9K__1K.ato"
+
+
+module CYPD3177_LoadSwitchSafe5V:
+    """
+    This is a submodule for the CYPD3177. It adds a load switch for the 5V Safe Output.
+    """
+    # Add power
+    power_in = new Power
+    power_out = new Power
+    signal en ~ power_in.gnd
+
+    # add the MOSFET for the safe 5V load switch
+    load_switch_mosfet_1 = new AO3401A
+    load_switch_mosfet_2 = new AO3401A
+    load_switch_mosfet_1.GATE ~ load_switch_mosfet_2.GATE
+    load_switch_mosfet_1.SOURCE ~ load_switch_mosfet_2.SOURCE
+    load_switch_mosfet_1.DRAIN ~ power_in.vcc
+    load_switch_mosfet_2.DRAIN ~ power_out.vcc
+    
+    # add voltage divider
+    load_switch_voltage_divider = new Voltage_Divider_0603_49_9K__1K
+    load_switch_voltage_divider.power ~ power_in
+    load_switch_voltage_divider.power_out ~ load_switch_mosfet_1.GATE

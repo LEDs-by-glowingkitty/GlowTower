@@ -1,0 +1,57 @@
+import Power from "generics/interfaces.ato"
+import Capacitor from "generics/capacitors.ato"
+
+component _AMS1117_3_3:
+    """
+    This is an LDO converter with a fixed output voltage of 3.3V and a maximum output current of 1A.
+    Datasheet: https://datasheet.lcsc.com/lcsc/2304140030_Advanced-Monolithic-Systems-AMS1117-3-3_C6186.pdf
+    """
+    # component AMS1117-3.3
+    footprint = "SOT-223-3_L6.5-W3.4-P2.30-LS7.0-BR"
+    lcsc_id = "C6186"
+    mpn = "C6186"
+
+    # define specs
+    v_in = 4.7V to 5.5V
+    v_out = 3.201V to 3.399V
+    
+    # pins
+    signal GND ~ pin 1
+    signal VOUT ~ pin 2
+    signal VIN ~ pin 3
+    VOUT ~ pin 4
+
+    power_in = new Power
+    power_in.vcc ~ VIN
+    power_in.gnd ~ GND
+
+    power_out = new Power
+    power_out.vcc ~ VOUT
+    power_out.gnd ~ GND
+
+
+module AMS1117_3_3:
+    # add power
+    power_in = new Power
+    power_out = new Power
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
+
+    # add IC
+    ic = new _AMS1117_3_3
+    ic.power_in ~ power_in
+    ic.power_out ~ power_out
+
+    # add input capacitor
+    input_cap = new Capacitor
+    input_cap.capacitance = 10uF +/- 20%
+    input_cap.footprint = "C0603"
+    input_cap.mpn = "C96446"
+    input_cap.power ~ power_in
+
+    # add output capacitor
+    output_cap = new Capacitor
+    output_cap.capacitance = 10uF +/- 20%
+    output_cap.footprint = "C0603"
+    output_cap.mpn = "C96446"
+    output_cap.power ~ power_out

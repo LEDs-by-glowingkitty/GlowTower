@@ -1,0 +1,50 @@
+import Capacitor from "generics/capacitors.ato"
+import Power from "generics/interfaces.ato"
+
+component _WS2812B_1010:
+    """
+    This is a WS2812B LED in the 1010 package.
+    Datasheet: https://datasheet.lcsc.com/szlcsc/1812041635_Worldsemi-XL-1010RGBC-WS2812B_C5349953.pdf
+
+    Specs:
+    - VDD: 3.5V to 5.5V
+    """
+
+    # component XL-1010RGBC-WS2812B
+    footprint = "LED-SMD_4P-L1.0-W1.0-TL_XL-1010RGBC-WS2812B"
+    lcsc_id = "C5349953"
+    mpn = "C5349953"
+
+    # define specs
+    v_in = 3.5V to 5.5V # recommended to keep above 4V
+
+    # pins
+    signal DOUT ~ pin 1 # data out
+    signal VDD ~ pin 2  # power supply (3.5V to 5.5V)
+    signal GND ~ pin 3  # ground
+    signal DIN ~ pin 4  # data in
+
+    # add the power interface
+    power = new Power
+    power.vcc ~ VDD
+    power.gnd ~ GND
+
+
+module WS2812B_1010:
+    # add the power interface
+    power = new Power
+
+    # add the LED
+    ic = new _WS2812B_1010
+    ic.power ~ power
+    signal DIN ~ ic.DIN
+    signal DOUT ~ ic.DOUT
+
+    # add the capacitor
+    capacitor = new Capacitor
+    capacitor.capacitance = 0.1uF +/- 10%
+    capacitor.voltage = 50V
+    capacitor.series = "X7R"
+    capacitor.footprint = "C0402"
+    capacitor.mpn = "C307331"
+    capacitor.power ~ power
