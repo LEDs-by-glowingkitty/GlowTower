@@ -61,6 +61,7 @@ module MainPCB:
     esp32.i2s ~ i2s
     esp32.spi ~ spi
     esp32.jtag ~ jtag
+    
     # Connected pins besides default pins:
     # IO5: LED Strips power on/off                                          WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO33: LED Ring power on/off                                           WLED settings check: SUCCESS            Prototype hardware check: ?
