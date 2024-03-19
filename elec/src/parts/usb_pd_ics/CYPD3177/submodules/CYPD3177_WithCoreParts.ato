@@ -47,41 +47,41 @@ module CYPD3177_WithCoreParts:
     power_out_5v_load_switch.power_out ~ power_out_5v
 
     # Add 3.3uF cap for the VBUS of the USB-C port
-    vbus_cap_1 = new Capacitor
-    vbus_cap_1.capacitance = 3.3uF +/- 10%
-    vbus_cap_1.footprint = "C0805"
-    vbus_cap_1.mpn = "C342775"
-    vbus_cap_1.power ~ power_in
+    vbus_cap = new Capacitor
+    vbus_cap.capacitance = 3.3uF +/- 10%
+    vbus_cap.footprint = "C0805"
+    vbus_cap.mpn = "C342775"
+    vbus_cap.power ~ power_in
 
     # Add 1uF cap for the VCCD (1.8V) to the CYPD3177
-    vbus_cap_2 = new Capacitor
-    vbus_cap_2.capacitance = 1uF +/- 10%
-    vbus_cap_2.footprint = "C0603"
-    vbus_cap_2.mpn = "C15849"
-    vbus_cap_2.power ~ power_1_8v
+    vccd_cap = new Capacitor
+    vccd_cap.capacitance = 1uF +/- 10%
+    vccd_cap.footprint = "C0603"
+    vccd_cap.mpn = "C15849"
+    vccd_cap.power ~ power_1_8v
 
     # Add 1uF & 0.1uF caps for the VDDD (3.3V) to the CYPD3177
-    vbus_cap_1 = new Capacitor
-    vbus_cap_1.capacitance = 1uF +/- 10%
-    vbus_cap_1.footprint = "C0603"
-    vbus_cap_1.mpn = "C15849"
-    vbus_cap_1.power ~ power_3_3v
+    vddd_cap_1 = new Capacitor
+    vddd_cap_1.capacitance = 1uF +/- 10%
+    vddd_cap_1.footprint = "C0603"
+    vddd_cap_1.mpn = "C15849"
+    vddd_cap_1.power ~ power_3_3v
 
-    vbus_cap_2 = new Capacitor
-    vbus_cap_2.capacitance = 0.1uF +/- 10%
-    vbus_cap_2.voltage = 50V
-    vbus_cap_2.series = "X7R"
-    vbus_cap_2.footprint = "C0402"
-    vbus_cap_2.mpn = "C307331"
-    vbus_cap_2.power ~ power_3_3v
+    vddd_cap_2 = new Capacitor
+    vddd_cap_2.capacitance = 0.1uF +/- 10%
+    vddd_cap_2.voltage = 50V
+    vddd_cap_2.series = "X7R"
+    vddd_cap_2.footprint = "C0402"
+    vddd_cap_2.mpn = "C307331"
+    vddd_cap_2.power ~ power_3_3v
 
-    vbus_cap_3 = new Capacitor
-    vbus_cap_3.capacitance = 0.1uF +/- 10%
-    vbus_cap_3.voltage = 50V
-    vbus_cap_3.series = "X7R"
-    vbus_cap_3.footprint = "C0402"
-    vbus_cap_3.mpn = "C307331"
-    vbus_cap_3.power ~ power_3_3v
+    vddd_cap_3 = new Capacitor
+    vddd_cap_3.capacitance = 0.1uF +/- 10%
+    vddd_cap_3.voltage = 50V
+    vddd_cap_3.series = "X7R"
+    vddd_cap_3.footprint = "C0402"
+    vddd_cap_3.mpn = "C307331"
+    vddd_cap_3.power ~ power_3_3v
 
     # Add a pull down resistor for the FAULT pin, so that it is not floating
     fault_pull_down_resistor = new Resistor
