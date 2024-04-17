@@ -47,7 +47,7 @@ module CYPD3177_WithCoreParts:
     power_out_5v_load_switch.power_out ~ power_out_5v
 
     # TODO: add to PCB layout 
-    # Add 390pF caps for the CC1 and CC2 pins (as in eva)
+    # Add 390pF caps for the CC1 and CC2 pins (as in evaluation board schematic)
     cc1_cap = new Capacitor
     cc1_cap.capacitance = 390pF +/- 5%
     cc1_cap.footprint = "C0402"
