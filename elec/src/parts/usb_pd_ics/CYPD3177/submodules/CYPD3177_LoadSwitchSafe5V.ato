@@ -24,6 +24,7 @@ module CYPD3177_LoadSwitchSafe5V:
     # After checking last revision with similar circuit (Dev Edition 1), 
     # it turns out the voltages at gate, source, drain are the same as in new design.
     # So... the problem isn't new basically, I just removed the part of the electronics last time and ignored it that way
+    # TODO: test replacing two p channel mosfets with HSM4805 dual p channel mosfet (which I already use for 100W load switch)
     # TODO: Test fix - remove big caps
     # TODO: what other things did I change in comparison to previous version?
     
