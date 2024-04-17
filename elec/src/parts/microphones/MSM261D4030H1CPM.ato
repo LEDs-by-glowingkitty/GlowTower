@@ -26,6 +26,7 @@ component _MSM261D4030H1CPM:
     i2s.sck ~ CLK
     i2s.sd ~ DATA
     i2s.gnd ~ GND
+    # TODO why does switching WS and CK pin fixes the not working microphone?
 
     # add power
     power = new Power

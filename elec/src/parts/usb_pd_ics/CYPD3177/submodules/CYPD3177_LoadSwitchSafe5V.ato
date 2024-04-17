@@ -1,6 +1,6 @@
 import Power from "generics/interfaces.ato"
 import AO3401A from "parts/mosfets/AO3401A.ato"
-import Voltage_Divider_0603_49_9K__1K from "parts/voltage_dividers/0603/Voltage_Divider_0603_49_9K__1K.ato"
+import Resistor from "generics/resistors.ato"
 
 
 module CYPD3177_LoadSwitchSafe5V:
@@ -10,7 +10,7 @@ module CYPD3177_LoadSwitchSafe5V:
     # Add power
     power_in = new Power
     power_out = new Power
-    signal en ~ power_in.gnd
+    signal en
 
     # add the MOSFET for the safe 5V load switch
     load_switch_mosfet_1 = new AO3401A
@@ -19,8 +19,27 @@ module CYPD3177_LoadSwitchSafe5V:
     load_switch_mosfet_1.SOURCE ~ load_switch_mosfet_2.SOURCE
     load_switch_mosfet_1.DRAIN ~ power_in.vcc
     load_switch_mosfet_2.DRAIN ~ power_out.vcc
+
+    # TODO: why is there 5V on the gate instead of being low? (which would connect VBUS to 5V)
+    # After checking last revision with similar circuit (Dev Edition 1), 
+    # it turns out the voltages at gate, source, drain are the same as in new design.
+    # So... the problem isn't new basically, I just removed the part of the electronics last time and ignored it that way
+    # TODO: Test fix - remove big caps
+    # TODO: what other things did I change in comparison to previous version?
     
     # add voltage divider
-    load_switch_voltage_divider = new Voltage_Divider_0603_49_9K__1K
-    load_switch_voltage_divider.power ~ power_in
-    load_switch_voltage_divider.power_out ~ load_switch_mosfet_1.GATE
+    # add pull up resistor
+    pull_up_resistor = new Resistor
+    pull_up_resistor.resistance = 49.9kohm +/- 1%
+    pull_up_resistor.footprint = "R0603"
+    pull_up_resistor.mpn = "C23184"
+    pull_up_resistor.p1 ~ power_in.vcc
+    pull_up_resistor.p2 ~ load_switch_mosfet_1.GATE
+
+    # add pull down resistor
+    pull_down_resistor = new Resistor
+    pull_down_resistor.resistance = 1kohm +/- 1%
+    pull_down_resistor.footprint = "R0603"
+    pull_down_resistor.mpn = "C21190"
+    pull_down_resistor.p1 ~ load_switch_mosfet_1.GATE
+    pull_down_resistor.p2 ~ en
