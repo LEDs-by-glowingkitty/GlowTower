@@ -16,7 +16,7 @@ module Voltage_Divider_0402_5_1K__2_4K:
     
     # add pull up resistor
     pull_up_resistor = new Resistor
-    pull_up_resistor.resistance = 5.1kohm +/- 1%
+    pull_up_resistor.value = 5.1kohm +/- 1%
     pull_up_resistor.footprint = "R0402"
     pull_up_resistor.mpn = "C25905"
     pull_up_resistor.p1 ~ power.vcc
@@ -24,7 +24,7 @@ module Voltage_Divider_0402_5_1K__2_4K:
 
     # add pull down resistor
     pull_down_resistor = new Resistor
-    pull_down_resistor.resistance = 2.4kohm +/- 1%
+    pull_down_resistor.value = 2.4kohm +/- 1%
     pull_down_resistor.footprint = "R0402"
     pull_down_resistor.mpn = "C25882"
     pull_down_resistor.p1 ~ power.gnd

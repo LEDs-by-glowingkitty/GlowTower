@@ -130,7 +130,7 @@ module MainPCB:
 
     # Add a pullup resistor to the slider switch, so it's not floating
     lampmode_slider_pullup_resistor = new Resistor
-    lampmode_slider_pullup_resistor.resistance = 100kohm +/- 1%
+    lampmode_slider_pullup_resistor.value = 100kohm +/- 1%
     lampmode_slider_pullup_resistor.footprint = "R0402"
     lampmode_slider_pullup_resistor.mpn = "C25741"
     lampmode_slider_pullup_resistor.p1 ~ esp32.ic.IO35
@@ -225,34 +225,34 @@ module MainPCB:
 
     # Add caps for LEDs
     led_ring_capacitor = new Capacitor
-    led_ring_capacitor.capacitance = 100uF +/- 20%
+    led_ring_capacitor.value = 100uF +/- 20%
     led_ring_capacitor.footprint = "C1206"
     led_ring_capacitor.mpn = "C15008"
     led_ring_capacitor.power ~ led_ring_power_mosfet_circuit.power_in
 
     led_strip_1_capacitor = new Capacitor
-    led_strip_1_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_1_capacitor.value = 1000uF +/- 20%
     led_strip_1_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
     led_strip_1_capacitor.lcsc_id = "C445078"
     led_strip_1_capacitor.mpn = "C445078"
     led_strip_1_capacitor.power ~ led_power_mosfet_circuit.power_in1
 
     led_strip_2_capacitor = new Capacitor
-    led_strip_2_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_2_capacitor.value = 1000uF +/- 20%
     led_strip_2_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
     led_strip_2_capacitor.lcsc_id = "C445078"
     led_strip_2_capacitor.mpn = "C445078"
     led_strip_2_capacitor.power ~ led_power_mosfet_circuit.power_in2
 
     led_strip_3_capacitor = new Capacitor
-    led_strip_3_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_3_capacitor.value = 1000uF +/- 20%
     led_strip_3_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
     led_strip_3_capacitor.lcsc_id = "C445078"
     led_strip_3_capacitor.mpn = "C445078"
     led_strip_3_capacitor.power ~ led_power_mosfet_circuit.power_in3
     
     led_strip_4_capacitor = new Capacitor
-    led_strip_4_capacitor.capacitance = 1000uF +/- 20%
+    led_strip_4_capacitor.value = 1000uF +/- 20%
     led_strip_4_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
     led_strip_4_capacitor.lcsc_id = "C445078"
     led_strip_4_capacitor.mpn = "C445078"

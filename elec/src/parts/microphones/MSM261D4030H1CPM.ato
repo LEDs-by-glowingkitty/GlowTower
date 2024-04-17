@@ -48,13 +48,13 @@ module MSM261D4030H1CPM:
 
     # add caps
     cap1 = new Capacitor
-    cap1.capacitance = 10uF +/- 20%
+    cap1.value = 10uF +/- 20%
     cap1.footprint = "C0603"
     cap1.mpn = "C96446"
     cap1.power ~ power
 
     cap2 = new Capacitor
-    cap2.capacitance = 0.1uF +/- 10%
+    cap2.value = 0.1uF +/- 10%
     cap2.voltage = 50V
     cap2.series = "X7R"
     cap2.footprint = "C0402"

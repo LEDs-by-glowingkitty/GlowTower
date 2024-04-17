@@ -18,12 +18,12 @@ module MOSFETcircuitPowerOnOff_1x_1A:
 
     # add the resistors for the N channel mosfet and the P channel mosfets
     power_p_mosfet_resistor = new Resistor
-    power_p_mosfet_resistor.resistance = 100kohm +/- 1%
+    power_p_mosfet_resistor.value = 100kohm +/- 1%
     power_p_mosfet_resistor.footprint = "R0402"
     power_p_mosfet_resistor.mpn = "C25741"
 
     power_n_mosfet_resistor = new Resistor
-    power_n_mosfet_resistor.resistance = 100kohm +/- 1%
+    power_n_mosfet_resistor.value = 100kohm +/- 1%
     power_n_mosfet_resistor.footprint = "R0402"
     power_n_mosfet_resistor.mpn = "C25741"
 

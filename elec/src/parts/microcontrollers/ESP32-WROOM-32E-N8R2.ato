@@ -136,7 +136,7 @@ module ESP32_WROOM_32E_N8R2:
 
     # Add capacitor for 3.3V input of ESP32
     power_cap = new Capacitor
-    power_cap.capacitance = 10uF +/- 20%
+    power_cap.value = 10uF +/- 20%
     power_cap.footprint = "C0603"
     power_cap.mpn = "C96446"
     power_cap.power ~ power
@@ -148,7 +148,7 @@ module ESP32_WROOM_32E_N8R2:
 
     # Add a delay capacitor for the reset/EN pin
     en_delay_cap = new Capacitor
-    en_delay_cap.capacitance = 1uF +/- 10%
+    en_delay_cap.value = 1uF +/- 10%
     en_delay_cap.footprint = "C0603"
     en_delay_cap.mpn = "C15849"
     en_delay_cap.p1 ~ ic.EN
@@ -156,7 +156,7 @@ module ESP32_WROOM_32E_N8R2:
 
     # Add a pull up resistor for the reset/EN pin
     en_pullup_resistor = new Resistor
-    en_pullup_resistor.resistance = 5.1kohm +/- 1%
+    en_pullup_resistor.value = 5.1kohm +/- 1%
     en_pullup_resistor.footprint = "R0402"
     en_pullup_resistor.mpn = "C25905"
     en_pullup_resistor.p1 ~ ic.EN
@@ -169,7 +169,7 @@ module ESP32_WROOM_32E_N8R2:
     
     # Add a pull up resistor for the boot button
     boot_pullup_resistor = new Resistor
-    boot_pullup_resistor.resistance = 100kohm +/- 1%
+    boot_pullup_resistor.value = 100kohm +/- 1%
     boot_pullup_resistor.footprint = "R0402"
     boot_pullup_resistor.mpn = "C25741"
     boot_pullup_resistor.p1 ~ ic.IO0
@@ -177,14 +177,14 @@ module ESP32_WROOM_32E_N8R2:
 
     # Add pull up resistors for the I2C interface
     i2c_pullup_resistor_sda = new Resistor
-    i2c_pullup_resistor_sda.resistance = 2kohm +/- 1%
+    i2c_pullup_resistor_sda.value = 2kohm +/- 1%
     i2c_pullup_resistor_sda.footprint = "R0402"
     i2c_pullup_resistor_sda.mpn = "C4109"
     i2c_pullup_resistor_sda.p1 ~ i2c.sda
     i2c_pullup_resistor_sda.p2 ~ power.vcc
 
     i2c_pullup_resistor_scl = new Resistor
-    i2c_pullup_resistor_scl.resistance = 2kohm +/- 1%
+    i2c_pullup_resistor_scl.value = 2kohm +/- 1%
     i2c_pullup_resistor_scl.footprint = "R0402"
     i2c_pullup_resistor_scl.mpn = "C4109"
     i2c_pullup_resistor_scl.p1 ~ i2c.scl

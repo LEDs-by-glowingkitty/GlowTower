@@ -31,7 +31,7 @@ module CYPD3177_LoadSwitchSafe5V:
     # add voltage divider
     # add pull up resistor
     pull_up_resistor = new Resistor
-    pull_up_resistor.resistance = 49.9kohm +/- 1%
+    pull_up_resistor.value = 49.9kohm +/- 1%
     pull_up_resistor.footprint = "R0603"
     pull_up_resistor.mpn = "C23184"
     pull_up_resistor.p1 ~ power_in.vcc
@@ -39,7 +39,7 @@ module CYPD3177_LoadSwitchSafe5V:
 
     # add pull down resistor
     pull_down_resistor = new Resistor
-    pull_down_resistor.resistance = 1kohm +/- 1%
+    pull_down_resistor.value = 1kohm +/- 1%
     pull_down_resistor.footprint = "R0603"
     pull_down_resistor.mpn = "C21190"
     pull_down_resistor.p1 ~ load_switch_mosfet_1.GATE

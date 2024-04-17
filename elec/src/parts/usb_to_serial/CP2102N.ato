@@ -82,7 +82,7 @@ module CP2102N:
 
     # Add capacitors for the VREGIN and VDD pins
     small_cap = new Capacitor
-    small_cap.capacitance = 0.1uF +/- 10%
+    small_cap.value = 0.1uF +/- 10%
     small_cap.voltage = 50V
     small_cap.series = "X7R"
     small_cap.footprint = "C0402"
@@ -90,14 +90,14 @@ module CP2102N:
     small_cap.power ~ power
 
     large_cap = new Capacitor
-    large_cap.capacitance = 10uF +/- 20%
+    large_cap.value = 10uF +/- 20%
     large_cap.footprint = "C0603"
     large_cap.mpn = "C96446"
     large_cap.power ~ power
 
     # Add a pull up resistor for the RSTb pin.
     pull_up_resistor = new Resistor
-    pull_up_resistor.resistance = 1kohm +/- 1%
+    pull_up_resistor.value = 1kohm +/- 1%
     pull_up_resistor.footprint = "R0402"
     pull_up_resistor.mpn = "C11702"
     pull_up_resistor.p1 ~ ic.RSTb

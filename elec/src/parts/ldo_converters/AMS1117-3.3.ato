@@ -44,14 +44,14 @@ module AMS1117_3_3:
 
     # add input capacitor
     input_cap = new Capacitor
-    input_cap.capacitance = 10uF +/- 20%
+    input_cap.value = 10uF +/- 20%
     input_cap.footprint = "C0603"
     input_cap.mpn = "C96446"
     input_cap.power ~ power_in
 
     # add output capacitor
     output_cap = new Capacitor
-    output_cap.capacitance = 10uF +/- 20%
+    output_cap.value = 10uF +/- 20%
     output_cap.footprint = "C0603"
     output_cap.mpn = "C96446"
     output_cap.power ~ power_out

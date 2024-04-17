@@ -69,33 +69,33 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Cin) add input capacitor group
     cin_capacitor_1 = new Capacitor
-    cin_capacitor_1.capacitance = 22uF +/- 10%
+    cin_capacitor_1.value = 22uF +/- 10%
     cin_capacitor_1.footprint = "C1206"
     cin_capacitor_1.mpn = "C12891"
     cin_capacitor_1.power ~ power_in
 
     cin_capacitor_2 = new Capacitor
-    cin_capacitor_2.capacitance = 22uF +/- 10%
+    cin_capacitor_2.value = 22uF +/- 10%
     cin_capacitor_2.footprint = "C1206"
     cin_capacitor_2.mpn = "C12891"
     cin_capacitor_2.power ~ power_in
 
     cin_capacitor_3 = new Capacitor
-    cin_capacitor_3.capacitance = 22uF +/- 10%
+    cin_capacitor_3.value = 22uF +/- 10%
     cin_capacitor_3.footprint = "C1206"
     cin_capacitor_3.mpn = "C12891"
     cin_capacitor_3.power ~ power_in
 
     # (Cvin) add input capacitor
     cvin_capacitor = new Capacitor
-    cvin_capacitor.capacitance = 4.7uF +/- 10%
+    cvin_capacitor.value = 4.7uF +/- 10%
     cvin_capacitor.footprint = "C1206"
     cvin_capacitor.mpn = "C29823"
     cvin_capacitor.power ~ power_in
 
     # (Ren) add resistor for EN pin
     ren_resistor = new Resistor
-    ren_resistor.resistance = 1kohm +/- 1%
+    ren_resistor.value = 1kohm +/- 1%
     ren_resistor.footprint = "R0402"
     ren_resistor.mpn = "C11702"
     ren_resistor.p2 ~ ic.EN
@@ -103,7 +103,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     # Add voltage divider for the EN pin
     # (Rent) add resistor 1
     rent_resistor = new Resistor
-    rent_resistor.resistance = 392kohm +/- 1%
+    rent_resistor.value = 392kohm +/- 1%
     rent_resistor.footprint = "R0402"
     rent_resistor.mpn = "C327347"
     rent_resistor.p1 ~ power_in.vcc
@@ -111,7 +111,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Renb) add resistor 2
     renb_resistor = new Resistor
-    renb_resistor.resistance = 86.6kohm +/- 1%
+    renb_resistor.value = 86.6kohm +/- 1%
     renb_resistor.footprint = "R0402"
     renb_resistor.mpn = "C19709"
     renb_resistor.p1 ~ ren_resistor.p1
@@ -124,7 +124,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Cbst) add capacitor for VBST
     cbst_capacitor = new Capacitor
-    cbst_capacitor.capacitance = 0.1uF +/- 10%
+    cbst_capacitor.value = 0.1uF +/- 10%
     cbst_capacitor.voltage = 50V
     cbst_capacitor.series = "X7R"
     cbst_capacitor.footprint = "C0402"
@@ -134,14 +134,14 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Rlbst) add resistor
     rlbst_resistor = new Resistor
-    rlbst_resistor.resistance = 1.82kohm +/- 1%
+    rlbst_resistor.value = 1.82kohm +/- 1%
     rlbst_resistor.footprint = "R0402"
     rlbst_resistor.mpn = "C5121516"
     rlbst_resistor.p1 ~ ic.LL
 
     # (Clfb) add capacitor
     clfb_capacitor = new Capacitor
-    clfb_capacitor.capacitance = 0.1uF +/- 10%
+    clfb_capacitor.value = 0.1uF +/- 10%
     clfb_capacitor.voltage = 50V
     clfb_capacitor.series = "X7R"
     clfb_capacitor.footprint = "C0805"
@@ -151,7 +151,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Clrfb) add capacitor
     clrfb_capacitor = new Capacitor
-    clrfb_capacitor.capacitance = 1nF +/- 10%
+    clrfb_capacitor.value = 1nF +/- 10%
     clrfb_capacitor.voltage = 50V
     clrfb_capacitor.series = "X7R"
     clrfb_capacitor.footprint = "C0402"
@@ -162,7 +162,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     # Add voltage divider for programming the output voltage
     # (Rfbt) add resistor 1
     rfbt_resistor = new Resistor
-    rfbt_resistor.resistance = 71.5kohm +/- 1%
+    rfbt_resistor.value = 71.5kohm +/- 1%
     rfbt_resistor.footprint = "R0402"
     rfbt_resistor.mpn = "C43534"
     rfbt_resistor.p1 ~ power_out_before_reverse_flow_protection.vcc
@@ -170,7 +170,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Rfbb) add resistor 2
     rfbb_resistor = new Resistor
-    rfbb_resistor.resistance = 10kohm +/- 1%
+    rfbb_resistor.value = 10kohm +/- 1%
     rfbb_resistor.footprint = "R0402"
     rfbb_resistor.mpn = "C25744"
     rfbb_resistor.p1 ~ ic.VFB
@@ -178,7 +178,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Cout) add output capacitors
     cout_capacitor_1 = new Capacitor
-    cout_capacitor_1.capacitance = 47uF +/- 10%
+    cout_capacitor_1.value = 47uF +/- 10%
     cout_capacitor_1.voltage = 16V
     cout_capacitor_1.series = "X5R"
     cout_capacitor_1.footprint = "C1210"
@@ -186,7 +186,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     cout_capacitor_1.power ~ power_out_before_reverse_flow_protection
 
     cout_capacitor_2 = new Capacitor
-    cout_capacitor_2.capacitance = 47uF +/- 10%
+    cout_capacitor_2.value = 47uF +/- 10%
     cout_capacitor_2.voltage = 16V
     cout_capacitor_2.series = "X5R"
     cout_capacitor_2.footprint = "C1210"
@@ -194,7 +194,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
     cout_capacitor_2.power ~ power_out_before_reverse_flow_protection
 
     cout_capacitor_3 = new Capacitor
-    cout_capacitor_3.capacitance = 47uF +/- 10%
+    cout_capacitor_3.value = 47uF +/- 10%
     cout_capacitor_3.voltage = 16V
     cout_capacitor_3.series = "X5R"
     cout_capacitor_3.footprint = "C1210"
@@ -203,7 +203,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Rpg) add resistor for PGOOD
     rpg_resistor = new Resistor
-    rpg_resistor.resistance = 105kohm +/- 1%
+    rpg_resistor.value = 105kohm +/- 1%
     rpg_resistor.footprint = "R0402"
     rpg_resistor.mpn = "C171671"
     rpg_resistor.p1 ~ ic.PGOOD
@@ -211,7 +211,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Rmodeg) add resistor for MODE
     rmodeg_resistor = new Resistor
-    rmodeg_resistor.resistance = 105kohm +/- 1%
+    rmodeg_resistor.value = 105kohm +/- 1%
     rmodeg_resistor.footprint = "R0402"
     rmodeg_resistor.mpn = "C171671"
     rmodeg_resistor.p1 ~ ic.MODE
@@ -219,7 +219,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Rtrip) add resistor for TRIP
     rtrip_resistor = new Resistor
-    rtrip_resistor.resistance = 150kohm +/- 1%
+    rtrip_resistor.value = 150kohm +/- 1%
     rtrip_resistor.footprint = "R0603"
     rtrip_resistor.mpn = "C22807"
     rtrip_resistor.p1 ~ ic.TRIP
@@ -227,7 +227,7 @@ module TPS53319DQPR_input_9_to_20V_output_5V_14A:
 
     # (Cvreg) add capacitor for VREG
     cvreg_capacitor = new Capacitor
-    cvreg_capacitor.capacitance = 1uF +/- 10%
+    cvreg_capacitor.value = 1uF +/- 10%
     cvreg_capacitor.footprint = "C0603"
     cvreg_capacitor.mpn = "C15849"
     cvreg_capacitor.p1 ~ ic.VREG

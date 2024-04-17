@@ -42,14 +42,14 @@ module LM74700QDBVRQ1:
 
     # add the Cin capacitor (22nF)
     cin_capacitor = new Capacitor
-    cin_capacitor.capacitance = 22nF +/- 10%
+    cin_capacitor.value = 22nF +/- 10%
     cin_capacitor.footprint = "C0402"
     cin_capacitor.mpn = "C1532"
     cin_capacitor.power ~ power_in
 
     # add the VCAP capacitor (100nF)
     vcap_capacitor = new Capacitor
-    vcap_capacitor.capacitance = 0.1uF +/- 10%
+    vcap_capacitor.value = 0.1uF +/- 10%
     vcap_capacitor.voltage = 50V
     vcap_capacitor.series = "X7R"
     vcap_capacitor.footprint = "C0402"
@@ -59,7 +59,7 @@ module LM74700QDBVRQ1:
 
     # add the Cout capacitor (100nF)
     cout_capacitor = new Capacitor
-    cout_capacitor.capacitance = 0.1uF +/- 10%
+    cout_capacitor.value = 0.1uF +/- 10%
     cout_capacitor.voltage = 50V
     cout_capacitor.series = "X7R"
     cout_capacitor.footprint = "C0402"

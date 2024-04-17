@@ -47,7 +47,7 @@ module SN74LVC2T45DCUR:
 
     # add bypass caps
     power_in_capacitor = new Capacitor
-    power_in_capacitor.capacitance = 0.1uF +/- 10%
+    power_in_capacitor.value = 0.1uF +/- 10%
     power_in_capacitor.voltage = 50V
     power_in_capacitor.series = "X7R"
     power_in_capacitor.footprint = "C0402"
@@ -55,7 +55,7 @@ module SN74LVC2T45DCUR:
     power_in_capacitor.power ~ power_in
 
     power_out_capacitor = new Capacitor
-    power_out_capacitor.capacitance = 0.1uF +/- 10%
+    power_out_capacitor.value = 0.1uF +/- 10%
     power_out_capacitor.voltage = 50V
     power_out_capacitor.series = "X7R"
     power_out_capacitor.footprint = "C0402"
@@ -64,7 +64,7 @@ module SN74LVC2T45DCUR:
 
     # Out
     data_in_1_resistor = new Resistor
-    data_in_1_resistor.resistance = 62ohm +/- 1%
+    data_in_1_resistor.value = 62ohm +/- 1%
     data_in_1_resistor.footprint = "R0402"
     data_in_1_resistor.mpn = "C4962"
     signal_out_1 = new Pair
@@ -72,7 +72,7 @@ module SN74LVC2T45DCUR:
     signal_out_1.gnd ~ power_out.gnd
 
     data_in_2_resistor = new Resistor
-    data_in_2_resistor.resistance = 62ohm +/- 1%
+    data_in_2_resistor.value = 62ohm +/- 1%
     data_in_2_resistor.footprint = "R0402"
     data_in_2_resistor.mpn = "C4962"
     signal_out_2 = new Pair
@@ -103,7 +103,7 @@ module SN74LVC2T45DCUR_one_used:
 
     # add bypass caps
     power_in_capacitor = new Capacitor
-    power_in_capacitor.capacitance = 0.1uF +/- 10%
+    power_in_capacitor.value = 0.1uF +/- 10%
     power_in_capacitor.voltage = 50V
     power_in_capacitor.series = "X7R"
     power_in_capacitor.footprint = "C0402"
@@ -111,7 +111,7 @@ module SN74LVC2T45DCUR_one_used:
     power_in_capacitor.power ~ power_in
 
     power_out_capacitor = new Capacitor
-    power_out_capacitor.capacitance = 0.1uF +/- 10%
+    power_out_capacitor.value = 0.1uF +/- 10%
     power_out_capacitor.voltage = 50V
     power_out_capacitor.series = "X7R"
     power_out_capacitor.footprint = "C0402"
@@ -120,7 +120,7 @@ module SN74LVC2T45DCUR_one_used:
 
     # Out
     data_in_1_resistor = new Resistor
-    data_in_1_resistor.resistance = 62ohm +/- 1%
+    data_in_1_resistor.value = 62ohm +/- 1%
     data_in_1_resistor.footprint = "R0402"
     data_in_1_resistor.mpn = "C4962"
     signal_out_1 = new Pair

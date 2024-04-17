@@ -30,27 +30,27 @@ module MOSFETcircuitPowerOnOff_4x_3_5A:
 
     # add the resistors for the N channel mosfet and the P channel mosfets
     power_p_mosfet_resistor_1 = new Resistor
-    power_p_mosfet_resistor_1.resistance = 100kohm +/- 1%
+    power_p_mosfet_resistor_1.value = 100kohm +/- 1%
     power_p_mosfet_resistor_1.footprint = "R0402"
     power_p_mosfet_resistor_1.mpn = "C25741"
 
     power_p_mosfet_resistor_2 = new Resistor
-    power_p_mosfet_resistor_2.resistance = 100kohm +/- 1%
+    power_p_mosfet_resistor_2.value = 100kohm +/- 1%
     power_p_mosfet_resistor_2.footprint = "R0402"
     power_p_mosfet_resistor_2.mpn = "C25741"
 
     power_p_mosfet_resistor_3 = new Resistor
-    power_p_mosfet_resistor_3.resistance = 100kohm +/- 1%
+    power_p_mosfet_resistor_3.value = 100kohm +/- 1%
     power_p_mosfet_resistor_3.footprint = "R0402"
     power_p_mosfet_resistor_3.mpn = "C25741"
 
     power_p_mosfet_resistor_4 = new Resistor
-    power_p_mosfet_resistor_4.resistance = 100kohm +/- 1%
+    power_p_mosfet_resistor_4.value = 100kohm +/- 1%
     power_p_mosfet_resistor_4.footprint = "R0402"
     power_p_mosfet_resistor_4.mpn = "C25741"
 
     power_n_mosfet_resistor = new Resistor
-    power_n_mosfet_resistor.resistance = 100kohm +/- 1%
+    power_n_mosfet_resistor.value = 100kohm +/- 1%
     power_n_mosfet_resistor.footprint = "R0402"
     power_n_mosfet_resistor.mpn = "C25741"
 
