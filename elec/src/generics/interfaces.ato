@@ -144,3 +144,15 @@ interface I2S:
     signal sck
     signal sd
     signal gnd
+
+interface SSI:
+    signal do
+    signal clk
+    signal csn
+    signal gnd
+
+interface QEP:
+    signal a
+    signal b
+    signal z
+    signal gnd

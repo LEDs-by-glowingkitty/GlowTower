@@ -2,7 +2,7 @@ import Power from "interfaces.ato"
 import Pair from "interfaces.ato"
 import DiffPair from "interfaces.ato"
 import Load from "interfaces.ato"
-import Resistor from "interfaces.ato"
+import Resistor from "resistors.ato"
 import Diode from "diodes.ato"
 
 component NFET:
@@ -31,25 +31,25 @@ module HalfBridge:
     output = new Pair
 
     # this doesnt work until we have replace with instance.
-    # # Components
-    # nfet_high = new NFET
-    # nfet_low = new NFET
-    # shunt = new Resistor
+    # Components
+    nfet_high = new NFET
+    nfet_low = new NFET
+    shunt = new Resistor
 
-    # # Connect power
-    # power.vcc ~ nfet_high.drain
-    # output ~ nfe_high.source
-    # output ~ nfet_low.drain
-    # power.gnd ~ shunt.2; shunt.1 ~ nfet_high.source
+    # Connect power
+    power.vcc ~ nfet_high.drain
+    output.io ~ nfet_high.source
+    output.io ~ nfet_low.drain
+    power.gnd ~ shunt.2; shunt.1 ~ nfet_low.source
 
-    # # Connect the gates
-    # gate_high.io ~ nfet_high.gate
-    # gate_low.io ~ nfet_low.gate
+    # Connect the gates
+    gate_high.io ~ nfet_high.gate
+    gate_low.io ~ nfet_low.gate
 
-    # # Connect the gnds
-    # output.gnd ~ power.gnd
-    # gate_high.gnd ~ power.gnd
-    # gate_low.gnd ~ power.gnd
+    # Connect the gnds
+    output.gnd ~ power.gnd
+    gate_high.gnd ~ power.gnd
+    gate_low.gnd ~ power.gnd
 
 module LowSideSwitch:
     fet = new Mosfet_nchannel

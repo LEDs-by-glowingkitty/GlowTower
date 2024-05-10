@@ -1,10 +1,10 @@
-import Power from "generics/interfaces.ato"
-import CYPD3177 from "parts/usb_pd_ics/CYPD3177/submodules/CYPD3177.ato"
-import Resistor from "generics/resistors.ato"
-import Capacitor from "generics/capacitors.ato"
-import Voltage_Divider_0603_100K__20K from "parts/voltage_dividers/0603/Voltage_Divider_0603_100K__20K.ato"
-import CYPD3177_LoadSwitchSafe5V from "parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitchSafe5V.ato"
-import CYPD3177_LoadSwitch100W from "parts/usb_pd_ics/CYPD3177/submodules/CYPD3177_LoadSwitch100W.ato"
+from "generics/interfaces.ato" import Power
+from "generics/resistors.ato" import Resistor
+from "generics/capacitors.ato" import Capacitor
+from "generics/vdivs.ato" import VDiv
+from "parts/usb_pd_ics/CYPD3177/CYPD3177.ato" import CYPD3177
+from "parts/usb_pd_ics/CYPD3177/CYPD3177_LoadSwitchSafe5V.ato" import CYPD3177_LoadSwitchSafe5V
+from "parts/usb_pd_ics/CYPD3177/CYPD3177_LoadSwitch100W.ato" import CYPD3177_LoadSwitch100W
 
 
 module CYPD3177_WithCoreParts:
@@ -16,16 +16,16 @@ module CYPD3177_WithCoreParts:
     power_in = new Power
     power_out_vbus = new Power
     power_out_5v = new Power
-    power_out_5v_before_reverse_flow_protection = new Power
     power_3_3v = new Power
     power_1_8v = new Power
 
     # And connect the GNDs together
-    signal gnd ~ power_in.gnd
-    gnd ~ power_out_vbus.gnd
-    gnd ~ power_out_5v.gnd
-    gnd ~ power_3_3v.gnd
-    gnd ~ power_1_8v.gnd
+    power = new Power
+    power.gnd ~ power_in.gnd
+    power.gnd ~ power_out_vbus.gnd
+    power.gnd ~ power_out_5v.gnd
+    power.gnd ~ power_3_3v.gnd
+    power.gnd ~ power_1_8v.gnd
 
     # Add the ic
     ic = new CYPD3177
@@ -46,21 +46,20 @@ module CYPD3177_WithCoreParts:
     power_out_5v_load_switch.power_in ~ power_in
     power_out_5v_load_switch.power_out ~ power_out_5v
 
-    # TODO: add to PCB layout 
     # Add 390pF caps for the CC1 and CC2 pins (as in evaluation board schematic)
     cc1_cap = new Capacitor
     cc1_cap.value = 390pF +/- 5%
     cc1_cap.footprint = "C0402"
     cc1_cap.mpn = "C527008"
     cc1_cap.power.vcc ~ ic.usb_pd.cc1
-    cc1_cap.power.gnd ~ gnd
+    cc1_cap.power.gnd ~ power.gnd
 
     cc2_cap = new Capacitor
     cc2_cap.value = 390pF +/- 5%
     cc2_cap.footprint = "C0402"
     cc1_cap.mpn = "C527008"
     cc2_cap.power.vcc ~ ic.usb_pd.cc2
-    cc2_cap.power.gnd ~ gnd
+    cc2_cap.power.gnd ~ power.gnd
 
     # Add 3.3uF cap for the VBUS of the USB-C port
     vbus_cap = new Capacitor
@@ -105,7 +104,7 @@ module CYPD3177_WithCoreParts:
     fault_pull_down_resistor.footprint = "R0603"
     fault_pull_down_resistor.mpn = "C25803"
     fault_pull_down_resistor.p1 ~ ic.FAULT
-    fault_pull_down_resistor.p2 ~ gnd
+    fault_pull_down_resistor.p2 ~ power.gnd
 
     # Add a pull up resistor for the FLIP pin, so that it is not floating
     flip_pull_up_resistor = new Resistor
@@ -114,12 +113,3 @@ module CYPD3177_WithCoreParts:
     flip_pull_up_resistor.mpn = "C4109"
     flip_pull_up_resistor.p1 ~ ic.FLIP
     flip_pull_up_resistor.p2 ~ power_3_3v.vcc
-
-    # Add a voltage divider, to be able to read with a microcontroller the current VDC out voltage
-    # Examples: 
-    # Input: 20V -> Output: 3.3V
-    # Input: 9V -> Output: 1.5V
-    signal power_out_vbus_readout
-    power_out_vbus_readout_voltage_divider = new Voltage_Divider_0603_100K__20K
-    power_out_vbus_readout_voltage_divider.power ~ power_out_vbus
-    power_out_vbus_readout_voltage_divider.power_out ~ power_out_vbus_readout

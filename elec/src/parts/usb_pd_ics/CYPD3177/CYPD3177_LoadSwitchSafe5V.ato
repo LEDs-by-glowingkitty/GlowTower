@@ -1,6 +1,6 @@
-import Power from "generics/interfaces.ato"
-import AO3401A from "parts/mosfets/AO3401A.ato"
-import Resistor from "generics/resistors.ato"
+from "generics/interfaces.ato" import Power 
+from "generics/resistors.ato" import Resistor
+from "parts/mosfets/AO3401A.ato" import AO3401A 
 
 
 module CYPD3177_LoadSwitchSafe5V:
@@ -20,14 +20,6 @@ module CYPD3177_LoadSwitchSafe5V:
     load_switch_mosfet_1.DRAIN ~ power_in.vcc
     load_switch_mosfet_2.DRAIN ~ power_out.vcc
 
-    # TODO: why is there 5V on the gate instead of being low? (which would connect VBUS to 5V)
-    # After checking last revision with similar circuit (Dev Edition 1), 
-    # it turns out the voltages at gate, source, drain are the same as in new design.
-    # So... the problem isn't new basically, I just removed the part of the electronics last time and ignored it that way
-    # TODO: test replacing two p channel mosfets with HSM4805 dual p channel mosfet (which I already use for 100W load switch)
-    # TODO: Test fix - remove big caps
-    # TODO: what other things did I change in comparison to previous version?
-    
     # add voltage divider
     # add pull up resistor
     pull_up_resistor = new Resistor

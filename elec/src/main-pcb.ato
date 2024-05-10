@@ -2,7 +2,7 @@ import buck_input_9_to_20V_output_5V_14A from "parts/buck_converters/buck_input_
 import ESP32_WROOM_32E_N8R2 from "parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
 import CP2102N from "parts/usb_to_serial/CP2102N.ato"
 import USB_C_Connector_5A from "parts/usb_connectors/USB-C_5A.ato"
-import CYPD3177_min_9V_2A from "parts/usb_pd_ics/CYPD3177/CYPD3177_min_9V_2A.ato"
+import CYPD3177_min_9V_2A from "parts/usb_pd_ics/CYPD3177/usb-pd-module-cypd3177.ato"
 import AMS1117_3_3 from "parts/ldo_converters/AMS1117-3.3.ato"
 import MSM261D4030H1CPM from "parts/microphones/MSM261D4030H1CPM.ato"
 from "parts/levelshifters/SN74LVC2T45DCUR.ato" import SN74LVC2T45DCUR, SN74LVC2T45DCUR_one_used

@@ -14,3 +14,6 @@ component BZT52C10 from ZenerDiode:
 
     signal input ~ anode
     signal output ~ cathode
+
+    output ~ pin 1
+    input ~ pin 2
