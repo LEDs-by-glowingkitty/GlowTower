@@ -1,0 +1,58 @@
+from "generics/interfaces.ato" import Power
+from "generics/vdivs.ato" import VDiv
+
+
+module VDiv_5_1K_and_1K from VDiv:
+    r_top.value = 5.1kohm +/- 1%
+    r_top.package = "0402"
+    r_top.footprint = "R0402"
+    r_top.mpn = "C25905"
+    r_bottom.value = 1kohm +/- 1%
+    r_bottom.package = "0402"
+    r_bottom.footprint = "R0402"
+    r_bottom.mpn = "C11702"
+    v_in = 0V to 3.3V
+    v_out = 0V to 3.3V
+    i_q = 0uA to 1mA
+
+
+module VDiv_5_1K_and_2_4K from VDiv:
+    r_top.value = 5.1kohm +/- 1%
+    r_top.package = "0402"
+    r_top.footprint = "R0402"
+    r_top.mpn = "C25905"
+    r_bottom.value = 2.4kohm +/- 1%
+    r_bottom.package = "0402"
+    r_bottom.footprint = "R0402"
+    r_bottom.mpn = "C25882"
+    v_in = 0V to 3.3V
+    v_out = 0V to 3.3V
+    i_q = 0uA to 1mA
+
+
+module VDiv_5_1K_and_5_1K from VDiv:
+    r_top.value = 5.1kohm +/- 1%
+    r_top.package = "0402"
+    r_top.footprint = "R0402"
+    r_top.mpn = "C25905"
+    r_bottom.value = 5.1kohm +/- 1%
+    r_bottom.package = "0402"
+    r_bottom.footprint = "R0402"
+    r_bottom.mpn = "C25905"
+    v_in = 0V to 3.3V
+    v_out = 0V to 3.3V
+    i_q = 0uA to 1mA
+
+
+module VDiv_5_1K_and_10K from VDiv:
+    r_top.value = 5.1kohm +/- 1%
+    r_top.package = "0402"
+    r_top.footprint = "R0402"
+    r_top.mpn = "C25905"
+    r_bottom.value = 10kohm +/- 1%
+    r_bottom.package = "0402"
+    r_bottom.footprint = "R0402"
+    r_bottom.mpn = "C25744"
+    v_in = 0V to 3.3V
+    v_out = 0V to 3.3V
+    i_q = 0uA to 1mA

@@ -1,0 +1,14 @@
+component AO3401A:
+    """
+    This is a P-Channel MOSFET.
+    30V 4A 44mΩ@10V,4.3A 1.4W P Channel SOT-23  MOSFETs ROHS
+    Datasheet: https://datasheet.lcsc.com/lcsc/1810171817_Alpha---Omega-Semicon-AO3401A_C15127.pdf
+    """
+    # component AO3401A
+    footprint = "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR"
+    lcsc_id = "C15127"
+    mpn = "C15127"
+    # pins
+    signal DRAIN ~ pin 3
+    signal GATE ~ pin 1
+    signal SOURCE ~ pin 2

@@ -1,0 +1,14 @@
+component AO3400A:
+    """
+    This is an N-channel MOSFET.
+    30V 5.7A 26.5mΩ@10V,5.7A 1.4W N Channel SOT-23-3L  MOSFETs ROHS
+    Datasheet: https://datasheet.lcsc.com/lcsc/1811081213_Alpha---Omega-Semicon-AO3400A_C20917.pdf
+    """
+    # component AO3400A
+    footprint = "SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+    lcsc_id = "C20917"
+    mpn = "C20917"
+    # pins
+    signal DRAIN ~ pin 3
+    signal GATE ~ pin 1
+    signal SOURCE ~ pin 2

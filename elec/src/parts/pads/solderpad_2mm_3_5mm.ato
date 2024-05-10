@@ -1,0 +1,9 @@
+component SolderPad_2mm_3_5mm:
+    """
+    This is a solderpad which is 2mm wide and 3.5mm long.
+    It can be used to solder external components via wires to the PCB.
+    """
+    footprint = "SolderPad_2mm_3_5mm"
+    mpn = "0"
+    # pins
+    signal p1 ~ pin 1

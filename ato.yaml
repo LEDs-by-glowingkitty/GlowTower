@@ -1,0 +1,11 @@
+ato-version: ^0.2.0
+builds:
+  default:
+    entry: elec/src/main-pcb.ato:MainPCB
+  button_pcb:
+    entry: elec/src/button-pcb.ato:ButtonPCB
+dependencies:
+- name: generics
+  version_spec: '@09ad6baeaab93d53b9b6c90069ac750f4161d76f'
+  link_broken: true
+  path: elec/src/generics

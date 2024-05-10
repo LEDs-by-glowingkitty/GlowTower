@@ -1,0 +1,239 @@
+import Power from "generics/interfaces.ato"
+import Capacitor from "generics/capacitors.ato"
+import Resistor from "generics/resistors.ato"
+import SMMS1360_2R2M from "parts/inductors/SMMS1360_2R2M.ato"
+import LM74700QDBVRQ1 from "parts/ideal_diodes/LM74700QDBVRQ1.ato"
+
+
+component TPS53319DQPR:
+    """
+    This is a buck converter from Texas Instruments.
+    Datasheet: https://www.ti.com/lit/ds/symlink/tps53319.pdf
+    """
+    # component TPS53319DQPR
+    footprint = "LSON-CLIP-22_L6.0-W5.0-P0.50-BL-EP"
+    lcsc_id = "C181971"
+    mpn = "C181971"
+    # pins
+    signal VFB ~ pin 1      # Output feedback input. Connect this pin to VOUT through a resistor divider.
+    signal EN ~ pin 2       # Enable pin. Typical turnon threshold voltage is 1.3 V. Typical turnoff threshold voltage is 1.0 V.
+    signal PGOOD ~ pin 3    # Open drain power-good flag. Provides 1-ms start-up delay after VFB falls in specified limits. When VFB
+                            # goes out of the specified limits, PGOOD goes low after a 2-μs delay.
+    signal VBST ~ pin 4     # Supply input for high-side FET gate driver (boost terminal). Connect capacitor from this pin to LL node.
+                            # Internally connected to VREG via bootstrap MOSFET switch.
+    signal ROVP ~ pin 5     # Redundant overvoltage protection (OVP) input. Use a resistor divider to connect this pin to VOUT. Internally
+                            # pulled down to GND with a 1.5-MΩ resistor. If redundant OVP is not needed, connect this pin to GND. Do
+                            # not leave ROVP pin floating (see Section 8.3.9).
+    signal LL ~ pin 6       # Output of converted power. Connect this pin to the output inductor.
+    LL ~ pin 7
+    LL ~ pin 8
+    LL ~ pin 9
+    LL ~ pin 10
+    LL ~ pin 11
+    signal VIN ~ pin 12     # Conversion power input. The conversion input voltage range is from 1.5 V to 22 V.
+    VIN ~ pin 13
+    VIN ~ pin 14
+    VIN ~ pin 15
+    VIN ~ pin 16
+    VIN ~ pin 17
+    signal VREG ~ pin 18    # 5-V low dropout (LDO) output. Supplies the internal analog circuitry and driver circuitry.
+    signal VDD ~ pin 19     # Controller power supply input. VDD input voltage range is from 4.5 V to 25 V.
+    signal MODE ~ pin 20    # Soft start and mode selection. Connect a resistor to select soft-start time using Table 8-3. The soft-start
+                            # time is detected and stored into internal register during start-up.
+    signal TRIP ~ pin 21    # OCL detection threshold setting pin. ITRIP = 10 μA at room temperature. 3000 ppm/°C current is sourced
+                            # and set the OCL trip voltage as follows.
+                            # VOCL = VTRIP/32 (VTRIP ≤ 2.4 V, VOCL ≤ 75 mV)
+    signal RF ~ pin 22      # Switching frequency selection. Connect a resistor to GND or VREG to select switching frequency using
+                            # Table 8-1. The switching frequency is detected and stored during the start-up.
+    signal EPAD ~ pin 23    # Ground and thermal pad of the device. Use proper number of vias to connect to ground plane.
+
+    # add power input
+    power_in = new Power
+    power_in.vcc ~ VIN
+    power_in.vcc ~ VDD
+    power_in.gnd ~ EPAD
+
+
+module TPS53319DQPR_input_9_to_20V_output_5V_14A:
+    # add power interfaces
+    power_in = new Power
+    power_out = new Power
+    power_out_before_reverse_flow_protection = new Power
+    signal gnd ~ power_in.gnd
+    gnd ~ power_out.gnd
+    gnd ~ power_out_before_reverse_flow_protection.gnd
+
+    # (U1) add IC
+    ic = new TPS53319DQPR
+    ic.power_in ~ power_in
+
+    # (Cin) add input capacitor group
+    cin_capacitor_1 = new Capacitor
+    cin_capacitor_1.value = 22uF +/- 10%
+    cin_capacitor_1.footprint = "C1206"
+    cin_capacitor_1.mpn = "C12891"
+    cin_capacitor_1.power ~ power_in
+
+    cin_capacitor_2 = new Capacitor
+    cin_capacitor_2.value = 22uF +/- 10%
+    cin_capacitor_2.footprint = "C1206"
+    cin_capacitor_2.mpn = "C12891"
+    cin_capacitor_2.power ~ power_in
+
+    cin_capacitor_3 = new Capacitor
+    cin_capacitor_3.value = 22uF +/- 10%
+    cin_capacitor_3.footprint = "C1206"
+    cin_capacitor_3.mpn = "C12891"
+    cin_capacitor_3.power ~ power_in
+
+    # (Cvin) add input capacitor
+    cvin_capacitor = new Capacitor
+    cvin_capacitor.value = 4.7uF +/- 10%
+    cvin_capacitor.footprint = "C1206"
+    cvin_capacitor.mpn = "C29823"
+    cvin_capacitor.power ~ power_in
+
+    # (Ren) add resistor for EN pin
+    ren_resistor = new Resistor
+    ren_resistor.value = 1kohm +/- 1%
+    ren_resistor.footprint = "R0402"
+    ren_resistor.mpn = "C11702"
+    ren_resistor.p2 ~ ic.EN
+
+    # Add voltage divider for the EN pin
+    # (Rent) add resistor 1
+    rent_resistor = new Resistor
+    rent_resistor.value = 392kohm +/- 1%
+    rent_resistor.footprint = "R0402"
+    rent_resistor.mpn = "C327347"
+    rent_resistor.p1 ~ power_in.vcc
+    rent_resistor.p2 ~ ren_resistor.p1
+
+    # (Renb) add resistor 2
+    renb_resistor = new Resistor
+    renb_resistor.value = 86.6kohm +/- 1%
+    renb_resistor.footprint = "R0402"
+    renb_resistor.mpn = "C19709"
+    renb_resistor.p1 ~ ren_resistor.p1
+    renb_resistor.p2 ~ gnd
+
+    # (L1) add power output inductor
+    l1_inductor = new SMMS1360_2R2M
+    l1_inductor.input ~ ic.LL
+    l1_inductor.output ~ power_out_before_reverse_flow_protection.vcc
+
+    # (Cbst) add capacitor for VBST
+    cbst_capacitor = new Capacitor
+    cbst_capacitor.value = 0.1uF +/- 10%
+    cbst_capacitor.voltage = 50V
+    cbst_capacitor.series = "X7R"
+    cbst_capacitor.footprint = "C0402"
+    cbst_capacitor.mpn = "C307331"
+    cbst_capacitor.p1 ~ ic.LL
+    cbst_capacitor.p2 ~ ic.VBST
+
+    # (Rlbst) add resistor
+    rlbst_resistor = new Resistor
+    rlbst_resistor.value = 1.82kohm +/- 1%
+    rlbst_resistor.footprint = "R0402"
+    rlbst_resistor.mpn = "C5121516"
+    rlbst_resistor.p1 ~ ic.LL
+
+    # (Clfb) add capacitor
+    clfb_capacitor = new Capacitor
+    clfb_capacitor.value = 0.1uF +/- 10%
+    clfb_capacitor.voltage = 50V
+    clfb_capacitor.series = "X7R"
+    clfb_capacitor.footprint = "C0805"
+    clfb_capacitor.mpn = "C49678"
+    clfb_capacitor.p1 ~ rlbst_resistor.p2
+    clfb_capacitor.p2 ~ power_out_before_reverse_flow_protection.vcc
+
+    # (Clrfb) add capacitor
+    clrfb_capacitor = new Capacitor
+    clrfb_capacitor.value = 1nF +/- 10%
+    clrfb_capacitor.voltage = 50V
+    clrfb_capacitor.series = "X7R"
+    clrfb_capacitor.footprint = "C0402"
+    clrfb_capacitor.mpn = "C1523"
+    clrfb_capacitor.p1 ~ ic.VFB
+    clrfb_capacitor.p2 ~ rlbst_resistor.p2
+
+    # Add voltage divider for programming the output voltage
+    # (Rfbt) add resistor 1
+    rfbt_resistor = new Resistor
+    rfbt_resistor.value = 71.5kohm +/- 1%
+    rfbt_resistor.footprint = "R0402"
+    rfbt_resistor.mpn = "C43534"
+    rfbt_resistor.p1 ~ power_out_before_reverse_flow_protection.vcc
+    rfbt_resistor.p2 ~ ic.VFB
+
+    # (Rfbb) add resistor 2
+    rfbb_resistor = new Resistor
+    rfbb_resistor.value = 10kohm +/- 1%
+    rfbb_resistor.footprint = "R0402"
+    rfbb_resistor.mpn = "C25744"
+    rfbb_resistor.p1 ~ ic.VFB
+    rfbb_resistor.p2 ~ gnd
+
+    # (Cout) add output capacitors
+    cout_capacitor_1 = new Capacitor
+    cout_capacitor_1.value = 47uF +/- 10%
+    cout_capacitor_1.voltage = 16V
+    cout_capacitor_1.series = "X5R"
+    cout_capacitor_1.footprint = "C1210"
+    cout_capacitor_1.mpn = "C77101"
+    cout_capacitor_1.power ~ power_out_before_reverse_flow_protection
+
+    cout_capacitor_2 = new Capacitor
+    cout_capacitor_2.value = 47uF +/- 10%
+    cout_capacitor_2.voltage = 16V
+    cout_capacitor_2.series = "X5R"
+    cout_capacitor_2.footprint = "C1210"
+    cout_capacitor_2.mpn = "C77101"
+    cout_capacitor_2.power ~ power_out_before_reverse_flow_protection
+
+    cout_capacitor_3 = new Capacitor
+    cout_capacitor_3.value = 47uF +/- 10%
+    cout_capacitor_3.voltage = 16V
+    cout_capacitor_3.series = "X5R"
+    cout_capacitor_3.footprint = "C1210"
+    cout_capacitor_3.mpn = "C77101"
+    cout_capacitor_3.power ~ power_out_before_reverse_flow_protection
+
+    # (Rpg) add resistor for PGOOD
+    rpg_resistor = new Resistor
+    rpg_resistor.value = 105kohm +/- 1%
+    rpg_resistor.footprint = "R0402"
+    rpg_resistor.mpn = "C171671"
+    rpg_resistor.p1 ~ ic.PGOOD
+    rpg_resistor.p2 ~ ic.VREG
+
+    # (Rmodeg) add resistor for MODE
+    rmodeg_resistor = new Resistor
+    rmodeg_resistor.value = 105kohm +/- 1%
+    rmodeg_resistor.footprint = "R0402"
+    rmodeg_resistor.mpn = "C171671"
+    rmodeg_resistor.p1 ~ ic.MODE
+    rmodeg_resistor.p2 ~ gnd
+
+    # (Rtrip) add resistor for TRIP
+    rtrip_resistor = new Resistor
+    rtrip_resistor.value = 150kohm +/- 1%
+    rtrip_resistor.footprint = "R0603"
+    rtrip_resistor.mpn = "C22807"
+    rtrip_resistor.p1 ~ ic.TRIP
+    rtrip_resistor.p2 ~ gnd
+
+    # (Cvreg) add capacitor for VREG
+    cvreg_capacitor = new Capacitor
+    cvreg_capacitor.value = 1uF +/- 10%
+    cvreg_capacitor.footprint = "C0603"
+    cvreg_capacitor.mpn = "C15849"
+    cvreg_capacitor.p1 ~ ic.VREG
+    cvreg_capacitor.p2 ~ gnd
+
+    # add reverse flow protection for 5V output, via ideal diode
+    reverse_flow_protection_ideal_diode = new LM74700QDBVRQ1
+    reverse_flow_protection_ideal_diode.power_in ~ power_out_before_reverse_flow_protection
+    reverse_flow_protection_ideal_diode.power_out ~ power_out

@@ -1,0 +1,191 @@
+import Resistor from "generics/resistors.ato"
+import Capacitor from "generics/capacitors.ato"
+from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG
+import TS_1185EC_C_D_B from "parts/buttons/TS_1185EC_C_D_B.ato"
+
+
+component _ESP32_WROOM_32E_N8R2:
+    """
+    This is the ESP32 WROOM 32E N8R2 module from Espressif.
+    It has 8MB flash and 2MB PSRAM.
+    Datasheet: https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf
+    Specs:
+    - 2.4 GHz Wi-Fi
+    - Bluetooth 4.2
+    - Dual-core processor with up to 240 MHz
+
+    Info: 
+    To save even more space on a PCB, you can use the IC directly (ESP32-D0WDQ6) and add the required components (crystal, capacitors, resistors, etc.) manually.
+    However, the module is recommended for most projects, as it is easier to implement and has a built-in antenna.
+    """
+    # component ESP32-WROOM-32E-N8R2
+    footprint = "ESP32-WROOM-32E"
+    lcsc_id = "C5361945"
+    mpn = "C5361945"
+
+    # add specs
+    v_in = 3.0V to 3.6V
+    current = 80mA to 250mA
+
+    # pins
+    # INFO: Many of the disconnected pins are required to be low or high on boot, or else prevent the ESP32 from booting. Therefore shouldn't be used.
+    signal GND ~ pin 1          # Ground
+    signal _3V3 ~ pin 2         # 3.3V power supply
+    signal EN ~ pin 3           # (INPUT ONLY) High: On, enables the chip. | Low: Off, the chip powers off | Note: Do not leave the pin floating.
+    signal SENSOR_VP ~ pin 4    # (INPUT ONLY) GPIO36, ADC1_CH0, RTC_GPIO0
+    signal IO36 ~ SENSOR_VP
+    signal SENSOR_VN ~ pin 5    # (INPUT ONLY) GPIO39, ADC1_CH3, RTC_GPIO3
+    signal IO39 ~ SENSOR_VN
+    signal IO34 ~ pin 6         # (INPUT ONLY) GPIO34, ADC1_CH6, RTC_GPIO4
+    signal IO35 ~ pin 7         # (INPUT ONLY) GPIO35, ADC1_CH7, RTC_GPIO5
+    signal IO32 ~ pin 8         # GPIO32, XTAL_32K_P (32.768 kHz crystal oscillator input), ADC1_CH4, TOUCH9, RTC_GPIO9
+    signal IO33 ~ pin 9         # GPIO33, XTAL_32K_N (32.768 kHz crystal oscillator output), ADC1_CH5, TOUCH8, RTC_GPIO8
+    signal IO25 ~ pin 10        # GPIO25, DAC_1, ADC2_CH8, RTC_GPIO6, EMAC_RXD0
+    signal IO26 ~ pin 11        # GPIO26, DAC_2, ADC2_CH9, RTC_GPIO7, EMAC_RXD1
+    signal IO27 ~ pin 12        # GPIO27, ADC2_CH7, TOUCH7, RTC_GPIO17, EMAC_RX_DV
+    signal IO14 ~ pin 13        # GPIO14, ADC2_CH6, TOUCH6, RTC_GPIO16, MTMS, HSPICLK, HS2_CLK, SD_CLK, EMAC_TXD2
+    signal IO12 ~ pin 14        # !!! pin must be LOW during boot !!!       GPIO12, ADC2_CH5, TOUCH5, RTC_GPIO15, MTDI, HSPIQ, HS2_DATA2, SD_DATA2, EMAC_TXD3
+    GND ~ pin 15                # Ground
+    signal IO13 ~ pin 16        # GPIO13, ADC2_CH4, TOUCH4, RTC_GPIO14, MTCK, HSPID, HS2_DATA3, SD_DATA3, EMAC_RX_ER
+    signal IO15 ~ pin 23        # !!! must be HIGH during boot, prevents startup log if pulled LOW !!!      GPIO15, ADC2_CH3, TOUCH3, MTDO, HSPICS0, RTC_GPIO13, HS2_CMD, SD_CMD, EMAC_RXD3
+    signal IO2 ~ pin 24         # !!! must be LOW during boot and also connected to the on-board LED !!!    GPIO2, ADC2_CH2, TOUCH2, RTC_GPIO12, HSPIWP, HS2_DATA0, SD_DATA0
+    signal IO0 ~ pin 25         # GPIO0, ADC2_CH1, TOUCH1, RTC_GPIO11, CLK_OUT1, EMAC_TX_CLK
+    signal IO4 ~ pin 26         # GPIO4, ADC2_CH0, TOUCH0, RTC_GPIO10, HSPIHD, HS2_DATA1, SD_DATA1, EMAC_TX_ER
+    signal IO16 ~ pin 27        # GPIO16, HS1_DATA4, U2RXD, EMAC_CLK_OUT
+    signal IO17 ~ pin 28        # GPIO17, HS1_DATA5, U2TXD, EMAC_CLK_OUT_180
+    signal IO5 ~ pin 29         # !!! pin must be HIGH during boot !!!     GPIO5, VSPICS0, HS1_DATA6, EMAC_RX_CLK
+    signal IO18 ~ pin 30        # GPIO18, VSPICLK, HS1_DATA7
+    signal IO19 ~ pin 31        # GPIO19, VSPIQ, U0CTS, EMAC_TXD0
+    signal IO21 ~ pin 33        # GPIO21, VSPIHD, EMAC_TX_EN
+    signal RXD0 ~ pin 34        # GPIO3, U0RXD, CLK_OUT2
+    signal IO3 ~ RXD0
+    signal TXD0 ~ pin 35        # GPIO1, U0TXD, CLK_OUT3, EMAC_RXD2
+    signal IO1 ~ TXD0
+    signal IO22 ~ pin 36        # GPIO22, VSPIWP, U0RTS, EMAC_TXD1
+    signal IO23 ~ pin 37        # GPIO23, VSPID, HS1_STROBE
+    GND ~ pin 38                # Ground
+    GND ~ pin 39                # Ground
+
+    # add the power interface for 3.3V
+    power = new Power
+
+    # connect the power interface for 3.3V
+    power.vcc ~ _3V3
+    power.gnd ~ GND
+
+    # add I2C interface
+    i2c = new I2C
+    i2c.sda ~ IO21
+    i2c.scl ~ IO22
+    i2c.gnd ~ GND
+
+    # add I2S interface
+    i2s = new I2S
+    i2s.ws ~ IO23
+    i2s.sck ~ IO25
+    i2s.sd ~ IO26
+    i2s.gnd ~ GND
+
+    # add SPI interface 
+    # (DMX can also be connected via SPI, for example via the SparkFun DMX shield for ESP32)
+    spi = new SPI
+    spi.miso ~ IO13
+    spi.mosi ~ IO14
+    spi.sck ~ IO4
+    spi.cs ~ IO15
+    spi.gnd ~ GND
+
+    # add UART
+    uart = new UART
+    uart.tx ~ TXD0
+    uart.rx ~ RXD0
+    uart.gnd ~ GND
+
+    # add JTAG interface
+    jtag = new JTAG
+    jtag.tck ~ IO13
+    jtag.tms ~ IO14
+    jtag.tdi ~ IO12
+    jtag.tdo ~ IO15
+    jtag.reset ~ EN
+    jtag.vcc ~ _3V3
+    jtag.gnd ~ GND
+
+    # INFO: Ethernet is not added here because it could cause conflicts with I2S and I2C devices.
+    # If you plan on adding ethernet, make sure it doesn't cause any conflicts.
+
+module ESP32_WROOM_32E_N8R2:
+    # add power interface
+    power = new Power
+
+    # add IC
+    ic = new _ESP32_WROOM_32E_N8R2
+    ic.power ~ power
+
+    # add interfaces
+    i2c = new I2C
+    i2c ~ ic.i2c
+    i2s = new I2S
+    i2s ~ ic.i2s
+    spi = new SPI
+    spi ~ ic.spi
+    uart = new UART
+    uart ~ ic.uart
+    jtag = new JTAG
+    jtag ~ ic.jtag
+
+    # Add capacitor for 3.3V input of ESP32
+    power_cap = new Capacitor
+    power_cap.value = 10uF +/- 20%
+    power_cap.footprint = "C0603"
+    power_cap.mpn = "C96446"
+    power_cap.power ~ power
+
+    # Add the reset/EN button
+    en_button = new TS_1185EC_C_D_B
+    en_button.input ~ ic.EN
+    en_button.output ~ power.gnd
+
+    # Add a delay capacitor for the reset/EN pin
+    en_delay_cap = new Capacitor
+    en_delay_cap.value = 1uF +/- 10%
+    en_delay_cap.footprint = "C0603"
+    en_delay_cap.mpn = "C15849"
+    en_delay_cap.p1 ~ ic.EN
+    en_delay_cap.p2 ~ power.gnd
+
+    # Add a pull up resistor for the reset/EN pin
+    en_pullup_resistor = new Resistor
+    en_pullup_resistor.value = 5.1kohm +/- 1%
+    en_pullup_resistor.footprint = "R0402"
+    en_pullup_resistor.mpn = "C25905"
+    en_pullup_resistor.p1 ~ ic.EN
+    en_pullup_resistor.p2 ~ power.vcc
+
+    # Add the boot button
+    boot_button = new TS_1185EC_C_D_B
+    boot_button.input ~ ic.IO0
+    boot_button.output ~ power.gnd
+    
+    # Add a pull up resistor for the boot button
+    boot_pullup_resistor = new Resistor
+    boot_pullup_resistor.value = 100kohm +/- 1%
+    boot_pullup_resistor.footprint = "R0402"
+    boot_pullup_resistor.mpn = "C25741"
+    boot_pullup_resistor.p1 ~ ic.IO0
+    boot_pullup_resistor.p2 ~ power.vcc
+
+    # Add pull up resistors for the I2C interface
+    i2c_pullup_resistor_sda = new Resistor
+    i2c_pullup_resistor_sda.value = 2kohm +/- 1%
+    i2c_pullup_resistor_sda.footprint = "R0402"
+    i2c_pullup_resistor_sda.mpn = "C4109"
+    i2c_pullup_resistor_sda.p1 ~ i2c.sda
+    i2c_pullup_resistor_sda.p2 ~ power.vcc
+
+    i2c_pullup_resistor_scl = new Resistor
+    i2c_pullup_resistor_scl.value = 2kohm +/- 1%
+    i2c_pullup_resistor_scl.footprint = "R0402"
+    i2c_pullup_resistor_scl.mpn = "C4109"
+    i2c_pullup_resistor_scl.p1 ~ i2c.scl
+    i2c_pullup_resistor_scl.p2 ~ power.vcc

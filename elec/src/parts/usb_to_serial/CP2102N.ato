@@ -1,0 +1,125 @@
+import Capacitor from "generics/capacitors.ato"
+import Resistor from "generics/resistors.ato"
+import SP0503BAHTG from "parts/diodes/tvs/SP0503BAHTG.ato"
+import UMH3N from "parts/transistors/UMH3N.ato"
+from "generics/interfaces.ato" import USB2, Power, UART
+
+component CP2102N_A02_GQFN24R:
+    """
+    This is the CP2102N USB to serial IC from Silicon Labs.
+    In comparison to the CP2102, the CP2102N has an increased maximum data rate of 3Mbps (vs 2Mbps) and a few additional features.
+    Datasheet: https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf
+
+    Included are also the required capacitors, resistors, ESD protection for the D+ and D- lines, and an auto-reset dual transistor.
+    """
+
+    # component CP2102N-A02-GQFN24R
+    footprint = "QFN-24_L4.0-W4.0-P0.50-TL-EP2.6"
+    lcsc_id = "C969151"
+    mpn = "C969151"
+
+    # pins
+    signal RI_CLK ~ pin 1           # Ring Indicator/Clock Input
+    signal GND ~ pin 2              # Ground
+    signal dplus ~ pin 3            # Data+ Line
+    signal dminus ~ pin 4           # Data- Line
+    signal VIO ~ pin 5              # Voltage Input/Output
+    signal VDD ~ pin 6              # Power Supply
+    signal VREGIN ~ pin 7           # Voltage Regulator Input
+    signal VBUS ~ pin 8             # USB Bus Voltage
+    signal RSTb ~ pin 9             # Reset. The RSTb pin will be driven low during power-on and power failure reset events
+    signal GPIO_3_WAKEUP ~ pin 11   # General Purpose Input/Output 3 / Wakeup
+    signal GPIO_2_RS485 ~ pin 12    # General Purpose Input/Output 2 / RS485
+    signal GPIO_1_RXT ~ pin 13      # General Purpose Input/Output 1 / Receive Transmit
+    signal GPIO_0_TXT ~ pin 14      # General Purpose Input/Output 0 / Transmit
+    signal SUSPENDb ~ pin 15        # Suspend
+    signal SUSPEND ~ pin 17         # Suspend
+    signal CTS ~ pin 18             # Clear To Send
+    signal RTS ~ pin 19             # Request To Send
+    signal RXD ~ pin 20             # Receive Data
+    signal TXD ~ pin 21             # Transmit Data
+    signal DSR ~ pin 22             # Data Set Ready
+    signal DTR ~ pin 23             # Data Terminal Ready
+    signal DCD ~ pin 24             # Data Carrier Detect
+    GND ~ pin 25                    # Ground
+
+    # Add USB2
+    usb = new USB2
+    usb.dp ~ dplus
+    usb.dm ~ dminus
+    usb.gnd ~ GND
+
+    # Add UART
+    uart = new UART
+    uart.tx ~ TXD
+    uart.rx ~ RXD
+    uart.gnd ~ GND
+
+    # Add power (3.3V)
+    power = new Power
+    power.vcc ~ VBUS
+    power.vcc ~ VREGIN
+    power.vcc ~ VDD
+    power.vcc ~ VIO
+    power.gnd ~ GND
+
+
+module CP2102N:
+    # add power (3.3V)
+    power = new Power
+    signal gnd ~ power.gnd
+    
+    # add IC
+    ic = new CP2102N_A02_GQFN24R
+    ic.power ~ power
+
+    # add interfaces
+    uart = new UART
+    uart ~ ic.uart
+
+    usb = new USB2
+    usb ~ ic.usb
+
+    # Add capacitors for the VREGIN and VDD pins
+    small_cap = new Capacitor
+    small_cap.value = 0.1uF +/- 10%
+    small_cap.voltage = 50V
+    small_cap.series = "X7R"
+    small_cap.footprint = "C0402"
+    small_cap.mpn = "C307331"
+    small_cap.power ~ power
+
+    large_cap = new Capacitor
+    large_cap.value = 10uF +/- 20%
+    large_cap.footprint = "C0603"
+    large_cap.mpn = "C96446"
+    large_cap.power ~ power
+
+    # Add a pull up resistor for the RSTb pin.
+    pull_up_resistor = new Resistor
+    pull_up_resistor.value = 1kohm +/- 1%
+    pull_up_resistor.footprint = "R0402"
+    pull_up_resistor.mpn = "C11702"
+    pull_up_resistor.p1 ~ ic.RSTb
+    pull_up_resistor.p2 ~ power.vcc
+
+    # Add ESD protection for the D+ and D- lines
+    # (ESD protection for VBUS not included to make it make it easier compatible with USB PD systems where ESD protection is done via the USB PD controller)
+    esd_protection_diode = new SP0503BAHTG
+    esd_protection_diode.gnd ~ gnd
+    esd_protection_diode.input2 ~ ic.dplus
+    esd_protection_diode.input3 ~ ic.dminus
+
+    # Add auto-reset dual transistor
+    auto_reset_transistor = new UMH3N
+    auto_reset_transistor.p1 ~ ic.RTS
+    auto_reset_transistor.p2 ~ ic.DTR
+    auto_reset_transistor.p4 ~ ic.DTR
+    auto_reset_transistor.p5 ~ ic.RTS
+    
+    # Auto program:
+    # DTR   RTS -->	EN 	IO0
+    # 1	    1		1	1
+    # 0	    0		1	1
+    # 1	    0		0	1
+    # 0	    1		1	0

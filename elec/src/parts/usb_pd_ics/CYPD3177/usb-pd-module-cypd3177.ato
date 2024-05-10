@@ -1,0 +1,26 @@
+from "generics/interfaces.ato" import I2C, USB_PD, Power
+from "generics/vdivs.ato" import VDiv
+from "parts/usb_pd_ics/CYPD3177/CYPD3177_WithCoreParts.ato" import CYPD3177_WithCoreParts
+from "parts/usb_pd_ics/CYPD3177/CYPD3177_voltage_dividers.ato" import VDiv_5_1K_and_1K, VDiv_5_1K_and_2_4K
+
+
+module CYPD3177_min_9V_2A from CYPD3177_WithCoreParts:
+    """
+    This is a module for the CYPD3177, where the CYPD3177 is setup to request at least 9V at 2A from the power supply.
+    If the power supply cannot provide this, the CYPD3177 will give out via SAVE_PWR 5V at 900mA.
+    """
+    # Request 9V (min)
+    voltage_request_voltage_divider = new VDiv_5_1K_and_1K
+    voltage_request_voltage_divider.power ~ power_3_3v
+    voltage_request_voltage_divider.output.io ~ ic.VBUS_MIN
+
+    # Request 20V (max) (via pull up to 3.3V)
+    ic.VBUS_MAX ~ power_3_3v.vcc
+
+    # Request 2A (min)
+    current_request_voltage_divider = new VDiv_5_1K_and_2_4K
+    current_request_voltage_divider.power ~ power_3_3v
+    current_request_voltage_divider.output.io ~ ic.ISNK_COARSE
+
+    # Request +0mA (via pull down to GND)
+    ic.ISNK_FINE ~ power.gnd
