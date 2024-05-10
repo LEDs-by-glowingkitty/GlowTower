@@ -1,24 +1,25 @@
-import buck_input_9_to_20V_output_5V_14A from "parts/buck_converters/buck_input_9_to_20V_output_5V_14A.ato"
-import ESP32_WROOM_32E_N8R2 from "parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato"
-import CP2102N from "parts/usb_to_serial/CP2102N.ato"
-import USB_C_Connector_5A from "parts/usb_connectors/USB-C_5A.ato"
-import CYPD3177_min_9V_2A from "parts/usb_pd_ics/CYPD3177/usb-pd-module-cypd3177.ato"
-import AMS1117_3_3 from "parts/ldo_converters/AMS1117-3.3.ato"
-import MSM261D4030H1CPM from "parts/microphones/MSM261D4030H1CPM.ato"
-from "parts/levelshifters/SN74LVC2T45DCUR.ato" import SN74LVC2T45DCUR, SN74LVC2T45DCUR_one_used
-import MOSFETcircuitPowerOnOff_1x_1A from "parts/power_mosfet_circuits/power_on_off_1x_1A.ato"
-import MOSFETcircuitPowerOnOff_4x_3_5A from "parts/power_mosfet_circuits/power_on_off_4x_3_5A.ato"
-import TS_1185EC_C_D_B from "parts/buttons/TS_1185EC_C_D_B.ato"
-import _74LVC2G04DW_7 from "parts/inverters/74LVC2G04DW_7.ato"
-import Resistor from "generics/resistors.ato"
-import Capacitor from "generics/capacitors.ato"
-from "parts/pin_headers/PinHeader_2_54mm.ato" import PinHeader_2_54mm_2pins, PinHeader_2_54mm_3pins
+from "generics/resistors.ato" import Resistor
+from "generics/vdivs.ato" import VDiv
+from "generics/capacitors.ato" import Capacitor
 from "generics/interfaces.ato" import Power, UART, I2C, SPI, I2S, JTAG, USB2, USB_PD
-import SK12D07VG4 from "parts/switches/SK12D07VG4.ato"
-import SMBJ33CA from "parts/diodes/tvs/SMBJ33CA.ato"
-import Solderpads_25x from "parts/pads/solderpads_25x.ato"
+
+from "parts/buck_converters/buck_input_9_to_20V_output_5V_14A.ato" import buck_input_9_to_20V_output_5V_14A
+from "parts/microcontrollers/ESP32-WROOM-32E-N8R2.ato" import ESP32_WROOM_32E_N8R2
+from "parts/usb_to_serial/CP2102N.ato" import CP2102N
+from "parts/usb_connectors/USB-C_5A.ato" import USB_C_Connector_5A
+from "parts/usb_pd_ics/CYPD3177/usb-pd-module-cypd3177.ato" import CYPD3177_min_9V_2A
+from "parts/ldo_converters/AMS1117-3.3.ato" import AMS1117_3_3
+from "parts/microphones/MSM261D4030H1CPM.ato" import MSM261D4030H1CPM
+from "parts/levelshifters/SN74LVC2T45DCUR.ato" import SN74LVC2T45DCUR, SN74LVC2T45DCUR_one_used
+from "parts/power_mosfet_circuits/power_on_off_1x_1A.ato" import MOSFETcircuitPowerOnOff_1x_1A
+from "parts/power_mosfet_circuits/power_on_off_4x_3_5A.ato" import MOSFETcircuitPowerOnOff_4x_3_5A
+from "parts/buttons/TS_1185EC_C_D_B.ato" import TS_1185EC_C_D_B
+from "parts/inverters/74LVC2G04DW_7.ato" import _74LVC2G04DW_7
+from "parts/switches/SK12D07VG4.ato" import SK12D07VG4
+from "parts/diodes/tvs/SMBJ33CA.ato" import SMBJ33CA
+from "parts/pads/solderpads_25x.ato" import Solderpads_25x
 from "parts/mounting_holes.ato" import MountingHole_M5, MountingHole_M3
-import TS_1185EC_C_D_B from "parts/buttons/TS_1185EC_C_D_B.ato"
+from "parts/pin_headers/PinHeader_2_54mm.ato" import PinHeader_2_54mm_2pins, PinHeader_2_54mm_3pins
 
 
 module MainPCB:
@@ -61,7 +62,7 @@ module MainPCB:
     esp32.i2s ~ i2s
     esp32.spi ~ spi
     esp32.jtag ~ jtag
-    
+
     # Connected pins besides default pins:
     # IO5: LED Strips power on/off                                          WLED settings check: SUCCESS            Prototype hardware check: ?
     # IO33: LED Ring power on/off                                           WLED settings check: SUCCESS            Prototype hardware check: ?
@@ -164,7 +165,7 @@ module MainPCB:
     levelshifter_1.signal_out_2.io ~ pin_header_male_led_strip_2.p2
     levelshifter_1.power_in ~ power_3_3v
     levelshifter_1.power_out ~ power_5v
-    
+
     levelshifter_2 = new SN74LVC2T45DCUR                                # for LED strip 3 + 4
     levelshifter_2.signal_in_1.io ~ esp32.ic.IO18                       # LED strip 3
     levelshifter_2.signal_out_1.io ~ pin_header_male_led_strip_3.p2
@@ -188,11 +189,41 @@ module MainPCB:
 
     # Add USB-C PD to request 9-20V at minimum 2A, to power everything
     usb_pd_ic = new CYPD3177_min_9V_2A
-    usb_pd_ic.usb_pd ~ usb_pd
-    usb_pd_ic.i2c ~ i2c
+    usb_pd_ic.ic.usb_pd ~ usb_pd
+    usb_pd_ic.ic.i2c ~ i2c
     usb_pd_ic.power_out_vbus ~ power_vbus
-    usb_pd_ic.power_out_5v ~ power_5v                   # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
-    usb_pd_ic.power_out_vbus_readout ~ esp32.ic.IO36    # Read the USB PD voltage via a voltage divider
+    usb_pd_ic.power_out_5v ~ power_5v # Safe PWR, which can output up to 900mA, if the USB-C PD negotiation fails
+
+    # Add pull down resistors for CC lines to try to fix USB PD negotiation issues when using a USB-C to USB-C cable
+    # TODO test if this actually fixes the issue or interferes with the USB PD negotiation IC
+    usb_cc1_pull_down_resistor = new Resistor
+    usb_cc1_pull_down_resistor.value = 5.1kohm +/- 1%
+    usb_cc1_pull_down_resistor.footprint = "R0402"
+    usb_cc1_pull_down_resistor.mpn = "C25905"
+    usb_cc1_pull_down_resistor.p1 ~ usb_pd.cc1
+    usb_cc1_pull_down_resistor.p2 ~ gnd
+
+    usb_cc2_pull_down_resistor = new Resistor
+    usb_cc2_pull_down_resistor.value = 5.1kohm +/- 1%
+    usb_cc2_pull_down_resistor.footprint = "R0402"
+    usb_cc2_pull_down_resistor.mpn = "C25905"
+    usb_cc2_pull_down_resistor.p1 ~ usb_pd.cc2
+    usb_cc2_pull_down_resistor.p2 ~ gnd
+
+    # Add a voltage divider to read the USB PD voltage
+    vbus_voltage_readout_voltage_divider = new VDiv
+    vbus_voltage_readout_voltage_divider.r_top.value = 100kohm +/- 1%
+    vbus_voltage_readout_voltage_divider.r_top.footprint = "R0603"
+    vbus_voltage_readout_voltage_divider.r_top.mpn = "C25803"
+    vbus_voltage_readout_voltage_divider.r_bottom.value = 20kohm +/- 1%
+    vbus_voltage_readout_voltage_divider.r_bottom.footprint = "R0603"
+    vbus_voltage_readout_voltage_divider.r_bottom.mpn = "C4184"
+    vbus_voltage_readout_voltage_divider.v_in = 4.7V to 20.1V
+    vbus_voltage_readout_voltage_divider.v_out = 0V to 3.6V
+    vbus_voltage_readout_voltage_divider.i_q = 0uA to 1mA
+    vbus_voltage_readout_voltage_divider.top ~ power_vbus.vcc
+    vbus_voltage_readout_voltage_divider.out ~ esp32.ic.IO36
+    vbus_voltage_readout_voltage_divider.bottom ~ gnd
 
     # Add a buck converter to convert the 9-20V from the USB-C PD to 5V
     buck_converter_5v = new buck_input_9_to_20V_output_5V_14A
@@ -224,39 +255,72 @@ module MainPCB:
     led_power_mosfet_circuit.gnd ~ gnd
 
     # Add caps for LEDs
+    # Add resistors for caps for inrush current limiting
+    # TODO: test if I can remove resistors and connect the caps instead to the power out of the power mosfet circuits
     led_ring_capacitor = new Capacitor
     led_ring_capacitor.value = 100uF +/- 20%
     led_ring_capacitor.footprint = "C1206"
     led_ring_capacitor.mpn = "C15008"
-    led_ring_capacitor.power ~ led_ring_power_mosfet_circuit.power_in
+    led_ring_capacitor.power.gnd ~ gnd
+
+    led_ring_capacitor_inrush_resistor = new Resistor
+    led_ring_capacitor_inrush_resistor.value = 10ohm +/- 5% # TODO test value in real life
+    led_ring_capacitor_inrush_resistor.footprint = "0603"
+    led_ring_capacitor_inrush_resistor.mpn = "C22859"
+    led_ring_capacitor_inrush_resistor.p1 ~ led_ring_power_mosfet_circuit.power_in.vcc # TODO or should it be connected to the power out?
+    led_ring_capacitor_inrush_resistor.p2 ~ led_ring_capacitor.power.vcc
 
     led_strip_1_capacitor = new Capacitor
     led_strip_1_capacitor.value = 1000uF +/- 20%
     led_strip_1_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
-    led_strip_1_capacitor.lcsc_id = "C445078"
     led_strip_1_capacitor.mpn = "C445078"
-    led_strip_1_capacitor.power ~ led_power_mosfet_circuit.power_in1
+    led_strip_1_capacitor.power.gnd ~ gnd
+
+    led_strip_1_capacitor_inrush_resistor = new Resistor
+    led_strip_1_capacitor_inrush_resistor.value = 10ohm +/- 5% # TODO test value in real life
+    led_strip_1_capacitor_inrush_resistor.footprint = "R0603"
+    led_strip_1_capacitor_inrush_resistor.mpn = "C22859"
+    led_strip_1_capacitor_inrush_resistor.p1 ~ led_power_mosfet_circuit.power_in1.vcc # TODO or should it be connected to the power out?
+    led_strip_1_capacitor_inrush_resistor.p2 ~ led_strip_1_capacitor.power.vcc
 
     led_strip_2_capacitor = new Capacitor
     led_strip_2_capacitor.value = 1000uF +/- 20%
     led_strip_2_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
-    led_strip_2_capacitor.lcsc_id = "C445078"
     led_strip_2_capacitor.mpn = "C445078"
-    led_strip_2_capacitor.power ~ led_power_mosfet_circuit.power_in2
+    led_strip_2_capacitor.power.gnd ~ gnd
+
+    led_strip_2_capacitor_inrush_resistor = new Resistor
+    led_strip_2_capacitor_inrush_resistor.value = 10ohm +/- 5% # TODO test value in real life
+    led_strip_2_capacitor_inrush_resistor.footprint = "R0603"
+    led_strip_2_capacitor_inrush_resistor.mpn = "C22859"
+    led_strip_2_capacitor_inrush_resistor.p1 ~ led_power_mosfet_circuit.power_in2.vcc # TODO or should it be connected to the power out?
+    led_strip_2_capacitor_inrush_resistor.p2 ~ led_strip_2_capacitor.power.vcc
 
     led_strip_3_capacitor = new Capacitor
     led_strip_3_capacitor.value = 1000uF +/- 20%
     led_strip_3_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
-    led_strip_3_capacitor.lcsc_id = "C445078"
     led_strip_3_capacitor.mpn = "C445078"
-    led_strip_3_capacitor.power ~ led_power_mosfet_circuit.power_in3
-    
+    led_strip_3_capacitor.power.gnd ~ gnd
+
+    led_strip_3_capacitor_inrush_resistor = new Resistor
+    led_strip_3_capacitor_inrush_resistor.value = 10ohm +/- 5% # TODO test value in real life
+    led_strip_3_capacitor_inrush_resistor.footprint = "R0603"
+    led_strip_3_capacitor_inrush_resistor.mpn = "C22859"
+    led_strip_3_capacitor_inrush_resistor.p1 ~ led_power_mosfet_circuit.power_in3.vcc # TODO or should it be connected to the power out?
+    led_strip_3_capacitor_inrush_resistor.p2 ~ led_strip_3_capacitor.power.vcc
+
     led_strip_4_capacitor = new Capacitor
     led_strip_4_capacitor.value = 1000uF +/- 20%
     led_strip_4_capacitor.footprint = "CAP-SMD_BD10.0-L10.3-W10.3-LS10.9-FD"
-    led_strip_4_capacitor.lcsc_id = "C445078"
     led_strip_4_capacitor.mpn = "C445078"
-    led_strip_4_capacitor.power ~ led_power_mosfet_circuit.power_in4
+    led_strip_4_capacitor.power.gnd ~ gnd
+
+    led_strip_4_capacitor_inrush_resistor = new Resistor
+    led_strip_4_capacitor_inrush_resistor.value = 10ohm +/- 5% # TODO test value in real life
+    led_strip_4_capacitor_inrush_resistor.footprint = "R0603"
+    led_strip_4_capacitor_inrush_resistor.mpn = "C22859"
+    led_strip_4_capacitor_inrush_resistor.p1 ~ led_power_mosfet_circuit.power_in4.vcc # TODO or should it be connected to the power out?
+    led_strip_4_capacitor_inrush_resistor.p2 ~ led_strip_4_capacitor.power.vcc
 
     # Add solder pads
     solder_pads = new Solderpads_25x

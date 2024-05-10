@@ -56,4 +56,3 @@ module VDiv_5_1K_and_10K from VDiv:
     v_in = 0V to 3.3V
     v_out = 0V to 3.3V
     i_q = 0uA to 1mA
-    
